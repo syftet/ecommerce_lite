@@ -1,0 +1,10 @@
+<ul class="nav nav-sidebar">
+  <%#= main_menu_tree t(:returns), icon: "transfer", sub_menu: "returns", url: "#sidebar-returns" %>
+</ul>
+
+
+<%# if can? :admin, Product %>
+<ul class="nav nav-sidebar">
+  <%#= main_menu_tree t(:products), icon: "th-large", sub_menu: "product", url: "#sidebar-product" %>
+</ul>
+<%# end %>
