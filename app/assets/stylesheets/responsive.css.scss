@@ -1,0 +1,99 @@
+@media (max-width: 1199px) {
+  footer {
+    .syftet-footer-profile {
+      .join-our-email-section {
+        padding: 76px 20px 56px 20px
+      }
+    }
+    .footer-information {
+      .about-company-social {
+        padding: 20px 30px 20px 20px;
+        margin: 0 -15px;
+      }
+
+      .map-block {
+        padding-top: 20px;
+        margin: 0 -15px;
+      }
+    }
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (max-width: 992px) {
+  footer {
+    .syftet-footer-profile {
+      .join-our-email-section {
+        padding: 76px 20px 56px 20px
+      }
+    }
+    .footer-information {
+      .about-company-social {
+        padding: 20px 30px 20px 20px;
+        margin: 0 -15px;
+      }
+
+      .map-block {
+        padding-top: 20px;
+        margin: 0 -15px;
+      }
+
+      .nav-block {
+        padding-left: 20px;
+      }
+    }
+  }
+
+  #syftet-off-canvas {
+    .navbar-collapse {
+      padding-right: 0;
+      padding-left: 0;
+    }
+    #main-menu-offcanvas {
+      float: none;
+      .dropdown-menu {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) {
+  footer {
+    .syftet-footer-profile {
+      .join-our-email-section {
+        padding: 76px 20px 56px 20px
+      }
+      .news-widget-form {
+        padding-top: 0;
+      }
+    }
+  }
+
+  #syftet-off-canvas {
+    .navbar-collapse {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+
+  .nav-block {
+    padding-left: 20px;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) {
+  footer {
+    .syftet-footer-profile {
+      .join-our-email-section {
+        padding: 76px 20px 56px 20px
+      }
+    }
+  }
+
+  .nav-block {
+    padding-left: 20px;
+  }
+}

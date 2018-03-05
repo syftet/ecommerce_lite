@@ -1,0 +1,199 @@
+footer {
+  color: #363636;
+  font-weight: 300;
+  .syftet-copyright .payment {
+    text-align: right;
+  }
+  .syftet-copyright {
+    font-size: 12px;
+    padding: 27px 0;
+    background: #fff;
+    color: #31353d;
+  }
+  .text-copyright {
+    text-transform: uppercase;
+    line-height: 30px;
+  }
+
+  .syftet-footer-profile {
+    .news-letter-wrapper {
+      background: image-url('bg-newletter.jpg') top left/cover no-repeat scroll;
+      display: flex;
+    }
+    .join-our-email-section {
+      padding: 76px 85px 56px 70px;
+      .divider_inner {
+        border-color: #9ba6bb;
+        border-style: dotted;
+        width: 20%;
+        border-width: 1px;
+      }
+      .line-height-one {
+        margin-bottom: 30px;
+      }
+      .join-text-wrapper {
+        h3 {
+          position: relative;
+          letter-spacing: 3.2px;
+          margin-top: 0;
+          margin-bottom: 0;
+          display: inline-block;
+          color: #ffffff;
+          font-size: 20px;
+          font-weight: 700;
+          text-transform: uppercase;
+          text-align: left;
+          padding-bottom: 5px;
+        }
+      }
+      .text-block {
+        display: inline-block;
+        clear: both;
+        width: 100%;
+        p {
+          color: #d4d4d4;
+          font-size: 12px;
+        }
+      }
+    }
+    .news-widget-form {
+      padding: 70px 0;
+      .input-group {
+        position: relative;
+        width: 100%;
+        .form-control {
+          border: none;
+          padding-left: 50px;
+          margin-left: 2px;
+          height: 46px;
+          background-color: hsla(0, 0%, 100%, .4);
+          font-weight: 300;
+          max-width: 100%;
+          color: #fff;
+          position: relative;
+        }
+        &:before {
+          position: absolute;
+          content: "\f003";
+          left: 15px;
+          top: 15px;
+          color: #fff;
+          font-family: FontAwesome;
+        }
+        input[type=submit] {
+          padding: 0;
+          border: none;
+          width: 100%;
+          height: 100%;
+          background: transparent;
+          z-index: 999;
+          outline: none;
+          font-size: 12px;
+          text-transform: uppercase;
+          font-weight: 500;
+          letter-spacing: 5px;
+          border-bottom: 1px solid #fff;
+          padding-bottom: 1px;
+          position: relative;
+          color: #ffffff;
+          margin-top: 10px;
+          -webkit-border-radius: 0;
+          -moz-border-radius: 0;
+          border-radius: 0;
+        }
+      }
+
+      ::-webkit-input-placeholder {
+        color: #eeeeee;
+      }
+      ::-moz-placeholder {
+        color: #eeeeee;
+      }
+      :-ms-input-placeholder {
+        color: #eeeeee;
+      }
+      :-moz-placeholder {
+        color: #eeeeee;
+      }
+    }
+  }
+  .footer-information {
+    background: #363a42;
+    .about-company-social {
+      background: #31353d;
+      padding: 87px 40px 82px 40px;
+      .text-block {
+        padding-top: 48px;
+        padding-bottom: 34px;
+        p {
+          color: #aaaaaa;
+          font-size: 14px;
+          line-height: 26px;
+          font-weight: 300;
+        }
+      }
+      .social-block {
+        a {
+          background-color: #363a42;
+          width: 42px;
+          height: 42px;
+          padding: 10px;
+          margin: 3px;
+          line-height: 1;
+          display: inline-block;
+          border-radius: 3px;
+          i {
+            font-size: 20px;
+          }
+          &:hover {
+            background: #9ba6bb;
+          }
+        }
+      }
+    }
+    .nav-block {
+      padding: 81px 15px 0 45px;
+      h3 {
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: left;
+        padding-bottom: 0;
+        margin-top: 0;
+        margin-bottom: 40px;
+        letter-spacing: 3.2px;
+        position: relative;
+        text-transform: uppercase;
+      }
+
+      #menu-footer-1,
+      #menu-footer-2 {
+        margin: 0;
+        list-style: none;
+        padding: 0;
+        li {
+          border: none;
+          padding: 3px 0;
+          a {
+            font-size: 14px;
+            text-transform: capitalize;
+            font-weight: 300;
+            display: inline-block;
+            border: none;
+            line-height: inherit;
+            padding: 7px 0;
+            color: #aaaaaa;
+            &:hover {
+              color: #a86017;
+            }
+          }
+        }
+      }
+    }
+
+    .map-block {
+      padding-top: 87px;
+      padding-right: 0;
+    }
+  }
+}

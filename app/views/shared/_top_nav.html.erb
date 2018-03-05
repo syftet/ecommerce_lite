@@ -1,0 +1,96 @@
+<section id="opal-topbar" class="opal-topbar hidden-xs hidden-sm">
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 col-sm-12 info">
+
+        <div class="telephone">
+
+          <span class="space-right-5">
+            <i class="fa fa-phone-square" aria-hidden="true"></i>
+            <%= t(:call_support) %>
+          </span>
+
+          <span class="phone-number">01706478728</span>
+
+        </div>
+
+        <aside id="text-2" class="widget-topbar clearfix widget_text">
+          <div class="textwidget">
+            <%= t(:free_shipping_text) %>
+          </div>
+        </aside>
+      </div>
+      <div class="col-md-6 col-sm-12">
+
+        <div class="topmenu pull-right hidden-xs hidden-sm">
+          <div class="menu-top-menu-header-container">
+            <ul id="main-topmenu">
+              <li class="dropdown custom-dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-question-circle"></i> <%= t(:page) %>
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu custom-drp-content">
+                  <li>
+                    <%= link_to t(:about_us), about_us_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'Customer Support', contact_us_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'Frequent Ask Question', faq_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'Secure Shopping', secure_shopping_path %>
+                  </li>
+                  <li>
+                    <a href="/blogs">
+                      Our <%= t(:blog) %>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <% if current_user.present? %>
+                  <li>
+                    <%= link_to user_logout_path, method: :delete do %>
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        <%= t(:logout) %>
+                    <% end %>
+                  </li>
+              <% else %>
+                  <li>
+                    <a href="#" data-toggle="modal" data-target="#modalLoginForm" class="syftet-user-login">
+                      <span class="fa fa-user"></span>
+                      <%= t(:login) %>
+                    </a>
+                  </li>
+                  <li>
+                    <%= link_to account_registration_path, class: 'syftet-user-register' do %>
+                        <span class="fa fa-pencil"></span>
+                        <%= t(:registration) %>
+                    <% end %>
+                  </li>
+              <% end %>
+              <li class="menu-item ">
+                <%= link_to current_user.present? ? my_account_path : account_registration_path do %>
+                    <i class="fa fa-id-card-o" aria-hidden="true"></i> <%= t(:my_account) %>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="top-account pull-right hidden-xs hidden-sm">
+
+          <ul class="list-style">
+
+          </ul>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<%= render 'users/login_modal' %>
+<%#= render 'products/shared/quickview_modal' %>

@@ -1,13 +1,43 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-      /* Email styles need to be inline */
-    </style>
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width"/>
+  <%= render partial: 'shared/base_mailer_stylesheets' %>
+</head>
+<body>
+<div style="max-width: 1026px;margin: auto" class="containerx">
+  <table class="body">
+    <tr>
+      <td class="center" align="center" valign="top">
+        <center>
+          <table class="container">
+            <tr>
+              <td>
+                <%= render partial: 'shared/base_mailer_header' %>
+                <table class="row">
+                  <tr>
+                    <td class="wrapper last" style="padding: 10px 0 0 0; position: relative;">
+                      <table class="twelve columns">
+                        <tr>
+                          <td>
+                            <%= yield %>
+                          </td>
+                          <td class="expander"></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <%= render partial: 'shared/base_mailer_footer' %>
+              </td>
+            </tr>
+          </table>
+        </center>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
 </html>

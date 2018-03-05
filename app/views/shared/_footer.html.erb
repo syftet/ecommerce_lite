@@ -1,0 +1,149 @@
+<div class="syftet-footer-profile clearfix">
+  <section class="news-letter-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-5 col-sm-5">
+          <div class="join-our-email-section">
+            <div class="join-text-wrapper">
+
+              <h3 class="kc_title newletter-left-option"><%= t(:join_our_email) %></h3>
+            </div>
+
+            <div class="kc-elm kc-css-483906 divider_line line-height-one">
+              <div class="divider_inner divider_line1">
+              </div>
+            </div>
+            <div class="text-block">
+              <p><%= t(:join_our_email_text) %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-7 col-sm-7">
+          <div class="news-widget-form">
+            <%= form_for NewsletterSubscription.new, url: email_subscription_path, remote: true do |f| %>
+                <div class="form-fields">
+                  <div class="input-group">
+                    <%= f.email_field :email, class: 'form-control', placeholder: "#{t(:enter_your_email)}..." %>
+
+                    <span class="clearfix pull-right">
+                      <input type="submit" value="<%= t(:subscribe) %> +" class="btn">
+                    </span>
+                  </div>
+                </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer-information">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-sm-12">
+          <div class="row">
+            <div class="col-sm-4 col-sm-4">
+              <div class="about-company-social">
+                <div>
+                  <%= link_to root_path do %>
+                      <%= image_tag('logo.png') %>
+                  <% end %>
+                </div>
+                <div class="text-block">
+                  <p style="text-align: left;">
+                    <%= t(:footer_about_text) %>
+                  </p>
+                </div>
+                <div class="social-block">
+                  <a href="https://www.facebook.com/lienesbeautyshop/" class="multi-icons-link multi-iconsfa-facebook text-center">
+                    <i class="fa fa-facebook" style="color:#658cdd;"></i>
+                  </a>
+
+                  <!--<a href="#" class="multi-icons-link multi-iconsfa-twitter">-->
+                  <!--<i class="fa fa-twitter" style="color:#31bfe1;"></i>-->
+                  <!--</a>-->
+
+                  <!--<a href="#" class="multi-icons-link multi-iconsfa-google-plus">-->
+                  <!--<i class="fa fa-google-plus" style="color:#cf3f12;"></i>-->
+                  <!--</a>-->
+
+                  <!--<a href="#" class="multi-icons-link multi-iconsfa-instagram">-->
+                  <!--<i class="fa fa-instagram" style="color:#a86017;"></i>-->
+                  <!--</a>-->
+
+                  <!--<a href="#" class="multi-icons-link multi-iconsfa-pinterest">-->
+                  <!--<i class="fa fa-pinterest" style="color:#c93232;"></i>-->
+                  <!--</a>-->
+
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4 col-sm-4">
+              <div class="nav-block">
+                <div class="title-wrap ">
+                  <h3 class="title"><%= t(:information) %></h3>
+                </div>
+                <div class="footer-nav-wrapper">
+                  <div class="row">
+                    <div class="col-sm-6 col-sm-6">
+                      <div class="widget widget-nav-menu widget-off" style="border: none;">
+                        <div class="menu-footer-1-container">
+                          <ul id="menu-footer-1" class="menu">
+                            <li>
+                              <a href="/my_account"><%= t(:my_account) %></a>
+                            </li>
+                            <li>
+                              <a href="/my_account#order-history"><%= t(:order_history) %></a>
+                            </li>
+                            <li>
+                              <a href="<%#= wishlists_path %>"><%= t(:wishlist) %></a>
+                            </li>
+                            <li>
+                              <a href="<%= promotion_products_path('discount') %>"><%= t(:special) %></a>
+                            </li>
+                            <li>
+                              <%#= link_to t(:feedback), new_feedback_path %>
+                              <%#= render 'home/feedback' %>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-sm-6">
+                      <div class="widget widget-off" style="border: none;">
+                        <div class="menu-footer-2-container">
+                          <ul id="menu-footer-2" class="menu">
+                            <li>
+                              <%#= link_to t(:discount), coupon_path %>
+                            </li>
+                            <li>
+                              <%#= link_to t(:return_policy), return_policy_path %>
+                            </li>
+                            <li>
+                              <%= link_to t(:customer_service), contact_us_path %>
+                            </li>
+                            <li>
+                              <%#= link_to t(:term_and_condition), term_condition_path %>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4 col-sm-4">
+              <div class="map-block">
+                <div style="height: 295px" class="kc-google-maps">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1826.203009943632!2d90.38409477843865!3d23.73289653640299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b84e57dd8b19%3A0xd66f294182e721e8!2sDhaka+New+Market!5e0!3m2!1sen!2sbd!4v1509519408010" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

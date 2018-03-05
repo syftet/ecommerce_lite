@@ -1,0 +1,7 @@
+<script type="text/javascript">
+    $(function () {
+        <% flash.each do |msg_type, text| %>
+        popupMessage("<%= text %>", 'alert alert-<%= msg_type %>');
+        <% end %>
+    });
+</script>

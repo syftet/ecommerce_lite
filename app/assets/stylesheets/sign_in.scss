@@ -1,0 +1,31 @@
+.sign-in-wrap {
+  .sign-in-container {
+    width: 500px;
+    margin: auto;
+    margin-bottom: 40px;
+    margin-top: 60px;
+    .custom-form-control {
+      color: #e1e1e1;
+      background-color: #ffffff;
+      border: 1px solid #e1e1e1;
+      border-radius: 0;
+      background-image: none;
+      box-shadow: none;
+    }
+    .custom-form-control:focus {
+      border-color: #fcc030;
+      outline: 0;
+    }
+    .others-link {
+      a {
+        color: #333;
+        text-decoration: none;
+        cursor: pointer;
+        &:hover {
+          color: #fcc030;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

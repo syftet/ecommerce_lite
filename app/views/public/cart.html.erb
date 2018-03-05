@@ -1,0 +1,81 @@
+<% content_for :breadcrumb do %>
+    <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb('Cart') %>
+<% end %>
+
+<section id="main-container" class="container inner">
+  <div class="row">
+    <div id="main-content" class="main-content col-xs-12 col-lg-12 col-md-12">
+      <div id="primary" class="content-area">
+        <div id="content" class="site-content" role="main">
+
+          <header class="page-header-v1">
+            <h1 class="page-title">Shopping Cart</h1>
+          </header><!-- .page-header -->
+
+          <article id="post-53" class="post-53 page type-page status-publish hentry">
+            <div class="entry-content-page">
+              <div class="woocommerce">
+                <form class="col-sm-12 col-md-8" action="" method="post">
+                <div class="table-responsive">
+                  <table class="custom-table shop_table" cellspacing="0">
+                    <thead>
+                    <tr>
+                      <th class="product-remove">&nbsp;</th>
+                      <th class="product-thumbnail">&nbsp;</th>
+                      <th class="product-name">Product</th>
+                      <th class="product-price">Price</th>
+                      <th class="product-quantity text-center">Quantity</th>
+                      <th class="product-subtotal">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% 8.times.each do |i| %>
+                        <%= render 'public/cart_item' %>
+                    <% end %>
+                    </tbody>
+                  </table>
+                  <div class="custom-cart-actions mb40">
+                    <div class="coupon">
+                      <label for="coupon_code">Coupon:</label> <input name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Coupon code" type="text">
+                      <input class="button" name="apply_coupon" value="Apply Coupon" type="submit">
+                    </div>
+                    <input class="button" name="update_cart" value="Update Cart" type="submit">
+                    <input id="_wpnonce" name="_wpnonce" value="698f7d544c" type="hidden"><input name="_wp_http_referer" value="/wordpress/pi/cart/" type="hidden">
+                  </div>
+                </div>
+              </form>
+                <div class="col-sm-12 col-md-4 cart-collaterals" style="background-color: #fafafa">
+                  <div class="cart_totals ">
+                    <h2>Cart totals</h2>
+                    <table class="table shop_table shop_table_responsive" cellspacing="0">
+                      <tbody><tr class="cart-subtotal">
+                        <th>Subtotal</th>
+                        <td data-title="Subtotal"><span class="price-amount amount"><span class="price-currency-symbol">$</span>3,362.0</span></td>
+                      </tr>
+                      <tr class="order-total">
+                        <th>Total</th>
+                        <td data-title="Total">
+                          <strong>
+                            <span class="price-amount amount">
+                              <span class="price-currency-symbol">$</span>
+                              3,362.0
+                            </span>
+                          </strong>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                    <div class="wc-proceed-to-checkout mb30">
+                      <a href="http://venusdemo.com/wordpress/pi/checkout/" class="checkout-button button alt wc-forward">
+                        Proceed to checkout</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- .entry-content -->
+          </article><!-- #post-## -->
+        </div><!-- #content -->
+      </div><!-- #primary -->
+    </div><!-- #main-content -->
+  </div>
+</section>

@@ -1,0 +1,46 @@
+<aside class="aside chunk-left clearfix">
+  <h2>
+    <span>Customer Service</span>
+    <i class="glyphicon glyphicon-menu-down visible-xs pull-right dropdown-mobile-menu" style="cursor: pointer;"></i>
+  </h2>
+
+  <ul class="service-list">
+    <li class="<%= get_active_class(action_name, 'safe_shopping_guarantee') %>">
+      <a href="/safe_shopping_guarantee">
+        <h3 class="m0" style="font-size: 12px; ">Safe Shopping Guarantee</h3>
+      </a>
+    </li>
+    <li class="<%= get_active_class(action_name, 'secure_shopping') %>">
+      <a href="/secure_shopping"><h4> Secure Shopping </h4></a>
+    </li>
+    <li class="<%= get_active_class(action_name, 'faq') %>">
+      <a href="<%= faq_path %>"><h4>Frequently Asked Questions </h4></a>
+    </li>
+    <li class="<%= get_active_class(action_name, 'return_policy') %>">
+      <a href="<%= return_policy_path %>"><h4> Return Policy </h4></a>
+    </li>
+    <li class="<%= get_active_class(action_name, 'international') %>">
+      <a href="<%= international_path %>"><h4>International Shipping & Returns </h4></a>
+    </li>
+    <li class="<%= get_active_class(action_name, 'about_us') %>">
+      <a href="/about_us"><h4>About US </h4></a>
+    </li>
+    <li class="<%= get_active_class(action_name, 'coupon') %>">
+      <a href="/coupon-code"><h4>Discount Coupon Code </h4></a>
+    </li>
+    <li class="<%= get_active_class(action_name, 'privacy_policy') %>">
+      <a href="/privacy_policy"><h4>Your Privacy Protection </h4></a>
+    </li>
+    <li class="<%= get_active_class(action_name, 'contact_us') %>">
+      <a href="<%= contact_us_path %>"><h4>Contact US </h4></a>
+    </li>
+  </ul>
+</aside>
+
+<script type="text/javascript">
+    $(function () {
+        $('.dropdown-mobile-menu').click(function () {
+            $('.service-list').toggle();
+        });
+    });
+</script>

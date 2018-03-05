@@ -1,0 +1,56 @@
+#subsciption-offer {
+  .modal-dialog {
+    width: 100%;
+    max-width: 730px;
+  }
+  .modal-content {
+    padding: 0;
+    background: image-url('bg_newletters.jpg');
+    .btn-cross {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      line-height: 19px;
+      padding: 3px 5px;
+      background: #c34322;
+      color: #ffffff !important;
+      z-index: 100;
+    }
+    .popupnewsletter-widget {
+      .pnew-head {
+        width: 45%;
+        h3 {
+          font-size: 22px;
+          padding-bottom: 20px;
+          font-weight: bold;
+        }
+        .description {
+          padding-bottom: 20px;
+          color: #707070;
+          font-size: 14px;
+        }
+      }
+      .subscription-popup-form {
+        margin: 10px 0;
+        .input-group {
+          width: 70%;
+        }
+        input[type='email'] {
+          width: calc(100% - 101px);
+          border-right: none;
+        }
+        input[type='submit'] {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          background: #c34322;
+          color: #ffffff;
+        }
+      }
+      #popup-socials-widget {
+        padding: 30px;
+        background: transparent;
+        margin: 0;
+      }
+    }
+  }
+}

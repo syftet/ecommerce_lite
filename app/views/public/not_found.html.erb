@@ -1,0 +1,40 @@
+<main class="main">
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="four-o-four">
+            <div class="page-title uppercase">
+              <h2>Not Found.</h2>
+            </div>
+            <h3 class="small gothamNarrowBold">
+              The page you requested was not found, and we have a fine guess why.
+            </h3>
+            <ul class="list-style-circle">
+              <li>If you typed the URL directly, please make sure the spelling is correct</li>
+              <li>If you clicked on a link to get here, the link is outdated.</li>
+            </ul>
+            <br>
+
+            <h3 class="small gothamNarrowBold">
+              What can you do?
+            </h3>
+
+            <p>Have no fear, help is near! There are many ways you can get back on track on us.</p>
+            <ul class="list-style-circle">
+              <li><a href="javascript:history.go(-1)" class="text-red">Go Back</a> to the previous page</li>
+              <li>Use the search bar at the top of the page to search for your products</li>
+            </ul>
+            <div class="search-cart">
+              <div class="search-box table-cell va-middle">
+                <form action="<%= spree.product_search_path %>" role="form" class="form-horizontal">
+                  <input type="text" class="form-control" placeholder="Search for shoes, clothing, bags...">
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

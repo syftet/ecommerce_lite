@@ -1,0 +1,95 @@
+<script type="text/javascript">
+    $(function () {
+
+        $('form .input-wrap .form-control.required').focus(function () {
+            $(this).parent('.input-wrap').addClass('focused');
+        }).blur(function (e) {
+            error_1 = "This field is required";
+            error_2 = "Enter a valid Email Address";
+            error_3 = "Enter a password of at least 6 characters that contains at least one number";
+            error_4 = "Email Address mis-match ";
+            _this = $(this);
+            inputVal = _this.val();
+            findInputType = _this.attr('type');
+            targetElement = _this.parent();
+            errorElement = _this.next('.form-error');
+            validateForm();
+        });
+
+        validateForm = function () {
+            if (inputVal == "") {
+                errorElement.text(error_1);
+                targetElement.addClass('errored').removeClass('focused non-empty');
+            }
+            else {
+                targetElement.addClass('non-empty');
+                if (findInputType == 'text') {
+                    targetElement.addClass('focused').removeClass('errored');
+                    _this.addClass('valid');
+                }
+                else if (findInputType == 'email') {
+                    if (!validateEmail(inputVal)) {
+                        errorElement.text(error_2);
+                        targetElement.addClass('errored').removeClass('focused');
+                    }
+                    else {
+                        if (_this.hasClass('email')) {
+                            targetElement.addClass('focused').removeClass('errored');
+                            _this.addClass('valid');
+                        }
+                        if (_this.hasClass('recheck-email')) {
+                            findEmailValue = $('.email').val();
+                            findReEmailValue = _this.val();
+                            if (findEmailValue.toLowerCase() != findReEmailValue.toLowerCase()) {
+                                errorElement.text(error_4);
+                                targetElement.addClass('errored').removeClass('focused');
+                            }
+                            else {
+                                targetElement.addClass('focused').removeClass('errored');
+                                _this.addClass('valid');
+                            }
+                        }
+                    }
+                }
+                else {
+                    targetElement.addClass('focused').removeClass('errored');
+                    _this.addClass('valid');
+                }
+            }
+        }
+
+        validateEmail = function (email) {
+            var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+            return emailReg.test(email);
+        }
+
+        $('input[type="submit"]').click(function (e) {
+            $('.input-wrap .form-control.required').each(function () {
+                $(this).blur();
+            });
+            totalRequiredFields = $('.input-wrap .form-control.required').length;
+            totalValidFields = $('.input-wrap .form-control.valid').length;
+            if (totalRequiredFields == totalValidFields) {
+                // perform form submission
+            }
+            else {
+                console.log('input-wrap');
+                e.preventDefault();
+            }
+        });
+
+
+// For Optional Entities
+        $('form .input-wrap .form-control.optional').focus(function () {
+            $(this).parent('.input-wrap').addClass('focused');
+        }).blur(function (e) {
+            inputVal = $(this).val();
+            targetElement = $(this).parent();
+            if (inputVal == "") {
+                targetElement.removeClass('focused');
+            }
+        });
+
+    })
+
+</script>

@@ -1,0 +1,149 @@
+<main class="main public-wrapper">
+  <div class="section">
+    <div class="container">
+      <div class="page-title uppercase text-center with-bb hidden-xs">
+        <h2>Contact Us</h2>
+      </div>
+      <div class="chunk contact">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= render 'public/cms_sidebar' %>
+          </div>
+          <div class="col-sm-5 chunk-right">
+            <h3 class="gothamNarrowBlack small margin-top-0"><i class="fa fa-envelope-o fa-2x va-sub"></i> Email Us</h3>
+
+            <div class="vspace10px"></div>
+            <p>
+              We look forward to helping you with your inquiry. We respond to email messages in the order that they are
+              received, and will respond to your email as quickly as possible.
+            </p>
+
+            <div class="vspace10px"></div>
+            <div class="contact-form">
+              <%= form_for @contact_us, class: 'form-horizontal clearfix' do |f| %>
+                  <div class="col-sm-x12">
+                    <div class="form-group">
+                      <div class="input-wrap">
+                        <!--<label for="" class="input-label">Full Name</label>-->
+                        <%= f.text_field :full_name, class: 'form-control required reset-border-radius', placeholder: 'Full Name' %>
+                        <span class="form-error"></span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="input-wrap">
+                        <!--<label for="" class="input-label">Email Address</label>-->
+                        <%= f.email_field :email, class: 'form-control required email reset-border-radius', placeholder: 'Email' %>
+                        <span class="form-error"></span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="input-wrap">
+                        <!--<label for="" class="input-label">Phone Number(Optional)</label>-->
+                        <%= f.text_field :phone, class: 'form-control optional reset-border-radius', placeholder: 'Phone Number' %>
+                        <span class="form-error"></span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="input-wrap">
+                        <!--<label class="input-label">Order Number (Optional)</label>-->
+                        <%= f.text_field :order_number, class: 'form-control optional reset-border-radius', placeholder: 'Order Number' %>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <%= f.select :inquiry_type, ['General', 'Account & Balance', 'Order', 'Checkout', 'Payment', 'Others'], {include_blank: "Select Support Type..."}, {class: 'form-control reset-border-radius'} %>
+                    </div>
+
+                    <div class="clear"></div>
+                    <div class="form-group">
+                      <div class="input-wrap with-textarea">
+                        <!--<label class="input-label">Message</label>-->
+                        <%= f.text_area :message, class: 'form-control required reset-border-radius', placeholder: 'Message' %>
+                        <span class="form-error"></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <%= f.submit 'Submit', class: 'btn-yellow' %>
+                      <!--<button type="submit" class="common-btn uppercase">Submit</button>-->
+                    </div>
+                  </div>
+              <% end %>
+
+              <div class="form-group">
+                <%= link_to 'Go to the Homepage', root_path, class: 'text-red' %>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="warehouse-locations">
+              <h3 class="gothamNarrowBlack small margin-top-0">
+                <i class="fa fa-home fa-2x va-sub"></i>
+                Our Warehouse location
+              </h3>
+
+              <div class="vspace10px"></div>
+
+              <div class="address-wrapper">
+                <div class="address-first-title">Head office</div>
+                <div class="address">83 stewart road, London E15 2BA, uk.</div>
+                <div class="phone">
+                  <i class="fa fa-envelope"></i>
+                  <a href="mailto:info@lienesbeauty.com" class="Blondie"> info@lienesbeauty.com </a>
+                </div>
+                <div class="phone">
+                  <i class="fa fa-phone"></i>
+                  <a href="tel:+07476873462" class="Blondie"> 07476873462 </a>
+                </div>
+                <div class="phone">
+                  <i class="fa fa-skype"></i>
+                  <a href="skype:live:184a22ede9bf623?chat" class="Blondie"> live:184a22ede9bf623 </a>
+                </div>
+                <div class="phone">
+                  <i class="sicon sicon-imo"></i>
+                  <a href="imo:01706478728" class="Blondie" title="IMO"> 01706478728 </a>
+                </div>
+                <div class="phone">
+                  <i class="sicon sicon-viber"></i>
+                  <a href="viber:01706478728" class="Blondie" title="Viber"> 01706478728 </a>
+                </div>
+              </div>
+
+              <div class="address-wrapper">
+                <div class="address-title">Bangladesh Outlet</div>
+                <div class="address">
+                  Ground floor, New market city complex, dhaka new market- 1205.
+                </div>
+                <div class="phone">
+                  <i class="fa fa-envelope"></i>
+                  <a href="mailto:sales@leinesbeauty.com" class="Blondie"> sales@leinesbeauty.com </a>
+                </div>
+                <div class="phone">
+                  <i class="fa fa-phone"></i>
+                  <a href="tel:+8801706478728" class="Blondie"> (+88) 01706478728 </a>
+                </div>
+                <div class="phone">
+                  <i class="fa fa-skype"></i>
+                  <a href="skype:live:184a22ede9bf623?chat" class="Blondie"> live:184a22ede9bf623 </a>
+                </div>
+                <div class="phone">
+                  <i class="sicon sicon-imo"></i>
+                  <a href="imo:01706478728" class="Blondie" title="IMO"> 01706478728 </a>
+                </div>
+                <div class="phone">
+                  <i class="sicon sicon-viber"></i>
+                  <a href="viber:01706478728" class="Blondie" title="Viber"> 01706478728 </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<%= render 'public/contact_validation_script' %>

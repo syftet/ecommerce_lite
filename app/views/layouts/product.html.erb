@@ -7,15 +7,14 @@
   <%= favicon_link_tag 'favicon.png' %>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => 'reload' %>
-  <%= render 'shared/cdn_resources' %>
-  <meta name="turbolinks-cache-control" content="no-cache">
+  <%= render 'shared/header' %>
+  <%= yield :social_share_meta %>
 </head>
 
 <body>
 <div id="page">
   <%= render 'shared/notification' %>
   <%= render 'shared/custom_flash' %>
-  <%= render 'shared/subscription_popup' %>
   <div class="syftet-page-inner row-offcanvas row-offcanvas-left">
     <div class="top-nav">
       <div class="container">
@@ -23,11 +22,12 @@
       </div>
     </div>
     <%= render 'shared/main_menu' %>
-    <%= yield :slider %>
+    <%= yield :breadcrumb %>
     <div class="container">
+      <%= yield :sidebar %>
       <%= yield %>
     </div>
-    <%#= render 'products/compare_modal' %>
+    <%= render 'products/compare_modal' %>
     <footer id="syftet-footer" class="syftet-footer" role="contentinfo">
       <%= render 'shared/footer' %>
       <%= render 'shared/public_footer' %>

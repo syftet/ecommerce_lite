@@ -1,0 +1,221 @@
+<header class="site-header header-default" role="banner">
+  <div class="topbar-mobile hidden-lg hidden-md">
+    <div class="active-mobile pull-right">
+      <button data-toggle="offcanvas" class="btn-mobile-toggle btn-offcanvas btn-toggle-canvas offcanvas" type="button">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    <div class="topbar-inner pull-right">
+      <div class="active-mobile search-popup pull-right">
+        <span class="fa fa-search"></span>
+
+        <div class="active-content">
+          <form action="<%#= products_path %>" method="get" class="input-group search-category">
+            <input name="name" maxlength="60" class="form-control search-category-input" type="text" size="20" placeholder="Search Products">
+
+            <div class="input-group-btn">
+              <label class="btn btn-link btn-search">
+                <span class="title-search hidden">Search</span>
+                <input type="submit" class="fa searchsubmit" value="">
+              </label>
+              <input type="hidden" name="post_type" value="product">
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="active-mobile setting-popup pull-left">
+        <%= link_to current_user.present? ? my_account_path : account_registration_path, style: 'padding: 0; color: #ffffff' do %>
+            <span class="fa fa-user"></span>
+        <% end %>
+      </div>
+
+      <div class="active-mobile pull-left cart-popup custom-cart">
+        <span class="fa fa-shopping-cart"></span>
+        <span class="mini-cart-items mobile-mini-cart-count"><%#= line_item_count %></span>
+
+        <div class="active-content custom-dropdown-content shopping-cart-doopdown">
+          <%#= render 'shared/cart_items' %>
+        </div>
+      </div>
+    </div>
+    <div class="active-mobile setting-popup pull-right">
+      <%= link_to root_path, style: 'color: #ffffff' do %>
+          <i class="fa fa-home"></i>
+      <% end %>
+    </div>
+  </div>
+
+
+  <section class="header-main clearfix">
+    <div class="container-fuild">
+      <section class="respon-menu main-menu no-sticky clearfix">
+        <div class="col-lg-10 col-md-8 col-xs-12">
+          <div id="syftet-mainmenu" class="syftet-mainmenu">
+            <div class="inner navbar-mega-simple">
+              <nav data-duration="400" class="hidden-xs hidden-sm slide animate navbar navbar-mega reset-margin" role="navigation">
+
+                <div class="collapse navbar-collapse navbar-mega-collapse nopadding">
+                  <ul id="primary-menu" class="nav navbar-nav megamenu">
+                    <li class="menu-item site-logo-link">
+                      <%= link_to root_path, style: 'padding: 18px 15px 19px 0;' do %>
+                          <%= image_tag('top_logo.png') %>
+                      <% end %>
+                    </li>
+
+                    <li class="menu-item">
+                      <a href="<%= promotion_products_path('discount') %>">
+                        <%= t(:discount) %>
+                        <span class="bubble-text-label label-hot"><%= t(:hot) %></span>
+                      </a>
+                    </li>
+                    <%# Taxonomy.all.each do |taxm| %>
+                        <li class="menu-item">
+                          <%#= link_to '#nof' do %>
+                              <%#= taxm.name %> <span class="caret"></span>
+                          <%# end %>
+                          <ul class="top-sub-menu">
+                            <%# taxm.taxons.where('parent_id IS NULL').each do |taxon| %>
+                                <%#= raw draw_nav_menu_tree(taxon) %>
+                            <%# end %>
+                          </ul>
+                        </li>
+                    <%# end %>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        <div class="respon-link col-lg-2 col-md-3 col-xs-12 hidden-xs hidden-sm">
+          <div class="header-right clearfix">
+            <div class="opal-topcart pull-right">
+              <div id="cart" class="custom-cart dropdown version-1 box-top">
+                <%= link_to '#', class: 'dropdown-toggle mini-cart box-wrap', 'data-toggle' => 'dropdown', 'aria-expandedx' => 'true' do %>
+                      <span class="icon-basket icons">
+                      <i class="fa fa-shopping-cart"></i>
+                      <span class="mini-cart-items"><%#= line_item_count %></span>
+                        <% #if current_order %>
+                          <span class="price-amount amount mini-cart-total">
+                            <%#= amount_with_currency(current_order.amount) %>
+                          </span>
+                        <%# end %>
+                    </span>
+                <% end %>
+                <div class="dropdown-menu custom-dropdown-content" id="shopping-cart-doopdown">
+                  <%#= render 'shared/cart_items' %>
+                </div>
+
+              </div>
+            </div>
+
+            <%#= link_to wishlists_path, class: 'syftet-btn-wishlist pull-right' do %>
+                <i class="fa fa-heart-o" aria-hidden="true"></i>
+            <%# end %>
+
+            <div id="search-container" class="search-box-wrapper pull-right">
+              <div class="opal-dropdow-search dropdown">
+                <a data-target=".bs-search-modal-lg" data-toggle="modal" class="search-focus btn dropdown-toggle dropdown-toggle-overlay">
+                  <i class="fa fa-search"></i>
+                </a>
+
+                <%#= render 'shared/search_modal' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</header>
+
+<div id="syftet-off-canvas" class="opal-off-canvas sidebar-offcanvas hidden-lg hidden-md">
+  <div class="opal-off-canvas-body">
+    <div class="offcanvas-head bg-primary text-right">
+      <span>Menu</span>
+      <button type="button" class="btn btn-offcanvas btn-toggle-canvas btn-default" data-toggle="offcanvas">
+        <i class="fa fa-close"></i>
+      </button>
+    </div>
+    <nav class="navbar navbar-offcanvas navbar-static" role="navigation">
+      <div class="navbar-collapse navbar-offcanvas-collapse">
+        <ul id="main-menu-offcanvas" class="nav navbar-nav">
+          <li class="menu-item">
+            <%= link_to root_path do %>
+                <i class="fa fa-home"></i> <%= t(:home) %>
+            <% end %>
+          </li>
+
+          <li class="menu-item">
+            <a href="<%= promotion_products_path('discount') %>">
+              <%= t(:discount) %>
+            </a>
+          </li>
+
+          <%# Taxonomy.all.each do |taxm| %>
+
+              <li class="dropdown">
+                <%#= link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do %>
+                    <%#= taxm.name %> <b class="caret"></b>
+                <%# end %>
+                <ul class="dropdown-menu">
+                  <%# taxm.taxons.where('parent_id IS NULL').each do |taxon| %>
+                      <%#= raw draw_mobile_menu_tree(taxon) %>
+                  <%# end %>
+                </ul>
+              </li>
+          <%# end %>
+
+          <li class="menu-item">
+            <a href="<%= promotion_products_path('new') %>">
+              <%= t(:new_arrival) %>
+            </a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <%= t(:page) %> <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link_to t(:about_us), about_us_path, class: 'dropdown-toggle' %>
+              </li>
+              <li>
+                <%= link_to 'Customer Support', contact_us_path, class: 'dropdown-toggle' %>
+              </li>
+              <li>
+                <%= link_to 'Frequent Ask Question', faq_path, class: 'dropdown-toggle' %>
+              </li>
+              <li>
+                <%= link_to 'Secure Shopping', secure_shopping_path, class: 'dropdown-toggle' %>
+              </li>
+              <li>
+                <a href="/blogs">
+                  Our <%= t(:blog) %>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.btn-toggle-canvas').click(function () {
+            $('#page').find('.syftet-page-inner').toggleClass('active');
+        });
+
+        $('.dropdown-submenu b.caret').on("click", function (e) {
+            $(this).parent().next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+        //Cart Dropdown
+//        $(".dropdown-toggle").dropdown();
+    });
+</script>

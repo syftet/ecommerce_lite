@@ -1,0 +1,62 @@
+<div class="modal fade" id="subsciption-offer" tabindex="-1" role="dialog" aria-labelledby="modalLoginForm">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content reset-border-radius">
+      <%= link_to '', class: 'btn-cross pull-right', 'data-dismiss' => 'modal' do %>
+          x
+      <% end %>
+      <div class="modal-body pt30 pb45 pl30 pr25">
+        <div class="popupnewsletter-widget">
+          <div>
+            <div class="pnew-head">
+              <h3>
+                <span>10% Off Your First Order</span>
+              </h3>
+
+              <p class="description">
+                Sign up to our newsletter and get a welcome gift from us </p>
+            </div>
+            <%= form_for NewsletterSubscription.new, url: email_subscription_path, remote: true, html: {class: 'subscription-popup-form'} do |f| %>
+                <div class="form-fields">
+                  <div class="input-group">
+                    <%= f.email_field :email, class: 'form-control', placeholder: "#{t(:enter_your_email)}..." %>
+
+                    <span class="clearfix pull-right">
+                      <input type="submit" value="<%= t(:subscribe) %> +" class="btn">
+                    </span>
+                  </div>
+                </div>
+            <% end %>
+          </div>
+          <aside id="popup-socials-widget">
+            <ul class="social list-unstyled list-inline bo-sicolor">
+              <li>
+                <a href="https://www.facebook.com/lienesbeautyshop/" class="facebook">
+                  <i class="fa fa-facebook bo-social-facebook">&nbsp;</i>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/SyftetLtd" class="twitter">
+                  <i class="fa fa-twitter bo-social-twitter">&nbsp;</i>
+                </a>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        if (typeof $.cookie('hidemodal') == 'undefined') {
+            $('#subsciption-offer').modal({
+                backdrop: true,
+                keyboard: false
+            }).on('hidden.bs.modal', function () {
+                $.cookie('hidemodal', 1);
+            });
+        }
+    });
+</script>
+
