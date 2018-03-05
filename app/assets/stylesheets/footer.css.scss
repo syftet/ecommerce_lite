@@ -17,7 +17,7 @@ footer {
 
   .syftet-footer-profile {
     .news-letter-wrapper {
-      background: image-url('bg-newletter.jpg') top left/cover no-repeat scroll;
+      background: asset-url('bg-newletter.jpg') top left/cover no-repeat scroll;
       display: flex;
     }
     .join-our-email-section {
