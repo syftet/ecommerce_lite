@@ -1,54 +1,82 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Lienesbeauty | UK Product</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag 'favicon.png' %>
-  <%= stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track' => 'reload' %>
-  <%= javascript_include_tag 'admin', 'data-turbolinks-track' => 'reload' %>
-  <%= render 'shared/header' %>
+<html lang="<%= I18n.locale %>">
+<head data-hook="admin_inside_head">
+  <%= render partial: 'admin/shared/head' %>
   <meta name="turbolinks-cache-control" content="no-cache">
 </head>
 
-<body>
-<div id="page">
-  <%= render 'shared/notification' %>
-  <%= render 'shared/custom_flash' %>
-  <%= render 'shared/subscription_popup' %>
-  <div class="syftet-page-inner row-offcanvas row-offcanvas-left">
-    <div class="top-nav">
-      <div class="container">
-        <%= render 'shared/top_nav' %>
-      </div>
-    </div>
-    <%= render 'shared/main_menu' %>
-    <%= yield :slider %>
-    <div class="container">
-      <%= yield %>
-    </div>
-    <%= render 'products/compare_modal' %>
-    <footer id="syftet-footer" class="syftet-footer" role="contentinfo">
-      <%= render 'shared/footer' %>
-      <%= render 'shared/public_footer' %>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110543805-1"></script>
-      <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag() {
-              dataLayer.push(arguments)
-          }
-          gtag('js', new Date());
+<body class="admin">
 
-          gtag('config', 'UA-110543805-1');
-      </script>
-    </footer>
+<%#-------------------------------------------------%>
+<%# Loading progress bars                           %>
+<%#-------------------------------------------------%>
+<div id="progress">
+  <div class="alert alert-info alert-progress">
+    <div class="spinner"><%= t(:loading) %>...</div>
+    <div class="progress-message"><%= t(:loading) %>...</div>
   </div>
 </div>
-<a onclick="topFunction()" id="btn-scroll-top" title="Go to top">
-  <i class="fa fa-angle-up fa-2x"></i>
-</a>
-<a id="btn-contact-top" href="<%= contact_us_path %>" title="Contact us">
-  <i class="fa fa-envelope"></i>
-</a>
+
+<%#-------------------------------------------------%>
+<%# Header navbar                                   %>
+<%#-------------------------------------------------%>
+<%= render partial: 'admin/shared/header' %>
+
+<%#-------------------------------------------------%>
+<%# Main content                                    %>
+<%#-------------------------------------------------%>
+<div id="wrapper" class="container-fluid <%= wrapper_classes %>">
+  <div class="row">
+
+    <%#-------------------------------------------------%>
+    <%# Sidebar                                         %>
+    <%#-------------------------------------------------%>
+    <div class="col-sm-3 col-md-2 hidden-xs sidebar" id="main-sidebar" data-hook="admin_tabs">
+      <%= render partial: 'admin/shared/main_menu' %>
+    </div>
+
+    <%#-------------------------------------------------%>
+    <%# Content                                         %>
+    <%#-------------------------------------------------%>
+    <div class="<%= main_part_classes %> main" id="main-part">
+
+      <%#-------------------------------------------------%>
+      <%# Content header (page title/actions)             %>
+      <%#-------------------------------------------------%>
+      <%= render partial: 'admin/shared/content_header' %>
+
+      <div class="row">
+        <%#-------------------------------------------------%>
+        <%# Alerts                                          %>
+        <%#-------------------------------------------------%>
+        <%#= flash_alert(flash) %>
+
+        <%#-------------------------------------------------%>
+        <%# Main content                                    %>
+        <%#-------------------------------------------------%>
+        <div class="<%= content_for?(:sidebar) ? 'with-sidebar col-md-9 col-sm-8' : 'col-sm-12' %>" id="content" data-hook>
+          <%#= render partial: 'admin/shared/table_filter' if content_for?(:table_filter) %>
+          <%= yield %>
+        </div>
+
+        <%#-------------------------------------------------%>
+        <%# Inner aside                                     %>
+        <%#-------------------------------------------------%>
+        <% if content_for?(:sidebar) %>
+            <div class="col-md-3 col-sm-4">
+              <%= render partial: 'admin/shared/sidebar' %>
+            </div>
+        <% end %>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<%#-------------------------------------------------%>
+<%# Insert footer scripts here                      %>
+<%#-------------------------------------------------%>
+<div data-hook="admin_footer_scripts"></div>
 </body>
 </html>
