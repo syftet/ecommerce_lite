@@ -1,4 +1,4 @@
-<% admin = current_user.try(:has_role?, "admin") %>
+<% admin = current_user.admin? %>
 
 <header class="header <%= admin ? "logged-in" : "logged-out" %>">
 
@@ -11,10 +11,8 @@
           <% end %>
 
           <% if admin %>
-            <span class="navbar-toggle" id="sidebar-toggle">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
+            <span id="sidebar-toggle">
+              <i class="fa fa-bars"></i>
             </span>
           <% end %>
         </div>

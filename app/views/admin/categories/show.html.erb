@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @admin_category.name %>
+</p>
+
+<p>
+  <strong>Slug:</strong>
+  <%= @admin_category.slug %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @admin_category.description %>
+</p>
+
+<p>
+  <strong>Parmalink:</strong>
+  <%= @admin_category.permalink %>
+</p>
+
+<p>
+  <strong>Meta title:</strong>
+  <%= @admin_category.meta_title %>
+</p>
+
+<p>
+  <strong>Meta desc:</strong>
+  <%= @admin_category.meta_desc %>
+</p>
+
+<p>
+  <strong>Keywords:</strong>
+  <%= @admin_category.keywords %>
+</p>
+
+<p>
+  <strong>Parent:</strong>
+  <%= @admin_category.parent_id %>
+</p>
+
+<%= link_to 'Edit', edit_admin_category_path(@admin_category) %> |
+<%= link_to 'Back', admin_categories_path %>

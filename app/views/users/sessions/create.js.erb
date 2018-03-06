@@ -1,0 +1,5 @@
+<% if @error.present? %>
+popupMessage("<%= @error %>", 'alert alert-danger');
+<%else%>
+  location.reload();
+<%end%>

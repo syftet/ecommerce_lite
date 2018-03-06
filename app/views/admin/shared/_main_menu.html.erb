@@ -1,5 +1,10 @@
 <ul class="nav nav-sidebar">
-  <%#= main_menu_tree t(:returns), icon: "transfer", sub_menu: "returns", url: "#sidebar-returns" %>
+  <li class="sidebar-menu-item">
+    <%= link_to admin_categories_path do %>
+        <i class="fa fa-times"> </i>
+        <span class="text"> Categories </span>
+    <% end %>
+  </li>
 </ul>
 
 

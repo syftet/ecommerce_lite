@@ -13,9 +13,16 @@
  *= require_tree .
  *= require_self
  */
+@import 'page_header';
+@import 'sidebar';
+@import 'spinner';
+@import 'tables';
+@import 'bootstrap_overwrites';
+@import 'pages';
 
 #main-part {
   padding: 15px 35px 0;
+  top: 52px;
   &.sidebar-collapsed {
     padding-left: 85px;
   }
@@ -24,4 +31,32 @@
 #logo {
   width: auto;
   height: 20px;
+}
+
+.navbar-inverse {
+  background-color: #162e40;
+  border-color: #09131a;
+}
+
+.navbar-fixed-top {
+  top: 0;
+  border-width: 0 0 1px;
+}
+
+#progress {
+  display: none;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 1001;
+}
+
+.public-header {
+  color: #555555;
+  margin: 0 0 10px 0;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 0 0 10px 0;
+  border-bottom: solid 1px #efefef;
 }

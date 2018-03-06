@@ -1,0 +1,13 @@
+<div class="form-actions">
+  <button name="button" type="submit" class="btn btn-primary btn-success">
+    <i class="fa fa-check"></i>
+    <%= record.new_record? ? 'Create' : 'Update' %>
+  </button>
+
+  <span class="or">or</span>
+
+  <a icon="remove" class="btn btn-default" href="<%= cancel %>">
+    <i class="fa fa-times"></i>
+    Cancel
+  </a>
+</div>

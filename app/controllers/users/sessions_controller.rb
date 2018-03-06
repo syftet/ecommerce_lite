@@ -1,6 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
-  include Core::ControllerHelpers::StoreHelper
-  include Core::ControllerHelpers::OrderHelper
+  # include Core::ControllerHelpers::StoreHelper
+  # include Core::ControllerHelpers::OrderHelper
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
