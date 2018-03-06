@@ -36,6 +36,8 @@ gem 'devise'
 gem "cancan"
 gem 'friendly_id', '~> 5.1.0'
 
+gem 'bootstrap-sass', '~> 3.3.6'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
