@@ -1,44 +1,29 @@
-<p id="notice"><%= notice %></p>
+<h1 class="public-header clearfix">
+  <a href="javascript: history.back();">
+    <i class="fa fa-angle-double-left"></i>
+  </a>
+  Category: <%= @admin_category.name %>
+  <%= link_to new_admin_category_path(parent_id: @admin_category.id), class: 'btn btn-default pull-right' do %>
+      <i class="fa fa-plus"></i> Sub Category
+  <% end %>
+</h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @admin_category.name %>
-</p>
+<div class="gsc-result-info">
+  <div class="gs-result">
+    <h3 class="gs-title">
+      <%= link_to "#{@admin_category.name} - #{@admin_category.meta_title}", admin_category_path(@admin_category) %>
+    </h3>
+    <%= link_to get_page_url(@admin_category.permalink), get_page_url(@admin_category.permalink), class: 'gs-visibleUrl' %>
+    <div class="gs-snippet">
+      <span> <%= @admin_category.created_at.strftime('%b %d, %Y') %> </span> -
+      <span class="text">
+        <%= @admin_category.meta_desc %>
+      </span>
+    </div>
+  </div>
+</div>
 
-<p>
-  <strong>Slug:</strong>
-  <%= @admin_category.slug %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @admin_category.description %>
-</p>
-
-<p>
-  <strong>Parmalink:</strong>
-  <%= @admin_category.permalink %>
-</p>
-
-<p>
-  <strong>Meta title:</strong>
-  <%= @admin_category.meta_title %>
-</p>
-
-<p>
-  <strong>Meta desc:</strong>
-  <%= @admin_category.meta_desc %>
-</p>
-
-<p>
-  <strong>Keywords:</strong>
-  <%= @admin_category.keywords %>
-</p>
-
-<p>
-  <strong>Parent:</strong>
-  <%= @admin_category.parent_id %>
-</p>
-
-<%= link_to 'Edit', edit_admin_category_path(@admin_category) %> |
-<%= link_to 'Back', admin_categories_path %>
+<h1 class="public-header"> Sub Categories of this current category </h1>
+<div class="sub-category-wrappers">
+  <%= render 'sub_category', subcategories: @admin_category.sub_categories, deep: false if @admin_category.sub_categories.present? %>
+</div>

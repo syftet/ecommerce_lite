@@ -43,6 +43,7 @@
       <%= form.label :keywords, 'Keywords(For SEO)' %>
       <%= form.text_area :keywords, id: :admin_category_keywords, class: 'form-control' %>
     </div>
+    <%= form.hidden_field :parent_id %>
 
     <%= render 'admin/shared/form_actions', cancel: admin_categories_path, record: form.object %>
 <% end %>

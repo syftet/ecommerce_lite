@@ -4,7 +4,7 @@ class Admin::Category < ApplicationRecord
 
   after_save :set_permalink
 
-  has_many :sub_categories, class_name: 'Admin::Category', foreign_key: 'parent_id', inverse_of: :sub_categories
+  has_many :sub_categories, class_name: 'Admin::Category', foreign_key: 'parent_id', dependent: :destroy
   belongs_to :category, class_name: 'Admin::Category', foreign_key: 'parent_id', required: false
 
   private

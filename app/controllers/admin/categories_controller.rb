@@ -5,7 +5,7 @@ module Admin
     # GET /admin/categories
     # GET /admin/categories.json
     def index
-      @admin_categories = Admin::Category.all
+      @admin_categories = Admin::Category.where("parent_id IS NULL")
     end
 
     # GET /admin/categories/1
@@ -15,7 +15,7 @@ module Admin
 
     # GET /admin/categories/new
     def new
-      @admin_category = Admin::Category.new
+      @admin_category = Admin::Category.new({parent_id: params[:parent_id]})
     end
 
     # GET /admin/categories/1/edit

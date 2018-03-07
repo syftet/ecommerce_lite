@@ -1,0 +1,22 @@
+<ul>
+  <% subcategories.each do |sub| %>
+      <li>
+        <% unless deep %>
+            <i class="fa fa-long-arrow-down"></i>
+        <% end %>
+        <%= link_to sub.name, admin_category_path(sub.name) %>
+        <div class="actions">
+          <%= link_to new_admin_category_path(parent_id: sub.id), title: 'Add category under this category', :class => 'btn btn-default btn-xs' do %>
+              <i class='fa fa-plus'></i>
+          <% end %>
+          <%= link_to edit_admin_category_path(sub), title: 'Edit this category', :class => 'btn btn-warning btn-xs' do %>
+              <i class='fa fa-pencil'></i>
+          <% end %>
+          <%= link_to admin_category_path(sub), title: 'Delete this category', :method => 'delete', :class => "btn btn-danger btn-xs", data: {confirm: 'Are you sure? Sub category of this category also be deleted'} do %>
+              <i class='fa fa-trash'></i>
+          <% end %>
+        </div>
+        <%= render 'sub_category', subcategories: sub.sub_categories, deep: true if sub.sub_categories.present? %>
+      </li>
+  <% end %>
+</ul>
