@@ -1,0 +1,59 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  name: MyString
+  description: MyText
+  origin: MyString
+  slug: MyString
+  meta_title: MyString
+  meta_desc: MyText
+  keywords: MyString
+  brand_id: 1
+  is_featured: false
+  is_active: false
+  deleted_at: 2018-03-07 16:53:22
+  product_id: 1
+  sale_price: 1.5
+  cost_price: 1.5
+  whole_sale: 1.5
+  color_name: MyString
+  color: MyString
+  size: MyString
+  weight: MyString
+  width: MyString
+  height: MyString
+  depth: MyString
+  promotionable: false
+  is_amount: false
+  discount: 1.5
+  reward_point: 1.5
+
+two:
+  code: MyString
+  name: MyString
+  description: MyText
+  origin: MyString
+  slug: MyString
+  meta_title: MyString
+  meta_desc: MyText
+  keywords: MyString
+  brand_id: 1
+  is_featured: false
+  is_active: false
+  deleted_at: 2018-03-07 16:53:22
+  product_id: 1
+  sale_price: 1.5
+  cost_price: 1.5
+  whole_sale: 1.5
+  color_name: MyString
+  color: MyString
+  size: MyString
+  weight: MyString
+  width: MyString
+  height: MyString
+  depth: MyString
+  promotionable: false
+  is_amount: false
+  discount: 1.5
+  reward_point: 1.5

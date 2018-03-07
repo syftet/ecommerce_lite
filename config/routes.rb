@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
     resources :categories
+    resources :brands
+    resources :products
   end
   get '/admin', to: 'admin/dashboard#index', as: :admin
 

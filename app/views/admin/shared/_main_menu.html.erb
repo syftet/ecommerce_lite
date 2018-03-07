@@ -8,11 +8,20 @@
     </ul>
 <% end %>
 
+<% if can? :admin, User %>
+    <ul class="nav nav-sidebar">
+      <%= main_menu_item('Products', admin_products_path, 'product') %>
+    </ul>
+<% end %>
+
+<% if can? :admin, Brand %>
+    <ul class="nav nav-sidebar">
+      <%= main_menu_item('Brands', admin_brands_path, 'brand') %>
+    </ul>
+<% end %>
+
 <%# if can? :admin, Product %>
 <ul class="nav nav-sidebar">
-  <li class="sidebar-menu-item">
-    <a href="#"> Products </a>
-  </li>
   <%#= main_menu_tree t(:products), icon: "th-large", sub_menu: "product", url: "#sidebar-product" %>
 </ul>
 <%# end %>
