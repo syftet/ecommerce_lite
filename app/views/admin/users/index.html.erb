@@ -1,1 +1,26 @@
-<h1> USer List Here </h1>
+<h1 class="public-header">User Listing</h1>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Type</th>
+    <th>PURCHASED</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+  <% @users.each do |user| %>
+      <tr>
+        <td> <%= user.email %> </td>
+        <td> <%= user.email %> </td>
+        <td> N/A</td>
+        <td> 0</td>
+      </tr>
+  <% end %>
+  <tbody>
+
+  </tbody>
+</table>
+
+<%= link_to 'Add New User', new_admin_user_path, class: 'btn btn-info' %>

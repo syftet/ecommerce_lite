@@ -1,15 +1,18 @@
 <ul class="nav nav-sidebar">
-  <li class="sidebar-menu-item">
-    <%= link_to admin_categories_path do %>
-        <i class="fa fa-times"> </i>
-        <span class="text"> Categories </span>
-    <% end %>
-  </li>
+  <%= main_menu_item('Categories', admin_categories_path, 'list') %>
 </ul>
 
+<% if can? :admin, User %>
+    <ul class="nav nav-sidebar">
+      <%= main_menu_item('Users', admin_users_path, 'user') %>
+    </ul>
+<% end %>
 
 <%# if can? :admin, Product %>
 <ul class="nav nav-sidebar">
+  <li class="sidebar-menu-item">
+    <a href="#"> Products </a>
+  </li>
   <%#= main_menu_tree t(:products), icon: "th-large", sub_menu: "product", url: "#sidebar-product" %>
 </ul>
 <%# end %>

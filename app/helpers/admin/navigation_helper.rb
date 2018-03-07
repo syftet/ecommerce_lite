@@ -52,11 +52,13 @@ module Admin
     end
 
     # Single main menu item
-    def main_menu_item text, url: nil, icon: nil
-      link_to url, :'data-toggle' => "collapse", :'data-parent' => '#sidebar' do
-        content_tag(:span, nil, class: "icon icon-#{icon}") +
-            content_tag(:span, " #{text}", class: 'text') +
-            content_tag(:span, nil, class: "icon icon-chevron-left pull-right")
+    def main_menu_item(text, url = nil, icon = nil)
+      content_tag :li, class: 'sidebar-menu-item' do
+        link_to url do
+          content_tag(:span, nil, class: "icon icon-#{icon}") +
+              content_tag(:i, nil, class: "fa fa-#{icon}") +
+              content_tag(:span, text, class: 'text')
+        end
       end
     end
 

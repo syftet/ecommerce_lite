@@ -9,6 +9,10 @@ module Admin
       end
     end
 
+    def new
+      
+    end
+
     def show
       redirect_to edit_admin_user_path(@user)
     end
@@ -16,7 +20,7 @@ module Admin
     def create
       @user = User.new(user_params)
       if @user.save
-        flash.now[:success] = flash_message_for(@user, :successfully_created)
+        flash.now[:success] = 'User has been successfully created'
         render :edit
       else
         render :new

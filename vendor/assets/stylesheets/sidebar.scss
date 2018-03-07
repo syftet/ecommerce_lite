@@ -77,6 +77,13 @@
   }
 }
 
+.sidebar-menu-item {
+  .text {
+    margin-left: 10px;
+    display: inline-block;
+  }
+}
+
 #wrapper.sidebar-minimized #main-sidebar {
   width: 50px;
   overflow: visible;
