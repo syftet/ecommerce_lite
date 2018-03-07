@@ -1,3 +1,8 @@
-<h1 class="public-header">New Admin Category</h1>
+<h1 class="public-header">
+  <% if @admin_category.category.present? %>
+      <%= link_to @admin_category.category.name, admin_categories_path(@admin_category.category) %> /
+  <% end %>
+  Add New Category
+</h1>
 
 <%= render 'form', admin_category: @admin_category %>
