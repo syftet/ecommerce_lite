@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180306130427) do
+ActiveRecord::Schema.define(version: 20180307121318) do
+
+  create_table "admin_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "slug"
+    t.text "description"
+    t.string "permalink"
+    t.string "meta_title"
+    t.string "meta_desc"
+    t.string "keywords"
+    t.boolean "is_active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "admin_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -53,6 +66,48 @@ ActiveRecord::Schema.define(version: 20180306130427) do
     t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "product_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "product_id"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_product_categories_on_category_id"
+    t.index ["product_id"], name: "index_product_categories_on_product_id"
+  end
+
+  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "code", null: false
+    t.string "name"
+    t.text "description"
+    t.string "origin"
+    t.string "slug"
+    t.string "meta_title"
+    t.text "meta_desc"
+    t.string "keywords"
+    t.bigint "brand_id"
+    t.boolean "is_featured", default: false, null: false
+    t.boolean "is_active", default: true, null: false
+    t.datetime "deleted_at"
+    t.integer "product_id"
+    t.float "sale_price", limit: 53, default: 0.0, null: false
+    t.float "cost_price", limit: 53, default: 0.0, null: false
+    t.float "whole_sale", limit: 53, default: 0.0, null: false
+    t.string "color_name"
+    t.string "color"
+    t.string "size"
+    t.string "weight"
+    t.string "width"
+    t.string "height"
+    t.string "depth"
+    t.boolean "discountable", default: false
+    t.boolean "is_amount", default: false
+    t.float "discount", limit: 53, default: 0.0, null: false
+    t.float "reward_point", limit: 53, default: 0.0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_id"], name: "index_products_on_brand_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

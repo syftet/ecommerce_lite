@@ -1,10 +1,7 @@
 <ul class="nav nav-sidebar">
-  <li class="sidebar-menu-item">
-    <%= link_to admin_categories_path do %>
-        <i class="fa fa-times"> </i>
-        <span class="text"> Categories </span>
-    <% end %>
-  </li>
+  <%= set_sidebar_menu admin_categories_path, 'indent', 'Categories' %>
+  <%= set_sidebar_menu admin_brands_path, 'bandcamp', 'Brands' %>
+  <%= set_sidebar_menu admin_products_path, 'product-hunt', 'Products' %>
 </ul>
 
 

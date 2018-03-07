@@ -1,0 +1,21 @@
+<h1 class="public-header clearfix">
+  <a href="javascript: history.back();">
+    <i class="fa fa-angle-double-left"></i>
+  </a>
+  Brand: <%= @admin_brand.name %>
+</h1>
+
+<div class="gsc-result-info">
+  <div class="gs-result">
+    <h3 class="gs-title">
+      <%= link_to "#{@admin_brand.name} - #{@admin_brand.meta_title}", admin_brand_path(@admin_brand) %>
+    </h3>
+    <%= link_to get_brand_url(@admin_brand.permalink), get_brand_url(@admin_brand.permalink), class: 'gs-visibleUrl' %>
+    <div class="gs-snippet">
+      <span> <%= @admin_brand.created_at.strftime('%b %d, %Y') %> </span> -
+      <span class="text">
+        <%= @admin_brand.meta_desc %>
+      </span>
+    </div>
+  </div>
+</div>

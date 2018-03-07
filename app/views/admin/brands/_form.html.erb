@@ -1,0 +1,55 @@
+<%= form_with(model: admin_brand, local: true) do |form| %>
+  <% if admin_brand.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(admin_brand.errors.count, "error") %> prohibited this admin_brand from being
+        saved:</h2>
+
+      <ul>
+        <% admin_brand.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :admin_brand_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group field">
+    <%= form.label :description %>
+    <%= form.text_area :description, id: :admin_brand_description, class: 'form-control' %>
+  </div>
+
+  <% unless form.object.new_record? %>
+    <div class="form-group field">
+      <%= form.label :permalink %>
+      <%= form.text_field :permalink, id: :admin_brand_permalink, class: 'form-control' %>
+    </div>
+  <% end %>
+
+  <div class="form-group field">
+    <%= form.label :meta_title, 'Meta Title(For SEO)' %>
+    <%= form.text_field :meta_title, id: :admin_brand_meta_title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group field">
+    <%= form.label :meta_desc, 'Meta Description(For SEO)' %>
+    <%= form.text_area :meta_desc, id: :admin_brand_meta_desc, class: 'form-control' %>
+  </div>
+
+  <div class="form-group field">
+    <%= form.label :keywords, 'Keywords(For SEO)' %>
+    <%= form.text_area :keywords, id: :admin_brand_keywords, class: 'form-control' %>
+  </div>
+
+  <div class="checkbox" data-hook="stock_location_active">
+    <%= label_tag :is_active, for: :admin_brand_is_active do %>
+      <%= form.check_box :is_active, id: :admin_brand_is_active %>
+      <%= t(:active) %>
+    <% end %>
+  </div>
+
+  <%= render 'admin/shared/form_actions', cancel: admin_brands_path, record: form.object %>
+<% end %>
