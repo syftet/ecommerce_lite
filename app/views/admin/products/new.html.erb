@@ -1,5 +1,62 @@
-<h1 class="public-header">
+<% content_for :page_title do %>
   Add New Product
-</h1>
+<% end %>
 
-<%= render 'form', product: @product %>
+<%= form_for [:admin, @product] do |form| %>
+  <% if @product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being
+        saved:</h2>
+
+      <ul>
+        <% @product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group field">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group field">
+        <%= form.label :code %>
+        <%= form.text_field :code, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group field">
+        <%= form.label :cost_price %>
+        <%= form.text_field :cost_price, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group field">
+        <%= form.label :sale_price %>
+        <%= form.text_field :sale_price, class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="checkbox" data-hook="stock_location_active">
+        <%= label_tag :is_active, for: :product_is_active do %>
+          <%= form.check_box :is_active, id: :product_is_active %>
+          <%= t(:active) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%= render 'admin/shared/form_actions', cancel: admin_products_path, record: form.object %>
+<% end %>
+
+<script type="text/javascript">
+  $(function () {
+  });
+</script>

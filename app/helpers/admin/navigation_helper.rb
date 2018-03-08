@@ -14,11 +14,6 @@ module Admin
     # Example:
     #   # Link to /admin/orders, also highlight tab for ProductsController and ShipmentsController
     #   tab :orders, :products, :shipments
-    def set_sidebar_menu(path, icon = nil, text = nil)
-      render partial: 'admin/shared/sidebar_menu_item',
-             locals: { link_to_path: path, icon_name: icon, link_text: text }
-    end
-
     def tab(*args)
       options = {label: args.first.to_s}
 

@@ -8,13 +8,13 @@
     </ul>
 <% end %>
 
-<% if can? :admin, User %>
+<% if can? :admin, Product %>
     <ul class="nav nav-sidebar">
       <%= main_menu_item('Products', admin_products_path, 'product') %>
     </ul>
 <% end %>
 
-<% if can? :admin, Brand %>
+<% if can? :admin, Admin::Brand %>
     <ul class="nav nav-sidebar">
       <%= main_menu_item('Brands', admin_brands_path, 'brand') %>
     </ul>

@@ -21,7 +21,9 @@ Rails.application.routes.draw do
     resources :users
     resources :categories
     resources :brands
-    resources :products
+    resources :products do
+      resources :variants
+    end
   end
   get '/admin', to: 'admin/dashboard#index', as: :admin
 

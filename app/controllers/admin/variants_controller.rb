@@ -1,23 +1,20 @@
 module Admin
-  class ProductsController < BaseController
-    before_action :set_product, only: [:show, :edit, :update, :destroy]
-
-    def index
-      @products = Product.active
-    end
+  class VariantsController < BaseController
+    before_action :set_product
+    before_action :set_variant, only: [:show, :edit, :update, :destroy]
 
     def show
     end
 
     def new
-      @product = Product.new(code: "P00#{Product.all.count + 1}")
+      @variant = @product.variants.build(code: "P00#{Product.all.count + 1}")
     end
 
     def create
-      @product = Product.new(product_params)
+      @variant = @product.variants.build(variant_params)
       respond_to do |format|
-        if @product.save
-          format.html { redirect_to edit_admin_product_path(@product), notice: 'Product created successfully.' }
+        if @variant.save
+          format.html { redirect_to admin_product_path(@product), notice: 'Variant added to product successfully.' }
         else
           format.html { render :new }
         end
@@ -29,8 +26,8 @@ module Admin
 
     def update
       respond_to do |format|
-        if @product.update(product_params)
-          format.html { redirect_to edit_admin_product_path(@product), notice: 'Product updated successfully.' }
+        if @variant.update(variant_params)
+          format.html { redirect_to admin_product_path(@product), notice: 'Variant updated successfully.' }
         else
           format.html { render :edit }
         end
@@ -38,21 +35,25 @@ module Admin
     end
 
     def destroy
-      if @product.destroy
-        flash[:notice] = 'Product deleted successfully.'
+      if @variant.destroy
+        flash[:notice] = 'Variant deleted successfully.'
       else
-        flash[:error] = 'Unable to deleted product.'
+        flash[:error] = 'Unable to deleted variant.'
       end
-      redirect_to admin_products_path
+      redirect_to admin_product_path(@product)
     end
 
     private
 
     def set_product
-      @product = Product.friendly.find(params[:id])
+      @product = Product.friendly.find(params[:product_id])
     end
 
-    def product_params
+    def set_variant
+      @variant = @product.variants.friendly.find(params[:id])
+    end
+
+    def variant_params
       params.require(:product).permit(:code, :name, :description, :origin,
                                       :slug, :meta_title, :meta_desc, :keywords,
                                       :brand_id, :is_featured, :is_active,
