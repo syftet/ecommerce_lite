@@ -1,0 +1,18 @@
+<% content_for :page_title do %>
+    <%= link_to t(:users), admin_users_url %> /
+    New User
+<% end %>
+
+<div data-hook="admin_user_new_form_header">
+  <%= render :partial => 'admin/shared/error_messages', :locals => {:target => @user} %>
+</div>
+
+<div data-hook="admin_user_new_form">
+  <%= form_for [:admin, @user], url: admin_users_url, method: :post do |f| %>
+      <%= render :partial => 'form', :locals => {:f => f} %>
+
+      <div data-hook="admin_user_new_form_buttons">
+        <%= render 'admin/shared/form_actions', record: f.object, cancel: admin_users_path %>
+      </div>
+  <% end %>
+</div>

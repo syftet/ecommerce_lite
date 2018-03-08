@@ -1,0 +1,33 @@
+<% if content_for?(:table_filter) %>
+    <div class="filter-wrap row">
+      <div class="col-sm-12">
+        <div class="input-group index-filter-button">
+        <span class="input-group-btn">
+          <button class="btn btn-default js-show-index-filters" type="button">
+            <span class="fa fa-angle-right"></span>
+            <span class="fa fa-angle-down"></span>
+            Filter
+          </button>
+        </span>
+          <%= form_tag request.fullpath, method: :get, id: "quick-search" do %>
+              <%= text_field_tag :quick_search, nil, class: "form-control js-quick-search", placeholder: 'Quick Search' %>
+          <% end %>
+        </div>
+        <% unless defined?(simple) %>
+            <div id="table-filter" data-hook class="well filter-well">
+              <%= yield :table_filter %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="table-active-filters js-filters">
+      <script type="text/javascript">
+          $(function () {
+              $('.js-show-index-filters').click(function () {
+                  $('.filter-wrap').toggleClass('collapsed');
+              });
+          });
+      </script>
+    </div>
+<% end %>

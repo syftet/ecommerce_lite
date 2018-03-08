@@ -8,10 +8,15 @@
               <p class="lead">Create New Account!</p>
 
               <div class="form-group">
+                <%= f.label :name %><br/>
+                <%= f.text_field :name, autofocus: true, class: 'required custom-form-control form-control reset-border-radius', required: true %>
+              </div>
+
+              <div class="form-group">
                 <%= f.label :email %><br/>
                 <%= f.email_field :email, autofocus: true, class: 'required custom-form-control form-control reset-border-radius' %>
               </div>
-              
+
 
               <div class="form-group">
                 <%= f.label :password %>
@@ -72,12 +77,12 @@
 
 <%#= render "users/shared/links" %>
 <script type="text/javascript">
-  $(document).on('turbolinks:load', function () {
-    $(function () {
-      $('.login-forgot-password').click(function () {
-        $('#modalLoginForm').modal();
-        $('#opalloginform').addClass('hidden');
-      });
+    $(document).on('turbolinks:load', function () {
+        $(function () {
+            $('.login-forgot-password').click(function () {
+                $('#modalLoginForm').modal();
+                $('#opalloginform').addClass('hidden');
+            });
+        });
     });
-  });
 </script>

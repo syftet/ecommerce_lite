@@ -47,15 +47,10 @@
 
       <div class="row">
         <%#-------------------------------------------------%>
-        <%# Alerts                                          %>
-        <%#-------------------------------------------------%>
-        <%#= flash_alert(flash) %>
-
-        <%#-------------------------------------------------%>
         <%# Main content                                    %>
         <%#-------------------------------------------------%>
         <div class="<%= content_for?(:sidebar) ? 'with-sidebar col-md-9 col-sm-8' : 'col-sm-12' %>" id="content" data-hook>
-          <%#= render partial: 'admin/shared/table_filter' if content_for?(:table_filter) %>
+          <%= render partial: 'admin/shared/table_filter' if content_for?(:table_filter) %>
           <%= yield %>
         </div>
 

@@ -1,8 +1,10 @@
 module Admin
   class UsersController < BaseController
+    before_action :set_user, only: [:show, :edit]
 
     def index
       @users = User.all
+      @search = User.new
       respond_to do |format|
         format.html
         format.json { render :json => json_data }
@@ -10,7 +12,11 @@ module Admin
     end
 
     def new
-      
+      @user = User.new
+    end
+
+    def edit
+
     end
 
     def show
@@ -115,10 +121,11 @@ module Admin
     private
 
     def user_params
-      params.require(:user).permit(permitted_user_attributes |
-                                       [role_user_ids: [],
-                                        ship_address_attributes: permitted_address_attributes,
-                                        bill_address_attributes: permitted_address_attributes])
+      params.require(:user).permit!
+    end
+
+    def set_user
+      @user = User.find_by_id(params[:id])
     end
 
     # handling raise from Admin::ResourceController#destroy
