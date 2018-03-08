@@ -35,8 +35,14 @@
 
   <div class="col-sm-12">
     <div data-hook="admin_user_form_roles" class="form-group">
-      <strong> Role </strong>
-
+      <div class="form-group">
+        <strong> Role </strong>
+      </div>
+      <% User::ROLES.each do |role| %>
+          <label>
+            <%= f.radio_button :role, role %> <%= role.camelize %>
+          </label>
+      <% end %>
     </div>
   </div>
 </div>

@@ -1,0 +1,6 @@
+<% content_for :page_title do %>
+    <%= link_to t(:sliders), admin_home_sliders_path %> /
+    <%= t(:new_slider) %>
+<% end %>
+
+<%= render 'admin/home_sliders/form' %>

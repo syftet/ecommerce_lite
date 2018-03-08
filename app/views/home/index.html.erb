@@ -1,0 +1,98 @@
+<% content_for :slider do %>
+    <%= render 'shared/top_slider' %>
+<% end %>
+<%= render 'top_category_promo' %>
+
+<section class="featured-products">
+  <h3 class="title public-title">
+    <%= t(:featured_products) %>
+  </h3>
+
+  <div class="product-lists clearfix">
+    <% @featured_products.each do |product| %>
+        <div class="product-wrapper product col-sm-6 col-md-3">
+          <%= render 'products/product', product: product %>
+        </div>
+    <% end %>
+  </div>
+  <div class="view-more-products">
+    <%= link_to '#', class: 'btn-more' do %>
+        <%= t(:view_more) %> <i class="fa fa-plus"></i>
+    <% end %>
+  </div>
+</section>
+
+
+<section class="row featured-banner">
+  <div class="hidden-xs">
+    <div class="col-sm-12">
+      <div class="col-sm-12">
+        <div class="effect-v3">
+          <a href="#" title="">
+            <img src="http://venusdemo.com/wordpress/pi/wp-content/uploads/2017/02/banner4.jpg" class="slider-image-fluid" alt="banner">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="we-love-landing clearfix">
+  <div class="col-sm-12">
+    <div class="wrapper clearfix">
+      <div class="col-sm-6">
+        <div class="col-inner-container row">
+          <div class="call-to-action">
+            <div class="cta-desc">
+              <h2>we love bags</h2>
+
+              <div class="cta-text">A professional-looking tote for your everyday needs! This Wilsons Leather
+                tote has a canvas look with genuine leather trim and a structured silhouette. Its shiny gold-tone
+                hardware and two-tone design give it extra fashionable flair.
+              </div>
+            </div>
+            <div class="cta-button">
+              <a href="#">
+                discover <i class="fa fa-plus"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="single-image-fluid effect-v1">
+            <a href="#" title="" target="_self">
+              <img src="http://venusdemo.com/wordpress/pi/wp-content/uploads/2017/06/banner5.jpg" class="single-image-fluid" alt="banner">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%= render 'home/new_arrival' %>
+
+<section class="from-our-blog row">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box-shadow-v1">
+        <div class="title-wrap">
+          <h3 class="public-title">
+            <%= t(:from_our_blog) %>
+          </h3>
+        </div>
+
+        <div class="blog-post" id="post-lists">
+          <% @blogs.each do |blog| %>
+              <%= render 'post', blog: blog %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%= render 'testimonial' %>

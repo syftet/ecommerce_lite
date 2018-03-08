@@ -1,0 +1,17 @@
+<div class="top-slider">
+  <% @sliders.each do |slider| %>
+      <div class="slider-item">
+        <%= image_tag(slider.image_url, class: 'img-fluid slider-image-fluid') %>
+      </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+    $(document).on('turbolinks:load', function () {
+        $('.top-slider').slick({
+            dots: !0,
+            autoplay: true,
+            infinite: true
+        });
+    });
+</script>

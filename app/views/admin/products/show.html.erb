@@ -2,20 +2,28 @@
   <a href="javascript: history.back();">
     <i class="fa fa-angle-double-left"></i>
   </a>
-  Brand: <%= @admin_brand.name %>
+  Product: <%= @product.name %>
+  <%= link_to new_admin_product_variant_path(@product), class: 'btn btn-default pull-right' do %>
+    <i class="fa fa-plus"></i> Add Variant
+  <% end %>
 </h1>
 
 <div class="gsc-result-info">
   <div class="gs-result">
     <h3 class="gs-title">
-      <%= link_to "#{@admin_brand.name} - #{@admin_brand.meta_title}", admin_brand_path(@admin_brand) %>
+      <%= link_to "#{@product.name} - #{@product.meta_title}", admin_product_path(@product) %>
     </h3>
-    <%= link_to get_brand_url(@admin_brand.permalink), get_brand_url(@admin_brand.permalink), class: 'gs-visibleUrl' %>
+    <%#= link_to get_page_url(@admin_category.permalink), get_page_url(@admin_category.permalink), class: 'gs-visibleUrl' %>
     <div class="gs-snippet">
-      <span> <%= @admin_brand.created_at.strftime('%b %d, %Y') %> </span> -
+      <span> <%= @product.created_at.strftime('%b %d, %Y') %> </span> -
       <span class="text">
-        <%= @admin_brand.meta_desc %>
+        <%= @product.meta_desc %>
       </span>
     </div>
   </div>
+</div>
+
+<h1 class="public-header"> Variants of <%= @product.name %> </h1>
+<div class="sub-category-wrappers">
+  <%= render 'admin/products/variants', variants: @product.variants %>
 </div>

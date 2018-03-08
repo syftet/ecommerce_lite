@@ -1,10 +1,9 @@
 module Admin
   class UsersController < BaseController
-    before_action :set_user, only: [:show, :edit]
+    before_action :set_user, only: [:show, :edit, :update]
 
     def index
-      @users = User.all
-      @search = User.new
+      @users = collection
       respond_to do |format|
         format.html
         format.json { render :json => json_data }
@@ -60,7 +59,6 @@ module Admin
         if @user.update_attributes(user_params)
           flash.now[:success] = t(:account_updated)
         end
-
         render :addresses
       end
     end
@@ -69,53 +67,6 @@ module Admin
       params[:q] ||= {}
       @search = Order.reverse_chronological.ransack(params[:q].merge(user_id_eq: @user.id))
       @orders = @search.result.page(params[:page]).per(Syftet.config.admin_products_per_page)
-    end
-
-    def items
-      params[:q] ||= {}
-      @search = Order.includes(
-          line_items: {
-              variant: [:product, {option_values: :option_type}]
-          }).ransack(params[:q].merge(user_id_eq: @user.id))
-      @orders = @search.result.page(params[:page]).per(Syftet.config.admin_products_per_page)
-    end
-
-    def generate_api_key
-      if @user.generate_syftet_api_key!
-        flash[:success] = t('api.key_generated')
-      end
-      redirect_to edit_admin_user_path(@user)
-    end
-
-    def clear_api_key
-      if @user.clear_spree_api_key!
-        flash[:success] = Spree.t('api.key_cleared')
-      end
-      redirect_to edit_admin_user_path(@user)
-    end
-
-    def model_class
-      User
-    end
-
-    protected
-
-    def collection
-      return @collection if @collection.present?
-      @collection = super
-      if request.xhr? && params[:q].present?
-        @collection = @collection.includes(:bill_address, :ship_address)
-                          .where("spree_users.email #{LIKE} :search
-                                     OR (spree_addresses.firstname #{LIKE} :search AND spree_addresses.id = spree_users.bill_address_id)
-                                     OR (spree_addresses.lastname  #{LIKE} :search AND spree_addresses.id = spree_users.bill_address_id)
-                                     OR (spree_addresses.firstname #{LIKE} :search AND spree_addresses.id = spree_users.ship_address_id)
-                                     OR (spree_addresses.lastname  #{LIKE} :search AND spree_addresses.id = spree_users.ship_address_id)",
-                                 {:search => "#{params[:q].strip}%"})
-                          .limit(params[:limit] || 100)
-      else
-        @search = @collection.ransack(params[:q])
-        @collection = @search.result.page(params[:page]).per(Syftet.config.admin_product_per_page)
-      end
     end
 
     private
@@ -134,25 +85,25 @@ module Admin
       render status: :forbidden, text: Spree.t(:error_user_destroy_with_orders)
     end
 
-    # Allow different formats of json data to suit different ajax calls
-    def json_data
-      json_format = params[:json_format] || 'default'
-      case json_format
-        when 'basic'
-          collection.map { |u| {'id' => u.id, 'name' => u.email} }.to_json
-        else
-          address_fields = [:firstname, :lastname, :address1, :address2, :city, :zipcode, :phone, :state_name, :state_id, :country_id]
-          includes = {only: address_fields, include: {state: {only: :name}, country: {only: :name}}}
-
-          collection.to_json(only: [:id, :email], include:
-                                                    {bill_address: includes, ship_address: includes})
-      end
-    end
-
     def sign_in_if_change_own_password
       if current_user == @user && @user.password.present?
         sign_in(@user, event: :authentication, bypass: true)
       end
     end
+
+    def collection
+      @search = User.new
+      if params[:quick_search].present?
+        User.where("name like '%#{params[:quick_search]}%' or email like '%#{params[:quick_search]}%'")
+      elsif params[:user].present?
+        @search = User.new(user_params)
+        users = User.all
+        users = users.where(name: params[:user][:name]) unless params[:user][:name].blank?
+        users.where(email: params[:user][:email]) unless params[:user][:email].blank?
+      else
+        User.all
+      end
+    end
+
   end
 end

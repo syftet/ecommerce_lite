@@ -1,0 +1,17 @@
+<%= content_for :breadcrumb do %>
+    <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb('Blogs') %>
+<% end %>
+
+<section class="from-our-blog row">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="box-shadow-v1">
+        <div class="blog-post" id="post-lists">
+          <% @blogs.each do |blog| %>
+              <%= render 'home/post', blog: blog %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

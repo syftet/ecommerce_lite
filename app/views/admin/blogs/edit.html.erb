@@ -1,0 +1,35 @@
+<%= render :partial => 'admin/shared/error_messages', :locals => {:target => @product} %>
+
+<% content_for :page_title do %>
+    <%= link_to t(:blogs), admin_blogs_url %> /
+    <%= t(:new_blog) %>
+<% end %>
+
+<%= form_for [:admin, @blog], :html => {:multipart => true} do |f| %>
+    <%= f.field_container :cover_photo, :class => ['form-group'] do %>
+        <%= f.label :cover_photo, t(:cover_photo) %> <span class="required">*</span>
+        <%= f.file_field :cover_photo, :class => 'form-control title' %>
+        <%= f.error_message_on :cover_photo %>
+    <% end %>
+
+    <fieldset data-hook="new_product">
+      <%= f.field_container :title, :class => ['form-group'] do %>
+          <%= f.label :title, t(:title) %> <span class="required">*</span>
+          <%= f.text_field :title, :class => 'form-control title' %>
+          <%= f.error_message_on :title %>
+      <% end %>
+
+      <%= f.field_container :body, :class => ['form-group'] do %>
+          <%= f.label :title, t(:body) %> <span class="required">*</span>
+          <%= f.cktext_area :body, :class => 'form-control title' %>
+          <%= f.error_message_on :body %>
+      <% end %>
+
+      <div class="form-actions" data-hook="buttons">
+        <%= button t('actions.update'), 'ok', 'submit', {class: 'btn-success'} %>
+        <span class="or"><%= t(:or) %></span>
+        <%= button_link_to t('actions.cancel'), admin_blogs_path, :icon => 'remove' %>
+      </div>
+
+    </fieldset>
+<% end %>

@@ -5,10 +5,23 @@ class Product < ApplicationRecord
   attr_readonly :price
 
   belongs_to :brand, class_name: 'Admin::Brand'
-  has_many :product_categories
+  belongs_to :product, foreign_key: :product_id
+  has_many :product_categories, dependent: :destroy
   has_many :categories, class_name: 'Admin::Category', through: :product_categories
+  has_many :variants, class_name: 'Product', foreign_key: :product_id, dependent: :destroy
 
-  scope :active, -> { where(is_active: true) }
+  validates_presence_of :name, :code, :cost_price, :sale_price, :is_active, :slug
+  validates_uniqueness_of :code
+
+  scope :active, -> { where(is_active: true, product_id: nil) }
+
+  def product?
+    !product.present?
+  end
+
+  def variant?
+    product.present?
+  end
 
   def price
     discountable ? discount_price : sale_price

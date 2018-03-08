@@ -1,27 +1,38 @@
-<h1 class="public-header">Products</h1>
+<% content_for :page_title do %>
+  Products
+<% end %>
 
-<table class="table">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Status</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @products.each do |product| %>
-    <tr>
-      <td><%= product.name %></td>
-      <td><%= product.is_active ? 'Active' : 'Inactive' %></td>
-      <td><%= link_to 'Show', admin_product_path(product) %></td>
-      <td><%= link_to 'Edit', edit_admin_product_path(product) %></td>
-      <td><%= link_to 'Destroy', admin_product_path(product), method: :delete, data: {confirm: 'Are you sure?'} %></td>
-    </tr>
+<% content_for :page_actions do %>
+  <%= link_to new_admin_product_path, class: 'btn btn-success' do %>
+    <i class="fa fa-plus" aria-hidden="true"></i> New Product
   <% end %>
-  </tbody>
-</table>
+<% end if can?(:create, Product) %>
 
-<br>
+<% if @products.any? %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
 
-<%= link_to 'New Brand', new_admin_product_path, class: 'btn btn-info' %>
+    <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= link_to product.name, admin_product_path(product) %></td>
+        <td><%= product.is_active ? 'Active' : 'Inactive' %></td>
+        <td><%= link_to 'Show', admin_product_path(product) %></td>
+        <td><%= link_to 'Edit', edit_admin_product_path(product) %></td>
+        <td><%= link_to 'Destroy', admin_product_path(product), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info no-objects-found">
+    <%= t(:no_resource_found, resource: 'Products') %>,
+    <%= link_to t(:add_one), new_admin_product_path %>!
+  </div>
+<% end %>

@@ -1,11 +1,11 @@
-<%= form_with(model: product, local: true) do |form| %>
-  <% if product.errors.any? %>
+<%= form_for [:admin, @product] do |form| %>
+  <% if @product.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being
+      <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being
         saved:</h2>
 
       <ul>
-        <% product.errors.full_messages.each do |message| %>
+        <% @product.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -16,20 +16,165 @@
     <div class="col-md-8">
       <div class="form-group field">
         <%= form.label :name %>
-        <%= form.text_field :name, id: :product_name, class: 'form-control' %>
+        <%= form.text_field :name, class: 'form-control' %>
       </div>
 
       <div class="form-group field">
         <%= form.label :slug %>
-        <%= form.text_field :slug, id: :product_slug, class: 'form-control' %>
+        <%= form.text_field :slug, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :code %>
+        <%= form.text_field :code, class: 'form-control' %>
       </div>
 
       <div class="form-group field">
         <%= form.label :description %>
-        <%= form.text_area :description, id: :product_description, class: 'form-control' %>
+        <%= form.text_area :description, class: 'form-control', rows: 13 %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :origin %>
+        <%= form.text_field :origin, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :reward_point %>
+        <%= form.text_field :reward_point, class: 'form-control' %>
+      </div>
+
+      <div class="checkbox">
+        <%= label_tag :is_featured, for: :product_is_featured do %>
+          <%= form.check_box :is_featured, id: :product_is_featured %>
+          Is Featured?
+        <% end %>
+      </div>
+
+      <div class="checkbox">
+        <%= label_tag :is_active, for: :product_is_active do %>
+          <%= form.check_box :is_active, id: :product_is_active %>
+          <%= t(:active) %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group field">
+        <%= form.label :cost_price %>
+        <%= form.text_field :cost_price, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :sale_price %>
+        <%= form.text_field :sale_price, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :whole_sale, 'Whole sale price' %>
+        <%= form.text_field :whole_sale, class: 'form-control' %>
+      </div>
+
+      <div class="checkbox">
+        <%= label_tag :discountable, for: :product_discountable do %>
+          <%= form.check_box :discountable, id: :product_discountable %>
+          Discountable?
+        <% end %>
+      </div>
+
+      <div class="checkbox">
+        <%= label_tag :is_amount, for: :product_is_amount do %>
+          <%= form.check_box :is_amount, id: :product_is_amount %>
+          Is Amount?
+        <% end %>
+        (Check -> Amount, Uncheck -> Percentage)
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :discount %>
+        <%= form.text_field :discount, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :color_name %>
+        <%= form.text_field :color_name, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :color %>
+        <%= form.text_field :color, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :size %>
+        <%= form.text_field :size, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :weight %>
+        <%= form.text_field :weight, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :width %>
+        <%= form.text_field :width, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :height %>
+        <%= form.text_field :height, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :depth %>
+        <%= form.text_field :depth, class: 'form-control' %>
+      </div>
+
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-group field">
+        <%= form.label :meta_title, 'Meta Title(For SEO)' %>
+        <%= form.text_field :meta_title, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :meta_desc, 'Meta Description(For SEO)' %>
+        <%= form.text_area :meta_desc, class: 'form-control' %>
+      </div>
+
+      <div class="form-group field">
+        <%= form.label :keywords, 'Keywords(For SEO)' %>
+        <%= form.text_field :keywords, class: 'form-control' %>
       </div>
     </div>
   </div>
 
   <%= render 'admin/shared/form_actions', cancel: admin_products_path, record: form.object %>
 <% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+      var discountable_element = $('#product_discountable');
+      var is_amount_element = $('#product_is_amount');
+      var discount_element = $('#product_discount');
+      discountable_element.change(function () {
+          if (this.checked) {
+              is_amount_element.parent().parent().show();
+              discount_element.parent().show();
+
+          }
+          else {
+              is_amount_element.parent().parent().hide();
+              discount_element.parent().hide();
+              is_amount_element.prop('checked', false);
+              discount_element.val(0.0);
+          }
+      });
+
+      if (!discountable_element.is(':checked')) {
+          is_amount_element.parent().parent().hide();
+          discount_element.parent().hide();
+      }
+  });
+</script>

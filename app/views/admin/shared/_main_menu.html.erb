@@ -8,7 +8,7 @@
     </ul>
 <% end %>
 
-<% if can? :admin, User %>
+<% if can? :admin, Product %>
     <ul class="nav nav-sidebar">
       <%= main_menu_item('Products', admin_products_path, 'product') %>
     </ul>
@@ -20,8 +20,14 @@
     </ul>
 <% end %>
 
-<%# if can? :admin, Product %>
-<ul class="nav nav-sidebar">
-  <%#= main_menu_tree t(:products), icon: "th-large", sub_menu: "product", url: "#sidebar-product" %>
-</ul>
-<%# end %>
+<% if can?(:admin, User) %>
+    <ul class="nav nav-sidebar">
+      <%= main_menu_item('Slider', admin_home_sliders_path, 'picture-o') %>
+    </ul>
+<% end %>
+
+<% if can?(:admin, Blog) %>
+    <ul class="nav nav-sidebar">
+      <%= main_menu_item('Blog', admin_blogs_path, 'pencil') %>
+    </ul>
+<% end %>

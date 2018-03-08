@@ -22,6 +22,8 @@
 @import 'categories';
 @import 'users';
 @import 'filters';
+@import 'home_slider';
+@import 'blog';
 
 #main-part {
   padding: 15px 35px 0;
@@ -73,5 +75,22 @@ label {
 
   input[type="radio"], input[type="checkbox"] {
     margin-top: 2px;
+  }
+}
+
+.custom-title {
+  border-bottom: solid 1px #efefef;
+  margin-bottom: 20px;
+  .page-title {
+    color: #555555;
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0 0 10px 0;
+  }
+
+  .top-actions {
+    text-align: right;
+    padding: 0 0 10px 0;
   }
 }

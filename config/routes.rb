@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     get 'registration', to: 'users/registrations#new', as: :account_registration
   end
 
+  resources :blogs, only: [:show, :index] do
+    resources :comments, only: [:create]
+  end
+
   root to: 'home#index'
   get '/promo/:q/products', to: 'products#index', as: :promotion_products
   post :email_subscription, to: 'public#subscribe'
@@ -21,7 +25,13 @@ Rails.application.routes.draw do
     resources :users
     resources :categories
     resources :brands
-    resources :products
+    resources :products do
+      resources :variants
+    end
+    resources :blogs do
+      resources :comments, only: [:destroy, :edit, :update]
+    end
+    resources :home_sliders
   end
   get '/admin', to: 'admin/dashboard#index', as: :admin
 

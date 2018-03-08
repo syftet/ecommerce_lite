@@ -1,0 +1,38 @@
+<div class="col-sm-4 post-item">
+  <div class="item">
+    <article>
+      <div class="content-blog">
+        <div class="image-thumnail">
+
+          <div class="post-thumbnail">
+            <%= image_tag(blog.cover_photo_url(:thumb), class: 'single-image-fluid') %>
+          </div>
+
+        </div>
+
+        <div class="bottom-blog">
+          <h3 class="title-post">
+            <%= link_to blog.title, blog_path(blog) %>
+          </h3>
+
+          <div class="blog-meta">
+            <div class="entry-date">
+              <i class="fa fa-calendar"></i>
+              <%= blog.created_at.strftime('%b - %d') %>
+            </div>
+            <div class="entry-comments">
+              <i class="fa fa-comments"></i>
+              <%= link_to pluralize(blog.comments.count, 'Comment'), "#{blog_path(blog)}#comments" %>
+            </div>
+          </div>
+          <div class="entry-content">
+            <%= raw truncate(raw(blog.body), length: 200).html_safe %>
+          </div>
+          <!-- .entry-content -->
+        </div>
+
+      </div>
+    </article>
+    <!-- #post-## -->
+  </div>
+</div>

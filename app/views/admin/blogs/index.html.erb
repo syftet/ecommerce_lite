@@ -1,0 +1,52 @@
+<% content_for :page_title do %>
+    <%= plural_resource_name(Blog) %>
+<% end %>
+
+<% content_for :page_actions do %>
+    <%= button_link_to t(:new_blog), new_admin_blog_url, :class => "btn-success", :icon => 'add', :id => 'admin_new_order' %>
+<% end if can? :create, Blog %>
+
+<% if @blogs.any? %>
+    <table class="table" id="listing_orders" data-hook>
+      <thead>
+      <tr data-hook="admin_orders_index_headers">
+        <th> <%= t(:title) %> </th>
+        <th><%= t(:cover_photo) %></th>
+        <th><%= t(:body) %></th>
+        <!--<th><%#= t(:created_at) %></th>-->
+        <th><%= t(:comment) %></th>
+        <th data-hook="admin_orders_index_header_actions" class="actions"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @blogs.each do |blog| %>
+          <tr>
+            <td>
+              <%= link_to blog.title, admin_blog_path(blog) %>
+            </td>
+            <td>
+              <%= image_tag(blog.cover_photo_url(:mini)) %>
+            </td>
+            <td>
+              <%= truncate(raw(blog.body), length: 150, omission: '...') %>
+            </td>
+            <!--<td>-->
+            <%#= order_time(blog.created_at) %>
+            <!--</td>-->
+            <td>
+              <%= link_to pluralize(blog.comments.count, 'Comment'), "#{admin_blog_path(blog)}#comments" %>
+            </td>
+            <td class='actions actions-1' data-hook="admin_orders_index_row_actions">
+              <%= link_to_edit_url edit_admin_blog_path(blog), :title => "admin_edit_#{dom_id(blog)}", :no_text => true %>
+              <%= link_to_delete blog, url: admin_blog_path(blog), :title => "admin_edit_#{dom_id(blog)}", :no_text => true %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="alert alert-info no-objects-found">
+      <%= t(:no_resource_found, resource: plural_resource_name(Blog)) %>,
+      <%= link_to(t(:add_one), new_admin_blog_url) if can? :create, Blog %>!
+    </div>
+<% end %>

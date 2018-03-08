@@ -1,0 +1,48 @@
+<% content_for :page_title do %>
+    <%= plural_resource_name(Blog) %>
+<% end %>
+
+<h1 style="margin-top: 0; font-weight: bold;"> <%= @blog.title %> </h1>
+
+<%= @blog.created_at.strftime('%B %d, %Y') %>
+
+<div class="blog-cover-photo">
+  <%= image_tag @blog.cover_photo_url(:large) %>
+</div>
+
+<div class="blog-body">
+  <%= raw @blog.body %>
+</div>
+
+<div class="comments-top-section" id="comments">
+  <h2>Leave a Comment</h2>
+
+  <p>
+    <%= pluralize(@blog.comments.count, 'comment') %>:
+  </p>
+</div>
+
+
+<div class="blog-comments-wrapper">
+  <ul>
+    <% @blog.comments.each do |comment| %>
+        <li class="clearfix">
+          <div class="avatar-wrapper">
+            <%= image_tag 'female-avater.png', class: 'single-image-fluid' %>
+          </div>
+          <div class="comments-wrapper">
+            <div class="author">
+              <%= comment.user.email.split('@').first %>
+              <%= link_to_delete comment, url: admin_blog_comment_path(@blog, comment), :title => "admin_delete_#{dom_id(comment)}", :no_text => true, style: 'float: right' %>
+            </div>
+            <div class="date-time">
+              <%= comment.created_at.strftime('%B %d, %Y at %H:%M %p') %>
+            </div>
+            <p>
+              <%= comment.body %>
+            </p>
+          </div>
+        </li>
+    <% end %>
+  </ul>
+</div>

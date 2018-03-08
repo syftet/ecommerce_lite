@@ -1,0 +1,18 @@
+<h1 class="public-header clearfix">
+  <a href="javascript: history.back();">
+    <i class="fa fa-angle-double-left"></i>
+  </a>
+  Variant of Product: <%= link_to @product.name, admin_product_path(@product) %>
+</h1>
+
+<div class="gsc-result-info">
+  <div class="gs-result">
+    <h3 class="gs-title">
+      <%= link_to "#{@variant.code}" %>
+    </h3>
+    <%#= link_to get_page_url(@admin_category.permalink), get_page_url(@admin_category.permalink), class: 'gs-visibleUrl' %>
+    <div class="gs-snippet">
+      <span> <%= @variant.created_at.strftime('%b %d, %Y') %> </span> -
+    </div>
+  </div>
+</div>

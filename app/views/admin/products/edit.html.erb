@@ -1,5 +1,5 @@
-<h1 class="public-header">
+<% content_for :page_title do %>
   Editing Product: <%= @product.name %>
-</h1>
+<% end %>
 
-<%= render 'form', product: @product %>
+<%= render 'form' %>

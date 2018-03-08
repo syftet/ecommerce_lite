@@ -37,6 +37,9 @@ gem "cancan"
 gem 'friendly_id', '~> 5.1.0'
 
 gem 'bootstrap-sass', '~> 3.3.6'
+gem 'carrierwave', '~> 1.0'
+gem 'rmagick'
+gem 'ckeditor', github: 'galetahub/ckeditor'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

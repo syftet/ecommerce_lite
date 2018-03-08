@@ -10,7 +10,7 @@
           </button>
         </span>
           <%= form_tag request.fullpath, method: :get, id: "quick-search" do %>
-              <%= text_field_tag :quick_search, nil, class: "form-control js-quick-search", placeholder: 'Quick Search' %>
+              <%= text_field_tag :quick_search, params[:quick_search], class: "form-control js-quick-search", placeholder: 'Quick Search' %>
           <% end %>
         </div>
         <% unless defined?(simple) %>

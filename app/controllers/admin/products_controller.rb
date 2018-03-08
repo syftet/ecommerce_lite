@@ -3,22 +3,47 @@ module Admin
     before_action :set_product, only: [:show, :edit, :update, :destroy]
 
     def index
-      @products = Product.all
+      @products = Product.active
     end
 
     def show
     end
 
     def new
+      @product = Product.new(code: "P00#{Product.all.count + 1}")
+    end
+
+    def create
+      @product = Product.new(product_params)
+      respond_to do |format|
+        if @product.save
+          format.html { redirect_to edit_admin_product_path(@product), notice: 'Product created successfully.' }
+        else
+          format.html { render :new }
+        end
+      end
     end
 
     def edit
     end
 
     def update
+      respond_to do |format|
+        if @product.update(product_params)
+          format.html { redirect_to edit_admin_product_path(@product), notice: 'Product updated successfully.' }
+        else
+          format.html { render :edit }
+        end
+      end
     end
 
     def destroy
+      if @product.destroy
+        flash[:notice] = 'Product deleted successfully.'
+      else
+        flash[:error] = 'Unable to deleted product.'
+      end
+      redirect_to admin_products_path
     end
 
     private

@@ -14,11 +14,6 @@ module Admin
     # Example:
     #   # Link to /admin/orders, also highlight tab for ProductsController and ShipmentsController
     #   tab :orders, :products, :shipments
-    def set_sidebar_menu(path, icon = nil, text = nil)
-      render partial: 'admin/shared/sidebar_menu_item',
-             locals: { link_to_path: path, icon_name: icon, link_text: text }
-    end
-
     def tab(*args)
       options = {label: args.first.to_s}
 
@@ -166,13 +161,13 @@ module Admin
     end
 
     def link_to_with_icon(icon_name, text, url, options = {})
-      options[:class] = (options[:class].to_s + " icon-link with-tip action-#{icon_name}").strip
+      options[:class] = (options[:class].to_s + " icon-link with-tip").strip
       options[:class] += ' no-text' if options[:no_text]
       options[:title] = text if options[:no_text]
-      text = options[:no_text] ? '' : content_tag(:span, text, class: 'text')
+      text = options[:no_text] ? '' : content_tag(:span, "#{text}", class: 'text')
       options.delete(:no_text)
       if icon_name
-        icon = content_tag(:span, '', class: "icon icon-#{icon_name}")
+        icon = content_tag(:i, '', class: "fa fa-#{icon_name}")
         text.insert(0, icon + ' ')
       end
       link_to(text.html_safe, url, options)

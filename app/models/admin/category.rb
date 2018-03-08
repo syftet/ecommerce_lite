@@ -6,7 +6,7 @@ class Admin::Category < ApplicationRecord
 
   has_many :sub_categories, class_name: 'Admin::Category', foreign_key: :parent_id, dependent: :destroy
   belongs_to :category, class_name: 'Admin::Category', foreign_key: :parent_id, required: false
-  has_many :product_categories
+  has_many :product_categories, dependent: :destroy
   has_many :products, through: :product_categories
 
   private

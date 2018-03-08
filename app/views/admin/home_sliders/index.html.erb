@@ -1,0 +1,41 @@
+<% if content_for?(:head) %>
+    <%= yield(:head) %>
+<% end %>
+
+<% content_for :page_title do %>
+    <%= t(:sliders) %>
+<% end %>
+
+<% content_for :page_actions do %>
+    <%= button_link_to t(:new_slider), new_admin_home_slider_path, :class => "btn-success", :icon => 'add', :id => 'admin_new_slider_link' %>
+<% end %>
+
+<table class="table" id="listing_products">
+  <thead>
+  <tr data-hook="admin_products_index_headers">
+    <th><%= t(:slider_image) %></th>
+    <th><%= t(:slider_image_title) %></th>
+    <th><%= t(:slider_image_sub_title) %></th>
+    <th><%= t(:slider_image_link) %></th>
+    <th data-hook="admin_home_sliders_index_header_actions" class="actions"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @sliders.each do |slide| %>
+      <%# @collection.each do |product| %>
+      <tr class="slider-image-<%= slide.id %>">
+        <td class="image"><%= image_tag(slide.image_url(:mini)) %></td>
+        <td class="title"><%= slide.title %></td>
+        <td class="sub-title"><%= slide.sub_title %></td>
+        <td class="link"><%= slide.link %></td>
+        <td class="actions actions-3 text-right" data-hook="admin_products_index_row_actions">
+
+          <%= link_to_edit slide, url: edit_admin_home_slider_path(slide), no_text: true %>
+          <%= link_to_delete slide, url: edit_admin_home_slider_path(slide), no_text: true %>
+
+        </td>
+      </tr>
+      <%# end %>
+      </tbody>
+  <% end %>
+  </table>
