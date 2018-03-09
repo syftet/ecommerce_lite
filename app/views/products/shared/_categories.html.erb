@@ -1,0 +1,36 @@
+<aside class="widget widget-product-categories">
+  <h3 class="widget-title">
+    <%= t(:categories) %>
+  </h3>
+  <ul class="product-categories">
+
+    <% Taxonomy.all.each do |taxm| %>
+        <li class="menu-item">
+          <%= link_to '#nof' do %>
+              <%= taxm.name %>
+          <% end %>
+          <span data-ref="top-cat-taxm-<%= taxm.id %>" class='pull-right collapse-ref'> <i class='fa fa-plus'></i> </span>
+          <ul class="top-sub-menu" id="top-cat-taxm-<%= taxm.id %>">
+            <% taxm.taxons.where('parent_id IS NULL').each do |taxon| %>
+                <%= raw draw_category_tree(taxon, (@taxon.present? ? @taxon.id : '')) %>
+            <% end %>
+          </ul>
+        </li>
+    <% end %>
+  </ul>
+</aside>
+
+<script type="text/javascript">
+    $(function () {
+        $.each($('.product-categories > li'), function (index, element) {
+            if ($(element).has('a.active').length > 0) {
+                $(element).addClass('top-active').find('i').toggleClass('fa-plus fa-minus');
+            }
+        });
+        $('.collapse-ref').click(function () {
+            ref = $(this).attr('data-ref');
+            $(this).find('i').toggleClass('fa-plus fa-minus');
+            $('#' + ref).toggle();
+        });
+    });
+</script>

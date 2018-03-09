@@ -1,0 +1,65 @@
+<div class="product-detail single-product-summary clearfix">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-sm-6">
+        <%= product_thumb_image(@product) %>
+      </div>
+      <div class="col-sm-6">
+        <div class="product-details-wrapper pdetail">
+          <h1 class="product-title">
+            <%= @product.name %>
+          </h1>
+
+          <div class="product-rating">
+            <div class="rating" style="display: inline-block; padding: 10px 0;">
+              <div class="star-rating quickview-rating" data-rating="<%= average_rating(@product) %>">
+                ******
+              </div>
+            </div>
+            - <span class="count review-link-color"> <%= pluralize(@product.reviews.count, 'review') %> </span>
+          </div>
+
+          <p class="stock in-stock">In Stock</p>
+
+          <p class="price">
+            <ins>
+              <span class="amount"><span class="woocommerce-Price-currencySymbol">$</span>
+                <%= @product.price %>
+              </span>
+            </ins>
+          </p>
+
+          <div class="short-description">
+            <p>
+              <%= @product.description %>
+            </p>
+          </div>
+
+          <div class="cart" style="margin: 15px 0">
+            <div class="add-cart">
+              <%= link_to product_path(@product), title: 'add to cart', class: 'btn btn-warning btn-large', style: 'color: #ffffff;' do %>
+                  <i class="icon-bag"></i><span class="title-cart">Select options</span>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="product-meta">
+            <p class="sku-wrapper">
+              SKU: <span class="sku"><%= @product.sku || 'N/A' %></span>
+            </p>
+
+            <p class="posted_in">
+              CATEGORIES: <%= raw categories(@product) %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.quickview-rating').rateit();
+    });
+</script>

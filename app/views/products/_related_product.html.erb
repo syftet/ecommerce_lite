@@ -1,0 +1,18 @@
+<div class="widget related-products products-collection owl-carousel-play woocommerce" id="postcarousel-950818756" data-ride="carousel">
+  <div class="background">
+    <div class="mask"></div>
+    <h3 class="widget-title public-title">
+      <span>Related Products</span>
+    </h3>
+
+    <div class="row clearfix list-of-recomanded-product">
+      <% @product.related_products.each do |rp| %>
+          <% if rp.relative_product %>
+              <div class='col-md-3 col-sm-2'>
+                <%= render 'products/product', product: rp.relative_product %>
+              </div>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="row">
+  <% products.each do |product| %>
+      <div class="product-wrapper product col-sm-6 col-md-4">
+        <%= render product %>
+      </div>
+  <% end %>
+</div>
+
+<div>
+  <%= paginate products %>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.star-rating').rateit();
+    })
+</script>

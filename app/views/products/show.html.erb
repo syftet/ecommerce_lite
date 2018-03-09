@@ -1,0 +1,149 @@
+<% content_for :social_share_meta do %>
+    <meta property="og:url" content="<%= product_url(@product) %>">
+    <meta name="twitter:url" content="<%= product_url(@product) %>">
+    <meta property="og:title" content="<%= @product.name %>">
+    <meta name="twitter:title" content="<%= @product.name %>">
+    <meta property="og:description" content="<%= @product.description %>">
+    <meta name="twitter:description" content="<%= @product.description %>">
+    <meta property="og:image" content="<%= asset_url(@product.images.first.attachment) if @product.images.present? %>">
+    <meta name="twitter:image" content="<%= @product.images.first if @product.images.present? %>">
+    <meta property="og:image:width" content="450"/>
+    <meta property="og:image:height" content="298"/>
+<% end %>
+
+<% content_for :breadcrumb do %>
+    <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb(@product.name, '', '', {products: products_path}) %>
+<% end %>
+
+<%= link_to :back, class: 'btn btn-default', style: 'margin-top: -10px;' do %>
+    <i class="fa fa-angle-double-left"></i> Back
+<% end %>
+
+<div class="mt10 clearfix">
+  <div class="col-sm-6 col-md-6 clearfix data-parent">
+    <div class="clearfix">
+      <div class="clearfix" id="product-thumb-image">
+        <div class="product-gallery-wrapper">
+          <div id="product-gallery" class="product-thumb-wrapper">
+            <% get_additional_images(@product).each do |image| %>
+                <div class="selection">
+                  <a href="#" class="addtional-image" data-image="<%= image.attachment.url(:product) %>" data-zoom-image="<%= image.attachment.url(:large) %>">
+                    <%= image_tag image.attachment.url(:small) || no_image, class: "img-fluid" %>
+                  </a>
+                </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="product-big-image-wrapper">
+          <div class="product-details-image text-xs-center">
+            <% product_image = get_image_object(@product) %>
+            <img src="<%= get_image_link(@product, product_image) %>" data-zoom-image="<%= get_zoom_image_link(product_image) %>" alt="product image" id="product-zoom" class="img-fluid d-inline-block">
+            <span class="zoom-init-image"></span>
+          </div>
+        </div>
+      </div>
+      <div class="social-share-btn">
+        <label> Share "<%= @product.name %>" </label>
+        <%= render 'shared/social_share' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-6">
+    <%= render 'products/details' %>
+  </div>
+</div>
+
+<div class="review-ratting">
+  <%= render 'products/review_ratting' %>
+</div>
+
+<div class="product-details-customer-widget product-lists">
+  <%= render 'products/related_product' %>
+</div>
+
+<script type="text/javascript">
+    $(document).on('turbolinks:load', function () {
+        $('.product-thumb-wrapper').children(":first").find('a').addClass('product-active');
+        $(".list-of-recomanded-product").slick({
+            infinite: true,
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            dots: false,
+            responsive: [
+                {
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: false
+                    }
+                },
+                {
+                    breakpoint: 765,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        infinite: true,
+                        dots: false
+                    }
+                },
+                {
+                    breakpoint: 520,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        infinite: true,
+                        dots: false
+                    }
+                }
+            ]
+        });
+    });
+
+    $('.size-selection').click(function () {
+        var size = $(this).data("size_value");
+        $('#size').val(size)
+    });
+
+    $('.member-size-selection').click(function () {
+        var size = $(this).data("size_value");
+        $(this).parents('.product-table-container').find('#size').val(size);
+    });
+
+    $('.select_member_varient').click(function () {
+        var varient = $(this).data("variant");
+        $(this).parents('.product-table-container').find('#variant_id').val(varient);
+    });
+
+    $(function () {
+        $('.add-to-cart-button-cl').click(function () {
+            var obj = $(this).parents('.product-btn');
+            obj.css('position', 'relative');
+            obj.find('.alert-error').addClass('custom-alert-place');
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function (e) {
+        setTimeout(function () {
+            $("#product-gallery").slick({
+                infinite: false,
+                slidesToShow: 4,
+                slidesToScroll: 4,
+                dots: false,
+                vertical: true
+            });
+        }, 100);
+    });
+
+    function zoom_image_load_failed(element) {
+        jelement = $(element);
+        anchor = jelement.prev();
+        console.log(anchor);
+        original_image = anchor.attr('data-image');
+        anchor.attr('data-zoom-image', original_image);
+    }
+</script>

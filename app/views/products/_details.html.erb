@@ -1,0 +1,61 @@
+<div class="product-detail single-product-summary clearfix">
+  <div class="product-details-wrapper pdetail clearfix">
+
+    <h1 class="product-title"><%= raw format_general_name(@product.name) %></h1>
+
+    <div class="single-product-rating">
+      <div class="rating" style="display: inline-block; padding: 10px 0;">
+        <div class="star-rating" data-rating="<%= average_rating(@product) %>">
+          ******
+        </div>
+      </div>
+      <span>
+        <a id="product-review-count" style="cursor: pointer;"> - <%= pluralize(@product.reviews.count, 'review') %> </a>
+      </span>
+    </div>
+
+    <% if @product.credit_point > 0 %>
+        <div class="rewards-point-wrapper" title="You will get <%= @product.credit_point %> rewards point, If you purchased this product.">
+          <%= image_tag('trophy.png') %> <%= @product.credit_point %>
+          <i class="fa fa-info-circle btn" data-container="body" data-toggle="popover" data-placement="top" data-content="You will get <%= @product.credit_point %> rewards point, If you purchased this product."></i>
+        </div>
+    <% end %>
+
+    <p class="stock in-stock">
+      <%= raw @product.on_stock %>
+    </p>
+
+    <p class="price">
+      <ins>
+        <span class="price-amount product-amount">
+          <%= amount_with_currency(@product.price) %>
+        </span>
+      </ins>
+      <%= discount_price(@product) %>
+    </p>
+
+    <div class="short-description">
+      <p>
+        <%= truncate(@product.description, length: 236) %>
+      </p>
+    </div>
+
+    <p style="margin-top: 10px; font-weight: bold; color: #999;">
+      Web ID: #<%= @product.id %>
+    </p>
+
+    <%= render 'products/cart_form' %>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="popover"]').popover();
+        $('#product-review-count').click(function () {
+            $('#description-rating-tabs a[href="#tab-reviews"]').tab('show');
+            $('html, body').animate({
+                scrollTop: $("#description-rating-tabs").offset().top - 150
+            }, 500);
+        });
+    });
+</script>
