@@ -1,7 +1,7 @@
 <div class="product-detail single-product-summary clearfix">
   <div class="product-details-wrapper pdetail clearfix">
 
-    <h1 class="product-title"><%= raw format_general_name(@product.name) %></h1>
+    <h1 class="product-title"><%= raw @product.name %></h1>
 
     <div class="single-product-rating">
       <div class="rating" style="display: inline-block; padding: 10px 0;">
@@ -14,10 +14,10 @@
       </span>
     </div>
 
-    <% if @product.credit_point > 0 %>
-        <div class="rewards-point-wrapper" title="You will get <%= @product.credit_point %> rewards point, If you purchased this product.">
-          <%= image_tag('trophy.png') %> <%= @product.credit_point %>
-          <i class="fa fa-info-circle btn" data-container="body" data-toggle="popover" data-placement="top" data-content="You will get <%= @product.credit_point %> rewards point, If you purchased this product."></i>
+    <% if @product.reward_point > 0 %>
+        <div class="rewards-point-wrapper" title="You will get <%= @product.reward_point %> rewards point, If you purchased this product.">
+          <%= image_tag('trophy.png') %> <%= @product.reward_point %>
+          <i class="fa fa-info-circle btn" data-container="body" data-toggle="popover" data-placement="top" data-content="You will get <%= @product.reward_point %> rewards point, If you purchased this product."></i>
         </div>
     <% end %>
 
@@ -28,10 +28,10 @@
     <p class="price">
       <ins>
         <span class="price-amount product-amount">
-          <%= amount_with_currency(@product.price) %>
+          <%= @product.price %>
         </span>
       </ins>
-      <%= discount_price(@product) %>
+      <%= @product.discount_price %>
     </p>
 
     <div class="short-description">

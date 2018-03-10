@@ -1,0 +1,78 @@
+<div class="form-group custom-form-group input-wrap">
+  <%= form_builder.label :firstname do %>
+      <strong> First Name </strong>
+  <% end %>
+  <%= form_builder.text_field :firstname, :class => 'form-control required' %>
+  <span class="form-error"></span>
+</div>
+
+<div class="form-group custom-form-group input-wrap">
+  <%= form_builder.label :lastname do %>
+      <strong> Last Name </strong>
+  <% end %>
+  <%= form_builder.text_field :lastname, :class => 'form-control required' %>
+  <span class="form-error"></span>
+</div>
+
+<div class="form-group custom-form-group input-wrap">
+  <%= form_builder.label :address1 do %>
+      <strong> <%= address_type %> Address </strong>
+  <% end %>
+  <%= form_builder.text_field :address1, :class => 'form-control required' %>
+  <span class="form-error"></span>
+  <span> Street Address, RO. Box, Company Name, c/o </span>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group custom-form-group input-wrap">
+      <label for="select_country">
+        <strong> Country </strong>
+      </label>
+      <%= form_builder.text_field :country, class: 'form-control' %>
+      <span class="form-error"></span>
+      <span> <%= address_type.downcase %> country. </span>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="form-group custom-form-group input-wrap">
+      <%= form_builder.label :city do %>
+          <strong> City </strong>
+      <% end %>
+      <%= form_builder.text_field :city, :class => 'form-control required' %>
+      <span class="form-error"></span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group custom-form-group input-wrap">
+      <label for="select_state"> <strong> State </strong> </label>
+      <%= form_builder.text_field :state, :class => 'form-control' %>
+      <span class="form-error"></span>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="form-group custom-form-group input-wrap">
+      <%= form_builder.label :zipcode do %>
+          <strong> Zip </strong>
+      <% end %>
+      <%= form_builder.text_field :zipcode, :class => 'form-control required' %>
+      <span class="form-error"></span>
+    </div>
+  </div>
+</div>
+
+<div class="form-group custom-form-group input-wrap">
+  <%= form_builder.label :phone do %>
+      <strong> Phone Number</strong>
+  <% end %>
+  <%= form_builder.text_field :phone, class: 'form-control required' %>
+  <span class="form-error"></span>
+</div>
+
+<script type="text/javascript">
+
+</script>

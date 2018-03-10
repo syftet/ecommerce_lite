@@ -1,0 +1,213 @@
+<% content_for :breadcrumb do %>
+    <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb('Checkout') %>
+<% end %>
+
+
+
+<section id="main-container" class="container inner">
+  <div class="notification-wrap">
+    <div class="notification-item clearfix">
+      <i class="fa fa-cube"></i>
+
+      <p>
+        Returning customer?
+        <a href="#">
+          Click here to login
+        </a>
+      </p>
+    </div>
+  </div>
+  <div class="notification-wrap">
+    <div class="notification-item clearfix">
+      <i class="fa fa-cube"></i>
+
+      <p>
+        Have a coupon?
+        <a href="#">
+          Click here to enter your code
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <div class="row col-sm-12 mb30">
+    <form action="get" class="billing-form">
+      <div class="col-sm-4">
+        <h3> Billing details </h3>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="">First name *</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="">Last name *</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="">Company name</label>
+          <input type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="sel1">Country *</label>
+          <select class="form-control" id="sel1">
+            <option>Country1</option>
+            <option>Country2</option>
+            <option>Country3</option>
+            <option>Country4</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="">Street address *</label>
+          <input type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="">Town / City *</label>
+          <input type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="">County</label>
+          <input type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="">Postcode *</label>
+          <input type="text" class="form-control">
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="">Phone *</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="">Email address *</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox">
+            <label><input type="checkbox" value=""> Create an account? </label>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-sm-4">
+        <h3> Additional Information </h3>
+
+        <div class="form-group">
+          <label for="comment">Order notes</label>
+          <textarea class="form-control" rows="5" id="comment" placeholder="Notes about your order"></textarea>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <h3> Your order </h3>
+
+        <div class="mb30">
+          <table class="table table-bordered shop_table">
+            <thead>
+            <tr>
+              <th>Product</th>
+              <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Mister Gamberetto × 2</td>
+              <td> $1,160.0</td>
+            </tr>
+            <tr>
+              <td>Mister Gamberetto × 2</td>
+              <td> $1,160.0</td>
+            </tr>
+            <tr>
+              <td>Mister Gamberetto × 2</td>
+              <td> $1,160.0</td>
+            </tr>
+            <tr>
+              <td>Mister Gamberetto × 2</td>
+              <td> $1,160.0</td>
+            </tr>
+            <tr>
+              <td>Mister Gamberetto × 2</td>
+              <td> $1,160.0</td>
+            </tr>
+            <tr>
+              <td>Mister Gamberetto × 2</td>
+              <td> $1,160.0</td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <div id="payment" class="woocommerce-checkout-payment payment-item">
+          <ul class="wc_payment_methods payment_methods methods">
+            <li class="wc_payment_method payment_method_cheque">
+              <input id="payment_method_cheque" class="input-radio" name="payment_method" value="cheque" checked="checked" data-order_button_text="" type="radio">
+
+              <label for="payment_method_cheque">
+                Check payments </label>
+
+              <div class="payment_box payment_method_cheque" style="display: block;">
+                <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store
+                  Postcode.</p>
+              </div>
+            </li>
+            <li class="wc_payment_method payment_method_paypal">
+              <input id="payment_method_paypal" class="input-radio" name="payment_method" value="paypal" data-order_button_text="Proceed to PayPal" type="radio">
+
+              <label for="payment_method_paypal">
+                PayPal
+                <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/AM_mc_vs_ms_ae_UK.png" alt="PayPal acceptance mark"><a href="https://www.paypal.com/gb/webapps/mpp/paypal-popup" class="about_paypal" onclick="javascript:window.open('https://www.paypal.com/gb/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">What
+                is PayPal?</a> </label>
+
+              <div class="payment_box payment_method_paypal" style="display: none;">
+                <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="form-row place-order">
+            <noscript>
+              Since your browser does not support JavaScript, or it is disabled, please ensure you click the &lt;em&gt;Update
+              Totals&lt;/em&gt; button before placing your order. You may be charged more than the amount stated above
+              if you fail to do so. &lt;br/&gt;&lt;input type="submit" class="button alt"
+              name="woocommerce_checkout_update_totals" value="Update totals" /&gt;
+            </noscript>
+
+
+            <div class="form-group text-right">
+              <button class="place-order-btn">Place order</button>
+            </div>
+
+            <!--<input class="place-order-btn" value="Place order" type="submit">-->
+
+            <input id="_wpnonce" name="_wpnonce" value="c7d8fd71a3" type="hidden">
+            <input name="_wp_http_referer" value="/wordpress/pi/checkout/?wc-ajax=update_order_review" type="hidden">
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+  </div>
+
+</section>

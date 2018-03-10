@@ -1,40 +1,40 @@
 <div class="product-block">
   <figure>
     <a title="<%= product.name %>" href="<%= product_path(product) %>" class="product-image">
-      <%#= product_preview_image(product) %>
+      <%= product_preview_image(product) %>
     </a>
 
     <div class="wrap-add-whishlist clearfix">
       <div class="add-to-wishlist">
-        <%#= raw wishlist_link(product.id) %>
+        <%= raw wishlist_link(product.id) %>
       </div>
     </div>
 
     <div class="button-action clearfix">
       <div class="button-groups">
         <div class="add-cart">
-          <%# if product.total_on_hand > 0 %>
-            <%#= render 'products/shared/add_to_cart_form', product: product %>
-          <%# end %>
+          <% if product.total_on_hand > 0 %>
+              <%= render 'products/shared/add_to_cart_form', product: product %>
+          <% end %>
         </div>
         <div class="wrap-acction-group">
           <div class="quick-view hidden-xs hidden-sm">
-            <a title="Quick view" href="#" data-action="<%#= product_quickview_path(product) %>" class="quickview" data-toggle="modal" data-target="#quickview-modal">
+            <a title="Quick view" href="#" data-action="<%= product_quickview_path(product) %>" class="quickview" data-toggle="modal" data-target="#quickview-modal">
               <i class="fa fa-eye" title="Quick view"> </i>
             </a>
           </div>
 
           <div class="yith-compare">
-            <%#= link_to product_compare_path(product), title: 'Add to compare', class: 'compare', remote: true do %>
-              <i class="fa fa-refresh"></i>
-            <%# end %>
+            <%= link_to product_compare_path(product), title: 'Add to compare', class: 'compare', remote: true do %>
+                <i class="fa fa-refresh"></i>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
   </figure>
   <% if product.discountable %>
-    <div class="promo-badge">Sale!</div>
+      <div class="promo-badge">Sale!</div>
   <% end %>
   <div class="meta">
     <h3 class="name">
@@ -43,15 +43,15 @@
 
     <div class="caption">
       <div class="rating">
-        <div class="star-rating" data-rating="3<%#= average_rating(product) %>">
+        <div class="star-rating" data-rating="<%= average_rating(product) %>">
           ******
         </div>
       </div>
-      <% if false #product.credit_point > 0 %>
-        <div class="rewards-point-wrapper" title="You will get <%= product.credit_point %> rewards point, If you purchased this product.">
-          <%= image_tag('trophy.png') %> <%= product.credit_point %>
-          <i class="fa fa-info-circle btn" data-container="body" data-toggle="popover" data-placement="top" data-content="You will get <%= product.credit_point %> rewards point, If you purchased this product."></i>
-        </div>
+      <% if product.reward_point > 0 %>
+          <div class="rewards-point-wrapper" title="You will get <%= product.reward_point %> rewards point, If you purchased this product.">
+            <%= image_tag('trophy.png') %> <%= product.reward_point %>
+            <i class="fa fa-info-circle btn" data-container="body" data-toggle="popover" data-placement="top" data-content="You will get <%= product.reward_point %> rewards point, If you purchased this product."></i>
+          </div>
       <% end %>
       <span class="price">
             <span class="amount">

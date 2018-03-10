@@ -17,7 +17,23 @@ Rails.application.routes.draw do
   root to: 'home#index'
   get '/promo/:q/products', to: 'products#index', as: :promotion_products
   post :email_subscription, to: 'public#subscribe'
-  resources :products
+  resources :wishlists, only: [:index, :destroy]
+  resources :products do
+    post :review
+    resources :wishlists, only: [:create]
+    get :quickview
+    get :compare
+    get :remove_compare
+  end
+
+  resources :orders, except: [:index, :new, :create, :destroy] do
+    post :populate, on: :collection
+    get :reset, on: :collection
+    get :shipped_track
+  end
+  resources :carts
+  get '/checkout', to: 'checkout#edit', as: :cart_checkout
+  patch '/checkout/update/:state', to: 'checkout#update', as: :update_checkout
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   # Admin routes and resources

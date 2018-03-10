@@ -1,20 +1,19 @@
 <%= form_for :order, url: populate_orders_path, remote: true, :html => {id: "order-populate"} do |f| %>
     <div id="inside-product-cart-form" data-hook="inside_product_cart_form">
-      <%= hidden_field_tag "variant_id", @product.master.id %>
+      <%= hidden_field_tag "variant_id", @product.id %>
       <%= hidden_field_tag "size" %>
 
       <div class="variations">
-        <% all_variant = get_all_variant(@product) %>
-        <% if all_variant.present? %>
+        <% if @product.variants.present? %>
             <div class="color-section">
               <label class="color-label"> Color: </label>
 
               <ul class="color-section-ul-style clearfix">
-                <% all_variant.each do |v| %>
+                <% @product.variants.each do |v| %>
                     <li>
-                      <input type="radio" class="select_varient" id="radio_<%= v.id %>" data-color-name="<%= v.color %>" data-variant-offer="<%= get_varient_offer(v) %>" data-variant-price="<%= get_varient_price(v) %>" name="variant_id" value="<%= v.id %>"/>
+                      <input type="radio" class="select_varient" id="radio_<%= v.id %>" data-color-name="<%= v.color %>" data-variant-offer="<%= v.price %>" data-variant-price="<%= v.price %>" name="variant_id" value="<%= v.id %>"/>
                       <label for="radio_<%= v.id %>">
-                        <span class="color_image" style="<%= variant_color_image_option(v.color_image) %>">
+                        <span class="color_image" style="<%= variant_color_image_option(v.color) %>">
                           <%= v.size %>
                         </span>
                       </label>
@@ -60,8 +59,8 @@
         assets[vid] = {};
         <% v.images.order(:id).each_with_index do |as, indx| %>
         assets[vid][<%= indx %>] = {
-            image: '<%= as.attachment %>',
-            zoom_image: '<%= as.attachment.url(:large); %>'
+            image: '<%= as.file %>',
+            zoom_image: '<%= as.file.url(:large); %>'
         };
         <%end%>
         <%end%>

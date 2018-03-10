@@ -1,0 +1,46 @@
+<tr class="cart_item">
+
+  <td class="product-remove">
+    <%= link_to "/carts/#{line_item.id}", class: 'remove', method: :delete, confirm: 'Are you sure?' do %>
+        <i class="fa fa-times"></i>
+    <% end %>
+  </td>
+
+  <td class="product-thumbnail">
+    <%= link_to product_path(line_item.product) do %>
+        <%= mini_image(line_item.product) %>
+    <% end %>
+  </td>
+
+  <td class="product-name">
+    <p>
+      <%= link_to line_item.product.name, product_path(line_item.product) %>
+    </p>
+    <b>Color: </b>
+    <label class="label" style="background:#<%= line_item.product.color %>"> </label>
+  </td>
+
+  <td class="product-price">
+    <span class="price-amount amount">
+      <%= amount_with_currency(line_item.price) %>
+    </span>
+  </td>
+
+  <td class="product-quantity">
+    <div class="qty add-to-cart-select-quantity quantity-adder quantity">
+      <label for="qty" class="quantity-selector">Qty:</label>
+
+      <div class="quantity-number">
+        <span class="add-down add-action" data-step="-1" data-item-id="<%= line_item.id %>">-</span>
+        <input name="name" maxlength="12" value="<%= line_item.quantity %>" title="Qty" class="input-text qty qty-line-item-<%= line_item.id %>" type="text">
+        <span class="add-up add-action pull-right" data-step="1" data-item-id="<%= line_item.id %>">+</span>
+      </div>
+    </div>
+  </td>
+
+  <td class="product-subtotal">
+    <span class="price-amount amount price-line-item-<%= line_item.id %>">
+      <%= amount_with_currency(line_item.total) %>
+    </span>
+  </td>
+</tr>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309050555) do
+ActiveRecord::Schema.define(version: 20180309051000) do
 
   create_table "admin_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -104,9 +104,55 @@ ActiveRecord::Schema.define(version: 20180309050555) do
     t.index ["viewable_type", "viewable_id"], name: "index_images_on_viewable_type_and_viewable_id"
   end
 
+  create_table "line_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "variant_id"
+    t.integer "order_id"
+    t.integer "quantity"
+    t.float "price", limit: 24, default: 0.0
+    t.float "cost_price", limit: 24, default: 0.0
+    t.string "currency"
+    t.decimal "adjustment_total", precision: 10, default: "0"
+    t.decimal "promo_total", precision: 10, default: "0"
+    t.string "size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "newsletter_subscriptions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "email"
     t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "number"
+    t.decimal "item_total", precision: 10, default: "0"
+    t.decimal "total", precision: 10, default: "0"
+    t.string "state"
+    t.decimal "adjustment_total", precision: 10, default: "0"
+    t.integer "user_id"
+    t.datetime "completed_at"
+    t.integer "ship_address_id"
+    t.decimal "payment_total", precision: 10, default: "0"
+    t.string "shipment_state"
+    t.string "payment_state"
+    t.string "email"
+    t.string "currency"
+    t.string "created_by_id"
+    t.decimal "shipment_total", precision: 10, default: "0"
+    t.decimal "promo_total", precision: 10, default: "0"
+    t.integer "item_count"
+    t.integer "approver_id"
+    t.datetime "approved_at"
+    t.boolean "confirmation_delivered"
+    t.string "guest_token"
+    t.datetime "canceled_at"
+    t.integer "canceler_id"
+    t.integer "store_id"
+    t.date "shipment_date"
+    t.integer "shipment_progress", default: 0
+    t.datetime "shipped_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -153,6 +199,25 @@ ActiveRecord::Schema.define(version: 20180309050555) do
     t.index ["brand_id"], name: "index_products_on_brand_id"
   end
 
+  create_table "related_products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "product_id"
+    t.integer "relative_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.integer "rating"
+    t.text "text"
+    t.integer "product_id"
+    t.integer "user_id"
+    t.string "email"
+    t.boolean "is_approved", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -170,6 +235,13 @@ ActiveRecord::Schema.define(version: 20180309050555) do
     t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "wishlists", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "product_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

@@ -1,0 +1,85 @@
+<% content_for :breadcrumb do %>
+    <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb('Cart') %>
+<% end %>
+
+<header class="page-header-v1 col-sm-12">
+  <h1 class="public-title" style="text-align: left">Shopping Cart</h1>
+</header>
+
+<div class="cart-view-wrapper">
+  <div class="col-sm-12 col-md-8">
+    <div class="table-responsive">
+      <table class="cart-table" cellspacing="0">
+        <thead>
+        <tr>
+          <th class="product-remove">&nbsp;</th>
+          <th class="product-thumbnail">&nbsp;</th>
+          <th class="product-name">Product</th>
+          <th class="product-price">Price</th>
+          <th class="product-quantity text-center">Quantity</th>
+          <th class="product-subtotal">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% current_order.line_items.each do |line_item| %>
+            <%= render 'carts/cart_item', line_item: line_item %>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-sm-12 col-md-4 cart-collaterals">
+    <div class="cart_totals ">
+      <h2 class="public-title mt20 text-left">Cart totals</h2>
+
+      <table class="cart-summary-table" cellspacing="0">
+        <tbody>
+        <tr class="cart-subtotal">
+          <th>Subtotal</th>
+          <td>
+            <span class="price-amount amount cart-sub-total">
+                  <%= amount_with_currency(current_order.total) if current_order %>
+            </span>
+          </td>
+        </tr>
+        <tr class="order-total">
+          <th>Total</th>
+          <td data-title="Total">
+            <strong>
+              <span class="price-amount amount cart-total-amount">
+                <%= amount_with_currency(current_order.total) if current_order %>
+              </span>
+            </strong>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="wc-proceed-to-checkout mb30">
+        <%= link_to 'Proceed to checkout', cart_checkout_path, class: 'btn btn-warning btn-block btn-large' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.add-action').click(function () {
+            step = parseInt($(this).attr('data-step'));
+            if (isNaN(step)) {
+                alert('Invalid operation');
+            }
+            else {
+                $.ajax({
+                    url: '/carts/' + $(this).attr('data-item-id'),
+                    type: 'patch',
+                    data: {order_id: <%= current_order.id %>, quantity: step},
+                    dataType: 'script',
+                    error: function () {
+                        popupMessage('Something wrong! Please try again!')
+                    }
+                })
+            }
+        })
+    });
+</script>

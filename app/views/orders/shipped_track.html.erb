@@ -1,0 +1,134 @@
+<!-- Main body Markup -->
+<main class="main">
+  <div class="section">
+    <div class="container">
+      <div class="page-title uppercase text-center with-bb hidden-xs">
+        <h2 class="public-title text-left mb0">Track package Order #<%= @order.number %></h2>
+      </div>
+      <div class="chunk track-package">
+        <div class="row">
+          <div class="col-sm-3">
+            <aside class="aside chunk-left clearfix">
+              <h3 class="mb5 pb5">
+                <span>My Orders</span>
+                <i class="glyphicon glyphicon-menu-down visible-xs pull-right"></i>
+              </h3>
+              <ul class="my-order-track-lists">
+                <% @orders.each do |order| %>
+                    <li class="<%= @order.id == order.id ? 'active' : '' %>">
+                      <%= link_to order.number, order_shipped_track_path(order.id), target: '_blank' %>
+                    </li>
+                <% end %>
+                <li>
+                  <hr/>
+                </li>
+                <li>
+                  <%= link_to 'My Orders', my_account_path %>
+                </li>
+                <li>
+                  <%= link_to 'My Wish List', wishlists_path %>
+                </li>
+              </ul>
+            </aside>
+          </div>
+          <div class="col-sm-9 chunk-right">
+            <div class="page-title clearfix hidden-xs">
+              <%= link_to 'Back To My Orders', my_account_path, class: 'pull-right link-with-decoration gothamNarrowBold' %>
+            </div>
+            <div class="page-title clearfix visible-xs gothamNarrowBold">
+              <h3 class="uppercase gothamNarrowBold">Track Package Order #<%= @order.number %></h3>
+              <%= link_to 'Back to My Order', my_account_path %>
+            </div>
+
+            <div class="order-items clearfix">
+              <div class="row">
+                <% @order.line_items.each do |item| %>
+                    <div class="col-sm-6 col-md-4 each-order-item">
+                      <div class="media">
+                        <div class="media-left">
+                          <% if item.variant.present? %>
+                              <%= link_to product_path(item.product) do %>
+                                  <%= mini_image(item.product) %>
+                              <% end %>
+                          <% end %>
+                        </div>
+                        <div class="media-body">
+                          <span class="block gothamNarrowBold uppercase"><%#= item.product.brand.name if item.product.brand.present? %></span>
+                          <span class="block gothamNarrowBold">
+                            <%= link_to product_path(item.product) do %>
+                              <%= raw item.product.name %>
+                            <% end %>
+                          </span>
+                          <b>Web ID: </b> #<%= item.product.id %>
+                          <span class="block"><b>Size:</b> <%= item.variant.size %></span>
+                          <span class="block">
+                            <b> Color: </b>
+                            <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%= variant_color_image_option(item.variant.color_image) %>"></span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                <% end %>
+              </div>
+            </div>
+            <div class="graph-tracks">
+              <div class="delivery-time clearfix">
+                <span class="gothamNarrowBold pull-right">
+                  Expecting Delivery On
+                  <%= @order.shipment_date.strftime('%d %B') if @order.shipment_date.present? %>
+                </span>
+              </div>
+              <div class="track-steps">
+                <ul class="floated-list clearfix">
+                  <li>
+                    <span class="gothamNarrowBold">Ordered</span>
+                    <span><%= @order.completed_at.strftime('%d %b') if @order.completed_at %></span>
+                  </li>
+                  <li>
+                    <span class="gothamNarrowBold">Shipped</span>
+                    <span><%= @order.shipped_at.strftime('%d %b') if @order.shipped_at.present? %></span>
+                  </li>
+                </ul>
+              </div>
+              <div class="gt-outer">
+                <div class="gt-inner" data-ship-progress="<%= @order.shipment_progress %>" style="width: <%= @order.shipment_progress %>%; height: 12px;"></div>
+              </div>
+              <div class="track-destination clearfix">
+                <div class="pull-right">
+                  <h3 class="public-title mb0"> Shipping Address </h3>
+                  <%= render 'checkout/shipping_address' %>
+                </div>
+              </div>
+            </div>
+            <div class="page-title gothamHTFBook uppercase">
+              <h3>Shipment Details</h3>
+            </div>
+            <div class="shipment-details">
+
+              <% @trackes.each_with_index do |(track_date, track_infos), index| %>
+                  <h3 style="margin: 15px 0 5px 0; padding: 0;"><%= index == 0 ? 'Latest update: ' + track_date : track_date %></h3>
+                  <% track_infos.each do |track_info| %>
+                      <div class="with-each-iterary">
+
+                        <div class="mytable">
+                          <div class="table-cell iterary-time va-top">
+                            <%= track_info.created_at.strftime('%l:%M %p') %>
+                          </div>
+                          <div class="table-cell iterary-detail va-top">
+                            <div class="package-info">
+                              <p>
+                                <%= track_info.comment %>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

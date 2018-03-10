@@ -32,10 +32,10 @@
 
       <div class="active-mobile pull-left cart-popup custom-cart">
         <span class="fa fa-shopping-cart"></span>
-        <span class="mini-cart-items mobile-mini-cart-count"><%#= line_item_count %></span>
+        <span class="mini-cart-items mobile-mini-cart-count"><%= line_item_count %></span>
 
         <div class="active-content custom-dropdown-content shopping-cart-doopdown">
-          <%#= render 'shared/cart_items' %>
+          <%= render 'shared/cart_items' %>
         </div>
       </div>
     </div>
@@ -70,16 +70,16 @@
                       </a>
                     </li>
                     <%# Taxonomy.all.each do |taxm| %>
-                        <li class="menu-item">
-                          <%#= link_to '#nof' do %>
-                              <%#= taxm.name %> <span class="caret"></span>
-                          <%# end %>
-                          <ul class="top-sub-menu">
-                            <%# taxm.taxons.where('parent_id IS NULL').each do |taxon| %>
-                                <%#= raw draw_nav_menu_tree(taxon) %>
-                            <%# end %>
-                          </ul>
-                        </li>
+                    <li class="menu-item">
+                      <%#= link_to '#nof' do %>
+                      <%#= taxm.name %> <span class="caret"></span>
+                      <%# end %>
+                      <ul class="top-sub-menu">
+                        <%# taxm.taxons.where('parent_id IS NULL').each do |taxon| %>
+                        <%#= raw draw_nav_menu_tree(taxon) %>
+                        <%# end %>
+                      </ul>
+                    </li>
                     <%# end %>
                   </ul>
                 </div>
@@ -95,24 +95,24 @@
                 <%= link_to '#', class: 'dropdown-toggle mini-cart box-wrap', 'data-toggle' => 'dropdown', 'aria-expandedx' => 'true' do %>
                       <span class="icon-basket icons">
                       <i class="fa fa-shopping-cart"></i>
-                      <span class="mini-cart-items"><%#= line_item_count %></span>
-                        <% #if current_order %>
-                          <span class="price-amount amount mini-cart-total">
-                            <%#= amount_with_currency(current_order.amount) %>
+                      <span class="mini-cart-items"><%= line_item_count %></span>
+                        <% if current_order %>
+                        <span class="price-amount amount mini-cart-total">
+                            <%= amount_with_currency(current_order.total) %>
                           </span>
-                        <%# end %>
+                        <% end %>
                     </span>
                 <% end %>
                 <div class="dropdown-menu custom-dropdown-content" id="shopping-cart-doopdown">
-                  <%#= render 'shared/cart_items' %>
+                  <%= render 'shared/cart_items' %>
                 </div>
 
               </div>
             </div>
 
-            <%#= link_to wishlists_path, class: 'syftet-btn-wishlist pull-right' do %>
+            <%= link_to wishlists_path, class: 'syftet-btn-wishlist pull-right' do %>
                 <i class="fa fa-heart-o" aria-hidden="true"></i>
-            <%# end %>
+            <% end %>
 
             <div id="search-container" class="search-box-wrapper pull-right">
               <div class="opal-dropdow-search dropdown">
@@ -155,16 +155,16 @@
 
           <%# Taxonomy.all.each do |taxm| %>
 
-              <li class="dropdown">
-                <%#= link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do %>
-                    <%#= taxm.name %> <b class="caret"></b>
-                <%# end %>
-                <ul class="dropdown-menu">
-                  <%# taxm.taxons.where('parent_id IS NULL').each do |taxon| %>
-                      <%#= raw draw_mobile_menu_tree(taxon) %>
-                  <%# end %>
-                </ul>
-              </li>
+          <li class="dropdown">
+            <%#= link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do %>
+            <%#= taxm.name %> <b class="caret"></b>
+            <%# end %>
+            <ul class="dropdown-menu">
+              <%# taxm.taxons.where('parent_id IS NULL').each do |taxon| %>
+              <%#= raw draw_mobile_menu_tree(taxon) %>
+              <%# end %>
+            </ul>
+          </li>
           <%# end %>
 
           <li class="menu-item">

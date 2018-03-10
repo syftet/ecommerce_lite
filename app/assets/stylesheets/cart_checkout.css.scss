@@ -1,0 +1,129 @@
+.cart-checkout-wrapper {
+  padding: 15px 15px 0 15px;
+  a {
+    color: #ffffff;
+    margin-right: 10px;
+    &.btn-view-cart {
+      background: #333333;
+      &:hover {
+        color: #fdfdfd;
+      }
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.cart-subtotal-wrapper {
+  text-align: right;
+  margin-top: 10px;
+  padding: 15px 15px 10px 15px;
+  border-top: solid 1px #CCCCCC;
+  border-bottom: solid 1px #CCCCCC;
+  .price-amount {
+    font-size: 15px;
+    font-weight: bold;
+  }
+}
+
+.cart-view-wrapper {
+  .cart-table {
+    border: 1px solid rgba(0, 0, 0, .1);
+    margin: 0 -1px 24px 0;
+    text-align: left;
+    width: 100%;
+    border-collapse: separate;
+    border-radius: 5px;
+    th {
+      font-weight: 700;
+      padding: 9px 12px;
+    }
+    tbody {
+      td {
+        padding: 15px 12px;
+        .price-amount {
+          font-weight: 700;
+          text-align: left;
+          color: #777777;
+        }
+        &.product-name {
+          a {
+            color: #5588b7;
+            font-weight: 700;
+          }
+        }
+        &.product-remove {
+          a {
+            display: block;
+            font-size: 1.2em;
+            height: 1em;
+            width: 1em;
+            text-align: center;
+            line-height: 1;
+            color: red !important;
+            text-decoration: none;
+            font-weight: 700;
+            border: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.cart-collaterals {
+  background-color: #fafafa;
+  .cart-summary-table {
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid rgba(0, 0, 0, .1);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    th, td {
+      border: none;
+      padding: 10px;
+    }
+  }
+}
+
+.order-summary-wrap {
+  margin-bottom: 10px;
+  .order-table {
+    box-shadow: 0 -2px 5px 1px rgba(204, 204, 204, 0.75);
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-width: 365px;
+    min-width: 335px;
+    table {
+      width: 100%;
+      tbody {
+        tr {
+          font-size: 14px;
+          font-weight: normal;
+          .td-value {
+            //text-align: right;
+          }
+          td {
+            padding: 5px;
+            font-size: 12px;
+            font-weight: normal;
+          }
+        }
+      }
+    }
+  }
+}
+
+#shipping-method {
+  table {
+    width: 100%;
+    thead {
+      th {
+        background: #dddddd;
+        border-bottom: 1px solid #999999;
+      }
+    }
+  }
+}

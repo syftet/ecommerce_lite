@@ -5,7 +5,7 @@
     <meta name="twitter:title" content="<%= @product.name %>">
     <meta property="og:description" content="<%= @product.description %>">
     <meta name="twitter:description" content="<%= @product.description %>">
-    <meta property="og:image" content="<%= asset_url(@product.images.first.attachment) if @product.images.present? %>">
+    <meta property="og:image" content="<%= asset_url(@product.images.first.file) if @product.images.present? %>">
     <meta name="twitter:image" content="<%= @product.images.first if @product.images.present? %>">
     <meta property="og:image:width" content="450"/>
     <meta property="og:image:height" content="298"/>
@@ -13,10 +13,6 @@
 
 <% content_for :breadcrumb do %>
     <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb(@product.name, '', '', {products: products_path}) %>
-<% end %>
-
-<%= link_to :back, class: 'btn btn-default', style: 'margin-top: -10px;' do %>
-    <i class="fa fa-angle-double-left"></i> Back
 <% end %>
 
 <div class="mt10 clearfix">
@@ -27,8 +23,8 @@
           <div id="product-gallery" class="product-thumb-wrapper">
             <% get_additional_images(@product).each do |image| %>
                 <div class="selection">
-                  <a href="#" class="addtional-image" data-image="<%= image.attachment.url(:product) %>" data-zoom-image="<%= image.attachment.url(:large) %>">
-                    <%= image_tag image.attachment.url(:small) || no_image, class: "img-fluid" %>
+                  <a href="#" class="addtional-image" data-image="<%= image.file.url(:product) %>" data-zoom-image="<%= image.file.url(:large) %>">
+                    <%= image_tag image.file.url(:small) || no_image, class: "img-fluid" %>
                   </a>
                 </div>
             <% end %>
@@ -36,8 +32,8 @@
         </div>
         <div class="product-big-image-wrapper">
           <div class="product-details-image text-xs-center">
-            <% product_image = get_image_object(@product) %>
-            <img src="<%= get_image_link(@product, product_image) %>" data-zoom-image="<%= get_zoom_image_link(product_image) %>" alt="product image" id="product-zoom" class="img-fluid d-inline-block">
+            <% product_image = @product.images.first %>
+            <img src="<%= product_image.file %>" data-zoom-image="<%#= get_zoom_image_link(product_image) %>" alt="product image" id="product-zoom" class="img-fluid d-inline-block">
             <span class="zoom-init-image"></span>
           </div>
         </div>

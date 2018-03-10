@@ -1,0 +1,36 @@
+<div class="cart-item">
+  <% if current_order.present? %>
+      <% current_order.line_items.each do |line_item| %>
+          <ul class="clearfix mb20">
+            <li class="item-img-width">
+              <%= mini_image(line_item.product) %>
+            </li>
+            <li class="item-text-width">
+              <p>
+                <%= link_to line_item.product.name, product_path(line_item.product) %>
+              </p>
+                <span>
+                  <%= currency_symbol %><%= line_item.price %> * <%= line_item.quantity %>
+                </span>
+            </li>
+          </ul>
+      <% end %>
+  <% else %>
+      <%= t(:no_product_on_cart) %>
+  <% end %>
+
+</div>
+
+<% if current_order.present? %>
+    <div class="cart-subtotal-wrapper">
+      <strong>Subtotal:</strong>
+          <span class="price-amount amount">
+            <%= currency_symbol %><%= current_order.total %>
+          </span>
+    </div>
+    <div class="cart-checkout-wrapper clearfix text-center">
+      <%= link_to 'View Cart', carts_path, class: 'btn btn-default btn-view-cart reset-border-radius' %>
+      <%= link_to t(:checkout), cart_checkout_path, class: 'btn btn-warning reset-border-radius' %>
+      <%= link_to t(:clear!), reset_orders_path, class: 'btn btn-danger reset-border-radius' %>
+    </div>
+<% end %>

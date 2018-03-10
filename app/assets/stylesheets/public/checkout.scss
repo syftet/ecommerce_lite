@@ -1,0 +1,115 @@
+.notification-wrap {
+  background-color: #f7f6f7;
+  border-top: 3px solid #1e85be;
+  .notification-item {
+    color: #515151;
+    margin-bottom: 25px;
+    padding: 15px;
+    i {
+      float: left;
+      padding-right: 10px;
+    }
+    p {
+      a {
+        &:hover {
+          color: #fcc030;
+        }
+      }
+    }
+  }
+}
+
+.place-order-btn {
+  background-color: #ffcd56;
+  border-color: #ffc53d;
+  border-radius: 2px;
+  color: #fff;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  &:hover {
+    background-color: #ffbe23;
+    border-color: #feb300;
+    color: #fff;
+  }
+}
+
+.payment-item {
+  background-color: #EBE9EB;
+  padding: 10px;
+}
+
+.billing-form {
+  input, textarea, select {
+    border-radius: 0;
+    border-color: #ddd;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    height: 36px;
+    line-height: 1.62857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+  }
+  .form-control {
+    box-shadow: none;
+  }
+  input::-moz-placeholder, input::-moz-placeholder, input::-moz-placeholder, textarea::-moz-placeholder,
+  select::-moz-placeholder {
+    color: #363636;
+    opacity: 1;
+  }
+}
+
+/* Cart dropdown */
+.custom-cart {
+  .custom-dropdown-content {
+    border: 2px solid #fcc030;
+    border-radius: 0;
+    min-width: 350px !important;
+    padding: 25px 20px;
+    background: #ffffff;
+    &.active-content {
+      min-width: 300px !important;
+      left: inherit !important;
+      right: -85px !important;
+      p {
+        margin: 0 !important;
+      }
+    }
+  }
+}
+
+.cart-item {
+  ul {
+    li {
+      float: left;
+      margin-right: 15px;
+      &:last-child {
+        margin-right: inherit;
+      }
+      span {
+        color: #fcc030;
+        font-weight: bold;
+      }
+      a {
+        font-size: 18px;
+        font-weight: bold;
+        color: #999999;
+        cursor: pointer;
+        &:hover {
+          color: #fcc030;
+        }
+      }
+    }
+    .item-img-width {
+      width: 50px
+    }
+    .item-text-width {
+      max-width: 210px;
+    }
+    .item-cross-width {
+      width: 15px
+    }
+
+  }
+}

@@ -1,0 +1,49 @@
+<h1 class="public-title text-left"> Order Summary </h1>
+<div class="order-summary-wrap pull-md-right">
+  <div class="order-table">
+    <table>
+      <tbody>
+      <tr>
+        <td> Order subtotal</td>
+        <td class="td-value">
+          <b>
+            <%= amount_with_currency(@order.total) %>
+          </b>
+        </td>
+      </tr>
+      <%# if @order.promotions.present? %>
+          <tr>
+            <td> Discount / coupon</td>
+            <td> <%#= price_with_currency(@order.adjustment_total) %> </td>
+          </tr>
+      <%# end %>
+      <tr>
+        <td> Estimated shipping</td>
+        <td class="td-value">
+          <% if false #@order.shipments.present? %>
+              <b> <%= shipping_method(@order.shipments) %> </b>
+          <% else %>
+              <b>Free</b>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td> Estimated sales tax</td>
+        <td class="td-value color-error"> Tax included in price</td>
+      </tr>
+      <tr class="total-order">
+        <td> Order total</td>
+        <td class="td-value">
+          <b>
+            <%= amount_with_currency(@order.total) %>
+          </b>
+        </td>
+      </tr>
+      <tr class="font-italic">
+        <td> You saved</td>
+        <td class="td-value"> <%#= you_saved(@order) %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

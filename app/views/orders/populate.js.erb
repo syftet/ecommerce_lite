@@ -1,0 +1,9 @@
+<% if @error %>
+popupMessage("<%= raw @error.to_s %>", 'alert-danger');
+<%else%>
+popupMessage("Item has been added to cart", 'alert-success');
+$("#shopping-cart-doopdown, .shopping-cart-doopdown").html("<%= escape_javascript(render 'shared/cart_items').html_safe %>");
+$(".mini-cart-items").html("<%= line_item_count %>");
+$(".mini-cart-total").html("<%= current_order.total %>");
+//$('.estimated-total-amount').html("<%#= price_with_currency(simple_current_order.total) %>");
+<%end%>

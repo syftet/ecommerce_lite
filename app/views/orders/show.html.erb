@@ -1,0 +1,162 @@
+<% content_for :breadcrumb do %>
+    <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb("##{@order.number}", '', '', {orders: my_account_path}) %>
+<% end %>
+
+<div id="content" class="col-sm-12" style="padding: 0" data-hook="">
+  <div class="container">
+    <div class="thanks-order-wrap">
+      <div class="thanks-order-container">
+        <% if order_just_completed?(@order) %>
+            <h3> THANKS FOR YOUR ORDER, <%= @order.ship_address.full_name %>! </h3>
+            <h4> Your Order ID is <%= @order.number %> </h4>
+        <% end %>
+      </div>
+    </div>
+    <% ship_address = @order.ship_address %>
+    <% bill_address = @order.bill_address %>
+    <div class="bill-wrap col-lg-12">
+      <div class="bill-container clearfix border-bottom row">
+        <div class="col-sm-6">
+          <h4 class="public-title text-left mb10"> Bill To </h4>
+
+          <div class="bill-to-details">
+            <ul class="common-ul-style">
+              <li>
+                <span> Name: </span>
+                <%= bill_address.full_name %>
+              </li>
+              <li>
+                <span> Address: </span>
+                <%= bill_address.address1 %>
+              </li>
+              <li>
+                <span> City: </span>
+                <%= bill_address.city %>
+              </li>
+              <li>
+                <span> Zip: </span>
+                <%= bill_address.zipcode %>
+              </li>
+              <li>
+                <span> Country: </span>
+                <%= bill_address.country %>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <h4 class="public-title text-left mb10"> Ship To </h4>
+
+          <div class="bill-to-details">
+            <ul class="common-ul-style">
+              <li>
+                <span> Name: </span>
+                <%= ship_address.full_name %>
+              </li>
+              <li>
+                <span> Address: </span>
+                <%= ship_address.address1 %>
+              </li>
+              <li>
+                <span> City: </span>
+                <%= ship_address.city %>
+              </li>
+              <li>
+                <span> Zip: </span>
+                <%= ship_address.zipcode %>
+              </li>
+              <li>
+                <span> Country: </span>
+                <%= ship_address.country %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12 mb10">
+      <div class="row shipping-contact-info">
+        <div class="col-sm-6">
+          <div class="shipping-method-wrap mb0">
+            <h3 class="public-title text-left mb10"> Shipping Methods: </h3>
+            Standard <strong> Free </strong>
+
+            <p>
+              Transit time: 3-6 business days
+            </p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="contact-info mb0">
+            <h3 class="public-title text-left mb10"> Contact Information: </h3>
+
+            <p>
+              Email: <%= @order.email %> <br>
+              Phone: <%= ship_address.phone %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-list-item order-show-product-list">
+      <div class="product-list-container">
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-sm-6">
+              <table class="table product-item-table">
+                <thead>
+                <tr>
+                  <th colspan="2"> Items(<%= @order.line_items.count %>)</th>
+                  <th> Quality</th>
+                  <th> Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @order.line_items.each do |item| %>
+                    <tr>
+                      <td>
+                        <%#= get_variant_image(item.variant) %>
+                        <%= mini_image(item.product) %>
+                      </td>
+                      <td>
+                        <%# if item.product.brand.present? %>
+                        <!--<strong> <%#= skip_html_tag(item.product.brand.name) %> </strong> <br>-->
+                        <%# end %>
+                        <label>
+                          <%= link_to product_path(item.product), target: '_blank' do %>
+                              <%= item.product.name %>
+                          <% end %>
+                        </label>
+                        <br>
+                        Web ID: <%= item.product.id %> <br>
+                        Size: <%= item.variant.size %> <br>
+                        color:
+                        <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%= variant_color_image_option(item.variant.color_image) %>"></span>
+                        <!--<br/>-->
+                        <span> <%= item.variant.color %> </span>
+                      </td>
+                      <td>
+                        <%= item.quantity %>
+                      </td>
+                      <td>
+                        <%= amount_with_currency(item.variant.price) %>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="col-sm-6">
+              <%= render 'orders/summary' %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

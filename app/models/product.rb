@@ -10,6 +10,8 @@ class Product < ApplicationRecord
   has_many :categories, class_name: 'Admin::Category', through: :product_categories
   has_many :variants, class_name: 'Product', foreign_key: :product_id, dependent: :destroy
   has_many :images, as: :viewable, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+  has_many :related_products, inverse_of: :product
 
   accepts_nested_attributes_for :images,
                                 allow_destroy: true,
@@ -49,4 +51,13 @@ class Product < ApplicationRecord
   def percentage_discount
     sale_price - (sale_price * (discount / 100.0))
   end
+
+  def total_on_hand
+    2 #TODO: Calculate stock
+  end
+
+  def on_stock
+    true
+  end
+
 end

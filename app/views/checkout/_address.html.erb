@@ -1,0 +1,61 @@
+<% content_for :breadcrumb do %>
+    <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb('Shipping Address', '', '', {'checkout' => '/checkout'}) %>
+<% end %>
+<% unless current_user.present? %>
+    <div class="billing-form">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="col-sm-6">
+            <div class="notification-wrap">
+              <div class="notification-item clearfix">
+                <label> Enter email address for guest checkout </label>
+
+                <p>
+                  <%= form.email_field :email, class: 'form-control required', placeholder: 'Email*' %>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="notification-wrap">
+              <div class="notification-item clearfix">
+                <i class="fa fa-cube"></i>
+
+                <p>
+                  Returning customer?
+                  <a href="#">
+                    Click here to login
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
+
+<%= form.fields_for :ship_address do |ship_form| %>
+    <div class="container">
+      <div class="clear"></div>
+      <div class="row">
+        <div class="col-md-6 clearfix">
+          <h1 class="public-title text-left mb15"> Your shipping address</h1>
+
+          <div class="checkout-form">
+            <div class="row">
+              <div class="col-md-12 shipping-address-form billing-form">
+                <%= render 'checkout/address_fields', form_builder: ship_form, address_type: 'Shipping' %>
+                <%= form.check_box :use_shipping, value: true, checked: true, class: 'hidden' %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 clearfix">
+          <%= render 'orders/summary' %>
+          <%= submit_tag 'Save and Continue', :class => 'place-order-btn' %>
+        </div>
+      </div>
+    </div>
+<% end %>
+<%= render 'shared/form_validation_script' %>

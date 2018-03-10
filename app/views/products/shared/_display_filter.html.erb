@@ -16,7 +16,7 @@
 
 
   <form method="get">
-    <%= select_tag :per_page, options_for_select(AppSettings::PER_PAGE_FILTER.collect { |key, val| [val, key] }, (params[:per_page] || Syftet.config.product_per_page)), {class: 'custom-select', onchange: 'this.form.submit()'} %>
+    <%= select_tag :per_page, options_for_select(AppSettings::PER_PAGE_FILTER.collect { |key, val| [val, key] }, (params[:per_page] || 20)), {class: 'custom-select', onchange: 'this.form.submit()'} %>
   </form>
 
   <form method="get" class="woocommerce-fillter">
