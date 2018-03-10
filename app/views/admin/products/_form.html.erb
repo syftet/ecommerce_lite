@@ -34,6 +34,11 @@
         <%= form.text_field :reward_point, class: 'form-control' %>
       </div>
 
+      <div class="form-group field">
+        <%= form.label :brand_id, 'Brand' %>
+        <%= form.select :brand_id, options_for_select(Admin::Brand.all.collect{|brand| [brand.name, brand.id]}, form.object.brand_id), {prompt: 'Select Brand'}, {class: 'form-control'} %>
+      </div>
+
       <div class="checkbox">
         <%= label_tag :is_featured, for: :product_is_featured do %>
           <%= form.check_box :is_featured, id: :product_is_featured %>
@@ -123,6 +128,12 @@
     </div>
 
     <div class="col-md-12">
+
+      <div class="form-group field">
+        <%= form.label :category_ids, 'Categories' %>
+        <%= form.select :category_ids, options_for_select(Admin::Category.all.collect{|cat| [cat.name, cat.id]}, form.object.categories.ids), {prompt: 'Select Category'}, {class: 'form-control', multiple: 'multiple'} %>
+      </div>
+
       <div class="form-group field">
         <%= form.label :meta_title, 'Meta Title(For SEO)' %>
         <%= form.text_field :meta_title, class: 'form-control' %>
@@ -146,6 +157,11 @@
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('#product_brand_id').select2();
+        $('#product_category_ids').select2();
+    });
+
   $(function () {
       var discountable_element = $('#product_discountable');
       var is_amount_element = $('#product_is_amount');
