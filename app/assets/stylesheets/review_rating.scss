@@ -1,0 +1,206 @@
+.tabs-wrapper {
+  margin-top: 20px;
+  .nav-tabs {
+    li {
+      a {
+        &:hover {
+          background: transparent;
+          border-color: transparent;
+        }
+      }
+      &.active {
+        border: none;
+        a {
+          border-color: transparent;
+          border-bottom-color: #fcc030;
+          border-bottom-width: 3px;
+          &:hover,
+          &:active,
+          &:focus {
+            border-color: transparent;
+            border-bottom-color: #fcc030;
+            border-bottom-width: 3px;
+          }
+        }
+      }
+    }
+  }
+}
+
+#tab-description,
+#tab-reviews {
+  padding: 40px 0;
+  p {
+    line-height: 23px;
+    color: #707070;
+    font-size: 14px;
+  }
+}
+
+#reviews {
+  h5 {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 0;
+    color: #000;
+  }
+  .reviews-summary {
+    .review-summary-total {
+      text-align: center;
+      font-weight: 400;
+      .review-summary-result {
+        width: 90px;
+        height: 90px;
+        text-align: center;
+        border: 2px solid #f0c73b;
+        color: #f0c73b;
+        line-height: 90px;
+        font-size: 24px;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        margin-bottom: 8px;
+      }
+    }
+  }
+  .comments {
+    border-top: 1px solid #e8e8e8;
+    background: #fff;
+    padding: 30px;
+    margin-bottom: 30px;
+    h5 {
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .commentlist {
+      margin: 15px 0;
+      .comment {
+        margin-bottom: 30px;
+      }
+      .avatar {
+        width: 100px;
+        text-align: center;
+        div {
+          display: inline-block;
+          img {
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            -o-border-radius: 50%;
+            overflow: hidden;
+            float: right;
+            height: auto;
+            max-width: 100%;
+            vertical-align: middle;
+            border: 0;
+          }
+        }
+        .avatar-author {
+          margin-top: 10px;
+          font-weight: 700;
+        }
+      }
+    }
+    .comment-text {
+      border: 1px solid #e8e8e8;
+      padding: 15px 20px;
+      .meta {
+        color: #bbb;
+      }
+      .description {
+        padding-top: 20px;
+        border-top: 1px solid #ededed;
+        display: inline-block;
+      }
+    }
+  }
+  .review-form-wrapper {
+    border-top: 1px solid #e8e8e8;
+    padding: 20px 0;
+    #reply-title {
+      margin-bottom: 20px;
+      font-size: 16px;
+      font-family: Poppins, sans-serif;
+    }
+    #respond {
+      position: static;
+      margin: 0;
+      width: auto;
+      padding: 0;
+      background: transparent none;
+      border: 0;
+      p {
+        margin: 0 0 10px;
+      }
+      label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.comment-author-admin {
+  position: relative;
+  .badge-wrapper {
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px;
+    height: 75px;
+    text-align: right;
+    .status-badge {
+      font-size: 12px;
+      font-weight: bold;
+      color: #FFF;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 20px;
+      transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+      width: 100px;
+      display: block;
+      background: #79A70A;
+      background: linear-gradient(#9BC90D 0%, #79A70A 100%);
+      box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+      position: absolute;
+      top: 19px;
+      right: -20px;
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0px;
+        top: 100%;
+        z-index: -1;
+        border-left: 3px solid #79A70A;
+        border-right: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+        border-top: 3px solid #79A70A;
+      }
+      &:after {
+        content: '';
+        position: absolute;
+        right: 0%;
+        top: 100%;
+        z-index: -1;
+        border-right: 3px solid #79A70A;
+        border-left: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+        border-top: 3px solid #79A70A;
+      }
+      &.approved {
+        color: #ffffff;
+      }
+      &.pending {
+        color: #c6000e;
+      }
+    }
+  }
+}

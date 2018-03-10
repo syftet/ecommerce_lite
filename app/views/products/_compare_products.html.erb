@@ -1,0 +1,68 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>Compare Products</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="compare-label">Name</td>
+    <% products.each do |product| %>
+        <td class="cp-<%= product.id %>" style="position: relative">
+          <%= link_to product_remove_compare_path(product), remote: true, class: 'remove-compare-btn alert-danger' do %>
+              <i class="fa fa-times"></i>
+          <% end %>
+          <%= product.name %>
+        </td>
+    <% end %>
+  </tr>
+  <tr>
+    <td class="compare-label">Image</td>
+    <% products.each do |product| %>
+        <td class="cp-<%= product.id %>">
+          <%= mini_image(product) %>
+        </td>
+    <% end %>
+  </tr>
+  <tr>
+    <td class="compare-label">Colors</td>
+    <% products.each do |product| %>
+        <td class="cp-<%= product.id %>">
+          <% all_variant = get_all_variant(product) %>
+          <% all_variant.each do |v| %>
+              <span style="background:#<%= v.color_image %>; display: inline-block; padding: 10px;"></span>
+          <% end %>
+        </td>
+    <% end %>
+  </tr>
+  <tr>
+    <td class="compare-label">Size</td>
+    <% products.each do |product| %>
+        <td class="cp-<%= product.id %>">
+          <% all_variant = get_all_variant(product) %>
+          <%= all_variant.map(&:size).join(', ') %>
+        </td>
+    <% end %>
+  </tr>
+  <tr>
+    <td class="compare-label">price</td>
+    <% products.each do |product| %>
+        <td class="cp-<%= product.id %>">
+          <%= product.display_price.to_display %>
+        </td>
+    <% end %>
+  </tr>
+  <tr>
+    <td class="compare-label">Rating</td>
+    <% products.each do |product| %>
+        <td class="cp-<%= product.id %>">
+          <div class="rating">
+            <div class="star-rating" data-rating="<%= average_rating(product) %>">
+              ******
+            </div>
+          </div>
+        </td>
+    <% end %>
+  </tr>
+  </tbody>
+</table>

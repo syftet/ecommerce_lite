@@ -1,0 +1,2 @@
+$('#compare-modal').modal().find('#compare_content').html("<%= escape_javascript(render 'products/compare_products', products: @products).html_safe %>");
+$('.star-rating').rateit();

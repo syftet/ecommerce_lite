@@ -1,0 +1,7 @@
+<%= form_for :order, url: populate_orders_path, remote: true do |f| %>
+    <%= hidden_field_tag :variant_id, product.master.id %>
+    <%= hidden_field_tag :quantity, 1 %>
+    <%= button_tag class: 'btn btn-default btn-large outline', type: :submit, title: 'Add To Cart' do %>
+        <i class="fa fa-cart-plus color-gray"></i>
+    <% end %>
+<% end %>

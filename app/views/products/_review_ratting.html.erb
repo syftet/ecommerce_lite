@@ -1,0 +1,168 @@
+<div class="tabs-wrapper horizontal-tabs">
+  <ul id="description-rating-tabs" class="nav nav-tabs">
+    <li class="description_tab active">
+      <a data-toggle="tab" href="#tab-description">Description</a>
+    </li>
+    <li class="reviews_tab">
+      <a data-toggle="tab" href="#tab-reviews">Reviews (<%= @product.reviews.count %>)</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane fade in active" id="tab-description">
+      <p>
+        <%= @product.description %>
+      </p>
+    </div>
+
+    <div class="tab-pane fade" id="tab-reviews">
+      <div id="reviews" class="widget-primary widget-reviews">
+        <div class="comments-content">
+          <div class="reviews-summary">
+            <div class="row">
+              <div class="col-md-6 media">
+                <h5>Customers review</h5>
+
+                <div class="review-summary-total pull-left">
+                  <div class="review-summary-result">
+                    <strong><%= average_rating(@product) %></strong>
+                  </div>
+                  <%= pluralize(@product.reviews.count, 'Rating') %>
+                </div>
+                <div class="media-body">
+                  <div class="review-summary-detal">
+                    <% 5.times.each do |i| %>
+                        <%= render 'products/shared/rating_analytics', star: (i + 1), rate: ((@rating_analysis[i + 1] || 0) * 100) / (@product.reviews.count == 0 ? 1 : @product.reviews.count) %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <!--<h5>Rate it!</h5>-->
+
+                <!--<p class="woocommerce-verification-required">Only logged in customers who have purchased this product-->
+                  <!--may leave a review.-->
+                <!--</p>-->
+
+                <!--<a href="#review_form_wrapper" class="btn btn-warning reset-border-radius" rel="nofollow">-->
+                  <!--Write A Review-->
+                <!--</a>-->
+
+              </div>
+            </div>
+          </div>
+
+          <div id="comments" class="comments">
+            <h5> <%= pluralize(@product.reviews.count, 'review') %> for <%= @product.name %></h5>
+
+
+            <ul class="commentlist list-unstyled">
+              <% @product.reviews.each do |review| %>
+                  <% if review.id %>
+                      <li class="comment comment-author-admin">
+                        <div id="comment-149" class="comment_container media">
+                          <div class="avatar pull-left">
+                            <div class="opal-image">
+                              <img src="http://0.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028" height="60" width="60">
+                            </div>
+                            <div class="avatar-author clear"> <%= review.name %> </div>
+                          </div>
+                          <div class="comment-text media-body">
+                            <p class="meta">
+                              <time> <%= review.created_at.strftime('%B %d, %Y') %> </time>
+                            </p>
+
+                            <div class="rating" style="margin-bottom: 10px">
+                              <div class="star-rating" data-rating="<%= review.rating %>">
+                                ******
+                              </div>
+                            </div>
+
+                            <div itemprop="description" class="description clear">
+                              <p>
+                                <%= raw review.text %>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                  <% end %>
+              <% end %>
+              <!-- #comment-## -->
+            </ul>
+
+
+          </div>
+
+
+          <div id="review-form-wrapper" class="review-form-wrapper">
+            <div id="review_form">
+              <div id="respond" class="comment-respond">
+                <h3 id="reply-title" class="comment-reply-title">
+                  Add a review
+                </h3>
+
+                <%= form_for @review, url: product_review_path(@review.product_id) do |f| %>
+                    <div class="comment-form-rating form-group clearfix">
+                      <div>
+                        <label class="control-label">Your Rating</label>
+                      </div>
+
+                      <div class="stars star-ratting">
+                        <%= f.radio_button :rating, 5, id: 'star-5', class: 'star star-5' %>
+                        <label class="star star-5" for="star-5"></label>
+                        <%= f.radio_button :rating, 4, id: 'star-4', class: 'star star-4' %>
+                        <label class="star star-4" for="star-4"></label>
+                        <%= f.radio_button :rating, 3, id: 'star-3', class: 'star star-3' %>
+                        <label class="star star-3" for="star-3"></label>
+                        <%= f.radio_button :rating, 2, id: 'star-2', class: 'star star-2' %>
+                        <label class="star star-2" for="star-2"></label>
+                        <%= f.radio_button :rating, 1, id: 'star-1', class: 'star star-1' %>
+                        <label class="star star-1" for="star-1"></label>
+                      </div>
+                    </div>
+
+                    <p class="comment-form-comment form-group">
+                      <%= f.label :text, 'Your Review' %>
+                      <%= f.text_area :text, cols: '45', rows: 8, class: 'form-control' %>
+                    </p>
+
+                    <p class="comment-form-author form-group">
+                      <%= f.label :name, 'Name*', class: 'control-label' %>
+                      <%= f.text_field :name, class: 'form-control reset-border-radius', required: true %>
+                    </p>
+
+                    <p class="comment-form-email form-group">
+                      <%= f.label :email, 'Email*', class: 'control-label' %>
+                      <%= f.email_field :email, class: 'form-control reset-border-radius', required: true, value: (current_user.present? ? current_user.email : '') %>
+                    </p>
+
+                    <p class="form-submit">
+                      <%= f.submit 'Submit', class: 'btn btn-warning reset-border-radius submit-review' %>
+                    </p>
+                <% end %>
+              </div>
+              <!-- #respond -->
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.submit-review').click(function (e) {
+            if ($(".star-ratting input[type='radio']").is(':checked')) {
+                return true;
+            }
+            else {
+                e.preventDefault();
+                alert("Please select a rating");
+            }
+        })
+    });
+</script>

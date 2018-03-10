@@ -1,0 +1,25 @@
+<div class="modal fade" id="compare-modal" tabindex="-1" role="dialog" aria-labelledby="modalLoginForm">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content reset-border-radius">
+
+      <div class="modal-body p25">
+        <div class="inner clearfix">
+          <%= link_to '', class: 'btn-cross pull-right', 'data-dismiss' => 'modal' do %>
+              x
+          <% end %>
+
+          <div class="text-center">
+            <%= link_to root_path, style: 'display: inline-block;' do %>
+                <%= image_tag('logo.png') %>
+            <% end %>
+          </div>
+
+          <div id="compare_content" class="form-wrapper sign-in-wrap">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

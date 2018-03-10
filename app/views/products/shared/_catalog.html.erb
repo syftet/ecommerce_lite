@@ -1,0 +1,123 @@
+<aside class="widget clearfix">
+  <div class="widget widget-off">
+    <h3 class="widget-title">
+      <%= t(:search_catalog) %>
+    </h3>
+
+    <div class="widget-filter-wrapper">
+      <div class="woof_redraw_zone">
+        <div class="price-slider">
+          <input class="range-slider hidden" value=''>
+        </div>
+
+        <div class="container-inner-filter color-filter-option">
+          <h4>Color</h4>
+          <a href="javascript:void(0);" style="display: none;" class="clear-color-filter" data-filter="color">
+            <i class="fa fa-times-circle"></i>
+          </a>
+
+          <div class="widget-block-html-items color-section clearfix">
+            <ul class="color-section-ul-style">
+              <% color_filters(@taxon).each do |color| %>
+                  <li>
+                    <%= radio_button_tag :color, color %>
+                    <label for="color_<%= color %>">
+                      <span style="background:#<%= color %>"></span>
+                    </label>
+                  </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+        <div class="size-filter-option">
+          <h4>
+            Size
+          </h4>
+          <a href="javascript:void(0);" style="display: none;" class="clear-size-filter" title="Clear size filter" data-filter="size">
+            <i class="fa fa-times-circle"></i>
+          </a>
+
+          <div class="widget-block-html-items">
+            <ul class="widget-list-checkbox">
+              <% size_filters(@taxon).each do |size| %>
+                  <li>
+                    <%= radio_button_tag 'size', size, false, {id: "size-#{size}"} %>
+                    <label for="size-<%= size %>"> <%= size %> </label>
+                  </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+        <div class="woof_submit_search_form_container">
+          <a style="float: right;" href="<%= @taxon.present? ? categories_path(@taxon) : products_path %>" class="btn btn-warning reset-border-radius" data-link="">Reset</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<script type="text/javascript">
+    $(function () {
+        data_query = $.query;
+        if (data_query.get('color') != '') {
+            $('.clear-color-filter').show();
+        }
+        if (data_query.get('size') != '') {
+            $('.clear-size-filter').show();
+        }
+        $(".range-slider").ionRangeSlider({
+            type: "double",
+            grid: true,
+            min: 0,
+            max: 5000,
+            from: <%= params[:min] || 0 %>,
+            to: <%= params[:max] || 5000 %>,
+            prefix: "৳",
+            onFinish: function (data) {
+                new_url = data_query.SET('min', data.from).SET('max', data.to);
+                loadProducts(new_url);
+            }
+        });
+
+        $('.color-section-ul-style label').click(function () {
+            color = $(this).parent().find("input[type='radio']").val();
+            if (typeof color != undefined) {
+                new_url = data_query.SET('color', color);
+                loadProducts(new_url);
+                $('.clear-color-filter').show();
+            }
+        });
+
+        $('.clear-color-filter, .clear-size-filter').click(function () {
+            $(this).parent().find("input[type='radio']:checked").prop('checked', false);
+            filter = $(this).attr('data-filter');
+            new_url = data_query.REMOVE(filter);
+            loadProducts(new_url);
+            $(this).hide();
+        });
+
+        $("input[name='size']").click(function () {
+            size = $("input[name='size']:checked").val();
+            new_url = data_query.SET('size', size);
+            loadProducts(new_url);
+            $('.clear-size-filter').show();
+        });
+    });
+
+    function loadProducts(url) {
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'script',
+            error: function (e) {
+                console.log(e);
+                popupMessage('Unable to load product!', 'alert alert-error');
+            },
+            success: function () {
+                window.history.pushState('', 'Products', url);
+            }
+        })
+    }
+</script>

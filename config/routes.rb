@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
   get '/promo/:q/products', to: 'products#index', as: :promotion_products
   post :email_subscription, to: 'public#subscribe'
+  resources :products
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   # Admin routes and resources

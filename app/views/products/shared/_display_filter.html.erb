@@ -1,0 +1,29 @@
+<div class="products-top-wrap">
+  <form class="display-mode" method="get">
+    <button title="Grid" class="btn " value="grid" name="display" type="submit">
+      <i class="fa fa-th"></i>
+    </button>
+    <button title="List" class="btn active" value="list" name="display" type="submit">
+      <i class="fa fa-list"></i>
+    </button>
+    <input type="hidden" name="swoof" value="1">
+    <input type="hidden" name="column" value="2">
+    <input type="hidden" name="per_page" value="6">
+    <input type="hidden" name="min_price" value="17">
+    <input type="hidden" name="max_price" value="605">
+    <input type="hidden" name="pa_size" value="l">
+  </form>
+
+
+  <form method="get">
+    <%= select_tag :per_page, options_for_select(AppSettings::PER_PAGE_FILTER.collect { |key, val| [val, key] }, (params[:per_page] || Syftet.config.product_per_page)), {class: 'custom-select', onchange: 'this.form.submit()'} %>
+  </form>
+
+  <form method="get" class="woocommerce-fillter">
+    <%= select_tag :product_type, options_for_select(AppSettings::PRODUCT_TYPE_FILTER.collect { |key, val| [val, key] }, (params[:product_type] || '')), {class: 'custom-select', onchange: 'this.form.submit()'} %>
+  </form>
+
+  <form class="woocommerce-ordering" method="get">
+    <%= select_tag :sort, options_for_select(AppSettings::PRODUCT_SORTING.collect { |key, val| [val, key] }, (params[:sort] || '')), {class: 'custom-select', onchange: 'this.form.submit()'} %>
+  </form>
+</div>
