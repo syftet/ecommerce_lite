@@ -1,5 +1,11 @@
+<%= render partial: 'admin/products/sidebar', locals: {current: :variants} %>
+<%= render partial: 'admin/variants/sidebar', locals: {current: :details} %>
+
 <% content_for :page_title do %>
-  Editing Variant of Product: <%= @product.name %>
+  <%= link_to @product.name, edit_admin_product_path(@product) %> /
+  <%= link_to 'Variants', admin_product_variants_path(@product) %> /
+  <%= link_to @variant.code, edit_admin_product_variant_path(@product, @variant) %> /
+  <%= t(:edit_variant) %>
 <% end %>
 
 <%= render 'form' %>

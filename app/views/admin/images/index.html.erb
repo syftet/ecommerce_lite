@@ -1,0 +1,51 @@
+<% if @product.master? %>
+  <%= render partial: 'admin/products/sidebar', locals: {current: :images} %>
+<% else %>
+  <%= render partial: 'admin/products/sidebar', locals: {current: :variants} %>
+  <%= render partial: 'admin/variants/sidebar', locals: {current: :images} %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to(t(:new_image), new_admin_product_image_url(@product), { class: "btn-success", icon: 'add', id: 'new_image_link' }) if can? :create, Image %>
+<% end %>
+
+<% content_for :page_title do %>
+  <% if @product.master? %>
+  <%= link_to @product.name, edit_admin_product_path(@product) %> / Images
+  <% else %>
+    <%= link_to @product.name, edit_admin_product_path(@product.product) %> /
+    <%= link_to 'Variants', admin_product_variants_path(@product.product) %> /
+    <%= link_to @product.code, edit_admin_product_variant_path(@product.product, @product) %> /
+    Images
+  <% end %>
+<% end %>
+
+<% if @images.any? %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th> <%= t(:thumbnail) %> </th>
+      <th><%= t(:alt_text) %></th>
+      <th colspan="2"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @images.each do |image| %>
+      <tr>
+        <td class="image">
+          <%= link_to image_tag(image.file.url(:mini)), image.file.url(:product) %>
+        </td>
+        <td><%= image.alt %></td>
+        <td><%= link_to 'Edit', edit_admin_product_image_path(@product, image) %></td>
+        <td><%= link_to 'Destroy', admin_product_image_path(@product, image), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info no-objects-found">
+    <%= t(:no_resource_found, resource: 'Images') %>,
+    <%= link_to t(:add_one), new_admin_product_image_path %>!
+  </div>
+<% end %>

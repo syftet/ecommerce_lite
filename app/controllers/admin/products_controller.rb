@@ -1,16 +1,13 @@
 module Admin
   class ProductsController < BaseController
-    before_action :set_product, only: [:show, :edit, :update, :destroy]
+    before_action :set_product, only: [:edit, :update, :destroy]
 
     def index
       @products = Product.active
     end
 
-    def show
-    end
-
     def new
-      @product = Product.new(code: "P00#{Product.all.count + 1}")
+      @product = Product.new(code: Product.generate_code)
     end
 
     def create

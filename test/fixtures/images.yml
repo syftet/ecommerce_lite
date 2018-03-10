@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  viewable: one
+  width: 1
+  height: 1
+  file_size: 1
+  position: 1
+  content_type: MyString
+  alt: MyString
+
+two:
+  viewable: two
+  width: 1
+  height: 1
+  file_size: 1
+  position: 1
+  content_type: MyString
+  alt: MyString

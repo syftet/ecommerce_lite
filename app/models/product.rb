@@ -9,18 +9,29 @@ class Product < ApplicationRecord
   has_many :product_categories, dependent: :destroy
   has_many :categories, class_name: 'Admin::Category', through: :product_categories
   has_many :variants, class_name: 'Product', foreign_key: :product_id, dependent: :destroy
+  has_many :images, as: :viewable, dependent: :destroy
+
+  accepts_nested_attributes_for :images,
+                                allow_destroy: true,
+                                reject_if: proc { |attributes|
+                                  attributes.all? { |k, v| v.blank? }
+                                }
 
   validates_presence_of :name, :code, :cost_price, :sale_price, :is_active, :slug
   validates_uniqueness_of :code
 
   scope :active, -> { where(is_active: true, product_id: nil) }
 
-  def product?
+  def master?
     !product.present?
   end
 
   def variant?
     product.present?
+  end
+
+  def self.generate_code
+    "P00#{Product.last.present? ? (Product.last.id + 1) : 1}"
   end
 
   def price

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180308104280) do
+ActiveRecord::Schema.define(version: 20180309050555) do
 
   create_table "admin_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -87,6 +87,21 @@ ActiveRecord::Schema.define(version: 20180308104280) do
     t.string "title"
     t.string "sub_title"
     t.string "link"
+  end
+
+  create_table "images", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "viewable_type"
+    t.bigint "viewable_id"
+    t.integer "width"
+    t.integer "height"
+    t.integer "file_size"
+    t.integer "position"
+    t.string "content_type"
+    t.text "file"
+    t.string "alt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["viewable_type", "viewable_id"], name: "index_images_on_viewable_type_and_viewable_id"
   end
 
   create_table "newsletter_subscriptions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -1,0 +1,11 @@
+<% content_for :sidebar do %>
+  <h4 style="margin-top: 30px">Variant</h4>
+  <ul class="nav nav-pills nav-stacked" data-hook="admin_user_tab_options">
+    <li<%== ' class="active"' if current == :details %>>
+      <%= link_to_with_icon 'pencil', 'Detail', @variant.present? ? edit_admin_product_variant_path(@product, @variant) : edit_admin_product_variant_path(@product.product, @product) %>
+    </li>
+    <li<%== ' class="active"' if current == :images %>>
+      <%= link_to_with_icon 'picture-o', 'Images', @variant.present? ? admin_product_images_path(@variant) : admin_product_images_path(@product) %>
+    </li>
+  </ul>
+<% end %>

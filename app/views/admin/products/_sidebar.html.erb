@@ -1,0 +1,19 @@
+<% content_for :page_title do %>
+  <%= link_to t(:products), admin_products_path %> /
+<% end %>
+
+<% content_for :sidebar do %>
+  <h4>Product</h4>
+  <% link_object = @product.master? ? @product : @product.product %>
+  <ul class="nav nav-pills nav-stacked" data-hook="admin_user_tab_options">
+    <li<%== ' class="active"' if current == :details %>>
+      <%= link_to_with_icon 'pencil', 'Detail', edit_admin_product_path(link_object) %>
+    </li>
+    <li<%== ' class="active"' if current == :images %>>
+      <%= link_to_with_icon 'picture-o', 'Images', admin_product_images_path(link_object) %>
+    </li>
+    <li<%== ' class="active"' if current == :variants %>>
+      <%= link_to_with_icon 'indent', 'Variants', admin_product_variants_path(link_object) %>
+    </li>
+  </ul>
+<% end %>

@@ -1,5 +1,7 @@
+<%= render partial: 'admin/products/sidebar', locals: {current: :details} %>
+
 <% content_for :page_title do %>
-  Editing Product: <%= @product.name %>
+  <%= @product.name %>
 <% end %>
 
 <%= render 'form' %>

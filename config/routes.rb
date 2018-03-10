@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :categories
     resources :brands
     resources :products do
+      resources :images
       resources :variants
     end
     resources :blogs do

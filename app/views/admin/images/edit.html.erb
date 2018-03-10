@@ -1,0 +1,52 @@
+<% if @product.master? %>
+  <%= render partial: 'admin/products/sidebar', locals: {current: :images} %>
+<% else %>
+  <%= render partial: 'admin/products/sidebar', locals: {current: :variants} %>
+  <%= render partial: 'admin/variants/sidebar', locals: {current: :images} %>
+<% end %>
+
+<% content_for :page_title do %>
+  <% if @product.master? %>
+    <%= link_to @product.name, edit_admin_product_path(@product) %> /
+  <% else %>
+    <%= link_to @product.name, edit_admin_product_path(@product.product) %> /
+    <%= link_to 'Variants', admin_product_variants_path(@product.product) %> /
+    <%= link_to @product.code, edit_admin_product_variant_path(@product.product, @product) %> /
+  <% end %>
+  <%= link_to 'Images', admin_product_images_path(@product) %> /
+  <%= link_to @image.file.present? ? @image.file.file.filename : 'Image', edit_admin_product_image_path(@product, @image) %> /
+  <%= t(:edit_image) %>
+<% end %>
+
+<%= render partial: 'admin/shared/error_messages', locals: {target: @image} %>
+
+<%= form_for [:admin, @product, @image], html: { multipart: true } do |f| %>
+  <div data-hook="edit_image" class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title">
+        <%= @image.file.file.filename if @image.file.present? %>
+      </h1>
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <div data-hook="thumbnail" class="col-md-3 text-center">
+          <%= f.label :file, t(:thumbnail) %>
+          <%= link_to image_tag(@image.file.url(:small)), @image.file.url(:product) %>
+        </div>
+        <div class="col-md-9">
+          <%= render partial: 'form', locals: { f: f } %>
+        </div>
+
+        <div class="form-actions" data-hook="buttons">
+          <%= button t('actions.update'), 'save' %>
+          <span class="or"><%= t(:or) %></span>
+          <%= button_link_to t('actions.cancel'), admin_product_images_url(@product), id: 'cancel_link', icon: 'delete' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div style="margin-top: 15px; text-align: center;">
+  <img src="" id="image-upload-preview"/>
+</div>

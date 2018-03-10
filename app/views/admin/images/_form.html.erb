@@ -1,0 +1,37 @@
+<div data-hook="admin_image_form_fields" class="row">
+  <div class="col-md-6">
+    <div data-hook="file" class="form-group">
+      <%= f.label :file, t(:filename) %>
+      <%= f.file_field :file %>
+      <span style="color: #00aced;">
+        (<i>Recommended image size 600x600, minimum size 400x400 with 1:1.25 ratio if possible</i>)
+      </span>
+    </div>
+  </div>
+  <div data-hook="alt_text" class="col-md-6">
+    <div class="form-group">
+      <%= f.label :alt, t(:alt_text) %>
+      <%= f.text_area :alt, :rows => 4, :class => 'form-control' %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#image_file").change(function () {
+            readURL(this);
+        });
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image-upload-preview').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

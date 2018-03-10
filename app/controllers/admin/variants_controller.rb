@@ -1,20 +1,21 @@
 module Admin
   class VariantsController < BaseController
     before_action :set_product
-    before_action :set_variant, only: [:show, :edit, :update, :destroy]
+    before_action :set_variant, only: [:edit, :update, :destroy]
 
-    def show
+    def index
+      @variants = @product.variants
     end
 
     def new
-      @variant = @product.variants.build(code: "P00#{Product.all.count + 1}")
+      @variant = @product.variants.build(code: Product.generate_code)
     end
 
     def create
       @variant = @product.variants.build(variant_params)
       respond_to do |format|
         if @variant.save
-          format.html { redirect_to admin_product_path(@product), notice: 'Variant added to product successfully.' }
+          format.html { redirect_to admin_product_variants_path(@product), notice: 'Variant added to product successfully.' }
         else
           format.html { render :new }
         end
@@ -27,7 +28,7 @@ module Admin
     def update
       respond_to do |format|
         if @variant.update(variant_params)
-          format.html { redirect_to admin_product_path(@product), notice: 'Variant updated successfully.' }
+          format.html { redirect_to admin_product_variants_path(@product), notice: 'Variant updated successfully.' }
         else
           format.html { render :edit }
         end
@@ -40,7 +41,7 @@ module Admin
       else
         flash[:error] = 'Unable to deleted variant.'
       end
-      redirect_to admin_product_path(@product)
+      redirect_to admin_product_variants_path(@product)
     end
 
     private

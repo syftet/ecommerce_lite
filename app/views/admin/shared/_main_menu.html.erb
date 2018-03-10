@@ -10,13 +10,13 @@
 
 <% if can? :admin, Product %>
     <ul class="nav nav-sidebar">
-      <%= main_menu_item('Products', admin_products_path, 'product') %>
+      <%= main_menu_item('Products', admin_products_path, 'product-hunt') %>
     </ul>
 <% end %>
 
 <% if can? :admin, Admin::Brand %>
     <ul class="nav nav-sidebar">
-      <%= main_menu_item('Brands', admin_brands_path, 'brand') %>
+      <%= main_menu_item('Brands', admin_brands_path, 'bandcamp') %>
     </ul>
 <% end %>
 
