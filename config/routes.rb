@@ -43,6 +43,9 @@ Rails.application.routes.draw do
     resources :categories
     resources :brands
     resources :products do
+      member do
+        get :stock
+      end
       resources :images
       resources :variants
     end
@@ -50,6 +53,11 @@ Rails.application.routes.draw do
       resources :comments, only: [:destroy, :edit, :update]
     end
     resources :home_sliders
+
+    resources :stock_locations
+    resources :stock_items
+    resources :stock_movements
+    resources :stock_transfers
   end
   get '/admin', to: 'admin/dashboard#index', as: :admin
 

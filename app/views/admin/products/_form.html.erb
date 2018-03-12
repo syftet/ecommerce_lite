@@ -162,27 +162,27 @@
         $('#product_category_ids').select2();
     });
 
-  $(function () {
-      var discountable_element = $('#product_discountable');
-      var is_amount_element = $('#product_is_amount');
-      var discount_element = $('#product_discount');
-      discountable_element.change(function () {
-          if (this.checked) {
-              is_amount_element.parent().parent().show();
-              discount_element.parent().show();
+    $(function () {
+        var discountable_element = $('#product_discountable');
+        var is_amount_element = $('#product_is_amount');
+        var discount_element = $('#product_discount');
+        discountable_element.change(function () {
+            if (this.checked) {
+                is_amount_element.parent().parent().show();
+                discount_element.parent().show();
 
-          }
-          else {
-              is_amount_element.parent().parent().hide();
-              discount_element.parent().hide();
-              is_amount_element.prop('checked', false);
-              discount_element.val(0.0);
-          }
-      });
+            }
+            else {
+                is_amount_element.parent().parent().hide();
+                discount_element.parent().hide();
+                is_amount_element.prop('checked', false);
+                discount_element.val(0.0);
+            }
+        });
 
-      if (!discountable_element.is(':checked')) {
-          is_amount_element.parent().parent().hide();
-          discount_element.parent().hide();
-      }
-  });
+        if (!discountable_element.is(':checked')) {
+            is_amount_element.parent().parent().hide();
+            discount_element.parent().hide();
+        }
+    });
 </script>

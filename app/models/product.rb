@@ -12,6 +12,7 @@ class Product < ApplicationRecord
   has_many :images, as: :viewable, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :related_products, inverse_of: :product
+  has_many :stock_items
 
   accepts_nested_attributes_for :images,
                                 allow_destroy: true,
@@ -22,7 +23,9 @@ class Product < ApplicationRecord
   validates_presence_of :name, :code, :cost_price, :sale_price, :is_active, :slug
   validates_uniqueness_of :code
 
-  scope :active, -> { where(is_active: true, product_id: nil) }
+  scope :active, -> { where(is_active: true) }
+  scope :master, -> { where(product_id: nil) }
+  scope :master_active, -> { where(is_active: true, product_id: nil) }
 
   def master?
     !product.present?
@@ -30,6 +33,10 @@ class Product < ApplicationRecord
 
   def variant?
     product.present?
+  end
+
+  def variants_with_master
+    [self, variants].flatten!
   end
 
   def self.generate_code

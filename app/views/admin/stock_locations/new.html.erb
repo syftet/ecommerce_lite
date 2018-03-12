@@ -1,0 +1,18 @@
+<% content_for :page_title do %>
+  <%= link_to t(:stock_locations), admin_stock_locations_path %> /
+  New Stock Location
+<% end %>
+
+<div data-hook="admin_user_new_form_header">
+  <%= render :partial => 'admin/shared/error_messages', :locals => {:target => @stock_location} %>
+</div>
+
+<div data-hook="admin_user_new_form">
+  <%= form_for [:admin, @stock_location] do |f| %>
+    <%= render :partial => 'form', :locals => {:f => f} %>
+
+    <div data-hook="admin_user_new_form_buttons">
+      <%= render 'admin/shared/form_actions', record: f.object, cancel: admin_stock_locations_path %>
+    </div>
+  <% end %>
+</div>

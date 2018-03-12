@@ -1,9 +1,9 @@
 module Admin
   class ProductsController < BaseController
-    before_action :set_product, only: [:edit, :update, :destroy]
+    before_action :set_product, only: [:edit, :update, :destroy, :stock]
 
     def index
-      @products = Product.active
+      @products = Product.master_active
     end
 
     def new
@@ -41,6 +41,15 @@ module Admin
         flash[:error] = 'Unable to deleted product.'
       end
       redirect_to admin_products_path
+    end
+
+    def stock
+      @products = @product.variants_with_master
+      @stock_locations = StockLocation.active
+      if @stock_locations.empty?
+        flash[:error] = t(:stock_management_requires_a_stock_location)
+        redirect_to admin_stock_locations_path
+      end
     end
 
     private

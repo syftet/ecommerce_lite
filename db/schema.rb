@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309051000) do
+ActiveRecord::Schema.define(version: 20180312044400) do
 
   create_table "admin_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -214,6 +214,53 @@ ActiveRecord::Schema.define(version: 20180309051000) do
     t.integer "user_id"
     t.string "email"
     t.boolean "is_approved", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "stock_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "stock_location_id"
+    t.integer "product_id"
+    t.integer "count_on_hand", default: 0
+    t.boolean "backorderable", default: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "stock_locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.boolean "default", default: false
+    t.string "address1"
+    t.string "city"
+    t.string "state"
+    t.string "zipcode"
+    t.string "country"
+    t.string "phone"
+    t.boolean "active", default: true
+    t.boolean "backorderable_default", default: false
+    t.boolean "propagate_all_variants", default: false
+    t.string "admin_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "stock_movements", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "stock_item_id"
+    t.integer "quantity", default: 0
+    t.string "action"
+    t.integer "originator_id"
+    t.string "originator_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "stock_transfers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "transfer_type"
+    t.string "reference"
+    t.integer "source_location_id"
+    t.integer "destination_location_id"
+    t.string "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

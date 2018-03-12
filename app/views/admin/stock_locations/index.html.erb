@@ -1,0 +1,39 @@
+<% content_for :page_title do %>
+  Stock Locations
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= link_to new_admin_stock_location_path, class: 'btn btn-success' do %>
+    <i class="fa fa-plus" aria-hidden="true"></i> New Stock Location
+  <% end %>
+<% end if can?(:create, StockLocation) %>
+
+<% if @stock_locations.any? %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Movements</th>
+      <th colspan="2"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @stock_locations.each do |stock_location| %>
+      <tr>
+        <td><%= stock_location.name %></td>
+        <td><%= stock_location.active ? 'Active' : 'Inactive' %></td>
+        <td><%= link_to 'Stock Movements', edit_admin_stock_location_path(stock_location) %></td>
+        <td><%= link_to 'Edit', edit_admin_stock_location_path(stock_location) %></td>
+        <td><%= link_to 'Destroy', admin_stock_location_path(stock_location), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info no-objects-found">
+    <%= t(:no_resource_found, resource: 'Stock Locations') %>,
+    <%= link_to t(:add_one), new_admin_stock_location_path %>!
+  </div>
+<% end %>

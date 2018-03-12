@@ -1,0 +1,40 @@
+<% content_for :page_title do %>
+  Stock Transfers
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= link_to new_admin_stock_transfer_path, class: 'btn btn-success' do %>
+    <i class="fa fa-plus" aria-hidden="true"></i> New Stock Transfer
+  <% end %>
+<% end if can?(:create, StockTransfer) %>
+
+<% if @stock_transfers.any? %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th><%= t(:created_at) %></th>
+      <th><%= t(:reference) %></th>
+      <th><%= t(:source) %></th>
+      <th><%= t(:destination) %></th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @stock_transfers.each do |stock_transfer| %>
+      <tr>
+        <td><%= stock_transfer.created_at %></td>
+        <td><%= stock_transfer.reference %></td>
+        <td><%= link_to stock_transfer.source_location.name, admin_stock_location_path(stock_transfer.source_location) %></td>
+        <td><%= link_to stock_transfer.destination_location.name, admin_stock_location_path(stock_transfer.destination_location) %></td>
+        <td><%= link_to 'Show', admin_stock_transfer_path(stock_transfer) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info no-objects-found">
+    <%= t(:no_resource_found, resource: 'Stock Transfers') %>,
+    <%= link_to t(:add_one), new_admin_stock_transfer_path %>!
+  </div>
+<% end %>
