@@ -54,9 +54,10 @@ Rails.application.routes.draw do
     end
     resources :home_sliders
 
-    resources :stock_locations
+    resources :stock_locations do
+      resources :stock_movements
+    end
     resources :stock_items
-    resources :stock_movements
     resources :stock_transfers
   end
   get '/admin', to: 'admin/dashboard#index', as: :admin

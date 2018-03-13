@@ -1,7 +1,7 @@
 class StockItem < ApplicationRecord
   belongs_to :stock_location
   belongs_to :product
-  has_many :stock_movements, dependent: :destroy
+  has_many :stock_movements, dependent: :nullify
 
   validates :stock_location, :product, presence: true
   validates :product_id, uniqueness: {scope: [:stock_location_id, :deleted_at]}, allow_blank: true

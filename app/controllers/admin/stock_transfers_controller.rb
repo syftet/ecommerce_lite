@@ -11,14 +11,18 @@ module Admin
     end
 
     def create
-      @stock_transfer = StockTransfer.new(stock_transfer_params)
-      respond_to do |format|
-        if @stock_transfer.save
-          format.html { redirect_to admin_stock_transfers_path, notice: 'Stock Transfer created successfully.' }
-        else
-          format.html { render :new }
-        end
+      products = Hash.new(0)
+      params[:product].each_with_index do |product_id, i|
+        products[product_id] += params[:quantity][i].to_i
       end
+
+      stock_transfer = StockTransfer.create(reference: params[:reference])
+      stock_transfer.transfer(source_location,
+                              destination_location,
+                              products)
+
+      flash[:success] = t(:stock_successfully_transferred)
+      redirect_to admin_stock_transfer_path(stock_transfer)
     end
 
     def edit
@@ -47,6 +51,14 @@ module Admin
 
     def set_stock_transfer
       @stock_transfer = StockTransfer.find(params[:id])
+    end
+
+    def source_location
+      @source_location ||= params.key?(:transfer_receive_stock) ? nil : StockLocation.find(params[:transfer_source_location_id])
+    end
+
+    def destination_location
+      @destination_location ||= StockLocation.find(params[:transfer_destination_location_id])
     end
 
     def stock_transfer_params

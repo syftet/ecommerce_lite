@@ -66,7 +66,8 @@ module Admin
                                       :cost_price, :whole_sale, :color_name,
                                       :color, :size, :weight, :width, :height,
                                       :depth, :discountable, :is_amount,
-                                      :discount, :reward_point, category_ids: [])
+                                      :discount, :reward_point,
+                                      :track_inventory, category_ids: [])
     end
   end
 end

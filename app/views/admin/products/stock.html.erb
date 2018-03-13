@@ -1,7 +1,10 @@
 <%= render partial: 'admin/products/sidebar', locals: {current: :stock} %>
 <%= render partial: 'admin/shared/error_messages', locals: {target: @product} %>
 
-
+<% content_for :page_title do %>
+  <%= link_to @product.name, edit_admin_product_path(@product) %> /
+  Stock
+<% end %>
 
 <% if can? :create, StockMovement %>
   <div id="add_stock_form" class="panel panel-default">
@@ -28,18 +31,14 @@
           </td>
           <td>
             <%= product.code %>
-            <!--<%#= form_tag admin_product_variants_including_master_path(@product, variant, format: :js), method: :put, class: 'toggle_variant_track_inventory' do %>-->
-              <!--<div class="checkbox">-->
-                <!--<%#= label_tag :track_inventory do %>-->
-                  <%#= check_box_tag 'track_inventory', 1, variant.track_inventory?,
-                                    class: 'track_inventory_checkbox' %>
-                  <!--<%#= t(:track_inventory) %>-->
-                  <%#= hidden_field_tag 'variant[track_inventory]', variant.track_inventory?,
-#                                        class: 'variant_track_inventory',
-                                       id: "variant_track_inventory_#{variant.id}" %>
-                <!--<%# end %>-->
-              <!--</div>-->
-            <!--<%# end if can?(:update, @product) && can?(:update, variant) %>-->
+            <%= form_for [:admin, product], class: 'toggle_variant_track_inventory' do |ti_form| %>
+              <div class="checkbox">
+                <%= label_tag :track_inventory, for: :product_track_inventory do %>
+                  <%= ti_form.check_box :track_inventory, id: :product_track_inventory %>
+                  <%= t(:track_inventory) %>
+                <% end %>
+              </div>
+            <% end if can?(:update, product) %>
           </td>
 
           <td colspan="3" class="stock_location_info">
@@ -57,15 +56,12 @@
                   <td><%= item.stock_location.name %></td>
                   <td class="text-center"><%= item.count_on_hand %></td>
                   <td class="text-center">
-                    <%#= form_tag admin_stock_item_path(item), method: :put, class: 'toggle_stock_item_backorderable' do %>
-                      <%#= check_box_tag 'stock_item[backorderable]', true,
-                                        item.backorderable?,
-                                        class: 'stock_item_backorderable',
-                                        id: "stock_item_backorderable_#{item.stock_location.id}" %>
-                    <%# end if can? :update, item %>
+                    <%= form_for [:admin, item], class: 'toggle_stock_item_backorderable' do |si_form| %>
+                      <%= si_form.check_box :backorderable, class: 'stock_item_backorderable', id: :stock_item_backorderable %>
+                    <% end if can? :update, item %>
                   </td>
                   <td class="actions actions-1 text-center">
-                    <%#= link_to_with_icon('delete', t(:remove), [:admin, item], method: :delete, remote: true, class: 'icon_link btn btn-danger btn-sm', data: {action: :remove, confirm: t(:are_you_sure)}, no_text: true) if can? :destroy, item %>
+                    <%= link_to_with_icon('times', 'Remove', [:admin, item], method: :delete, remote: true, class: 'icon_link btn btn-danger btn-sm', data: {action: :remove, confirm: 'Are you sure?'}, no_text: true) if can? :destroy, item %>
                   </td>
                 </tr>
               <% end %>
@@ -78,3 +74,15 @@
     </tbody>
   </table>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).off('change', '#product_track_inventory').on('change', '#product_track_inventory', function () {
+     console.log($(this).parents('.edit_product').attr('id'));
+      $(this).parents('.edit_product').submit();
+  });
+
+  $(document).off('change', '#stock_item_backorderable').on('change', '#stock_item_backorderable', function () {
+     console.log($(this).parents('.edit_stock_item').attr('id'));
+      $(this).parents('.edit_stock_item').submit();
+  });
+</script>

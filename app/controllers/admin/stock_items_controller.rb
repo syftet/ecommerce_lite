@@ -1,5 +1,7 @@
 module Admin
   class StockItemsController < BaseController
+    before_action :set_stock_item, only: [:update, :destroy]
+
     def create
       product = Product.find(params[:product_id])
       stock_location = StockLocation.find(params[:stock_location_id])
@@ -15,16 +17,36 @@ module Admin
       redirect_to admin_products_path
     end
 
-    def destroy
-      stock_item.destroy
+    def update
+      respond_to do |format|
+        if @stock_item.update(stock_item_params)
+          format.html { redirect_to stock_admin_product_path(@stock_item.product), notice: 'Stock changed successfully.' }
+        else
+          format.html { redirect_to stock_admin_product_path(@stock_item.product), error: 'Unable to changed stock.' }
+        end
+      end
+    end
 
-      respond_with(@stock_item) do |format|
-        format.html { redirect_to :back }
-        format.js
+    def destroy
+      respond_to do |format|
+        @product = @stock_item.product.master? ? @stock_item.product : @stock_item.product.product
+        if @stock_item.destroy
+          format.html { redirect_to stock_admin_product_path(@product), notice: 'Stock changed successfully.' }
+        else
+          format.html { redirect_to stock_admin_product_path(@product), error: 'Unable to changed stock.' }
+        end
       end
     end
 
     private
+
+    def set_stock_item
+      @stock_item = StockItem.find(params[:id])
+    end
+
+    def stock_item_params
+      params.require(:stock_item).permit!
+    end
 
     def stock_movement_params
       params.require(:stock_movement).permit!

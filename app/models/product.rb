@@ -26,6 +26,7 @@ class Product < ApplicationRecord
   scope :active, -> { where(is_active: true) }
   scope :master, -> { where(product_id: nil) }
   scope :master_active, -> { where(is_active: true, product_id: nil) }
+  scope :in_stock, -> { joins(:stock_items).where('count_on_hand > ? OR track_inventory = ?', 0, false) }
 
   def master?
     !product.present?
@@ -57,6 +58,22 @@ class Product < ApplicationRecord
 
   def percentage_discount
     sale_price - (sale_price * (discount / 100.0))
+  end
+
+  def should_track_inventory?
+    track_inventory? #&& Config.track_inventory_levels TODO: Need to check this
+  end
+
+  def track_inventory
+    should_track_inventory?
+  end
+
+  def volume
+    (width || 0) * (height || 0) * (depth || 0)
+  end
+
+  def dimension
+    (width || 0) + (height || 0) + (depth || 0)
   end
 
   def total_on_hand

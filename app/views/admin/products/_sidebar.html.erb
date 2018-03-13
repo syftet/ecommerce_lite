@@ -16,7 +16,7 @@
       <%= link_to_with_icon 'indent', 'Variants', admin_product_variants_path(link_object) %>
     </li>
     <li<%== ' class="active"' if current == :stock %>>
-      <%= link_to_with_icon 'indent', 'Stock', stock_admin_product_path(link_object) %>
+      <%= link_to_with_icon 'home', 'Stock', stock_admin_product_path(link_object) %>
     </li>
   </ul>
 <% end %>

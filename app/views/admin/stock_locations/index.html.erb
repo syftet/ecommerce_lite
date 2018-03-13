@@ -24,7 +24,7 @@
       <tr>
         <td><%= stock_location.name %></td>
         <td><%= stock_location.active ? 'Active' : 'Inactive' %></td>
-        <td><%= link_to 'Stock Movements', edit_admin_stock_location_path(stock_location) %></td>
+        <td><%= link_to 'Stock Movements', admin_stock_location_stock_movements_path(stock_location) %></td>
         <td><%= link_to 'Edit', edit_admin_stock_location_path(stock_location) %></td>
         <td><%= link_to 'Destroy', admin_stock_location_path(stock_location), method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>

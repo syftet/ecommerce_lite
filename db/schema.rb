@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180312044400) do
+ActiveRecord::Schema.define(version: 20180313120708) do
 
   create_table "admin_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(version: 20180312044400) do
     t.float "reward_point", limit: 53, default: 0.0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "track_inventory", default: true
     t.index ["brand_id"], name: "index_products_on_brand_id"
   end
 
@@ -239,7 +240,7 @@ ActiveRecord::Schema.define(version: 20180312044400) do
     t.string "phone"
     t.boolean "active", default: true
     t.boolean "backorderable_default", default: false
-    t.boolean "propagate_all_variants", default: false
+    t.boolean "propagate_all_variants", default: true
     t.string "admin_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

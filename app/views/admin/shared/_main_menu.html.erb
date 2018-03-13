@@ -32,11 +32,11 @@
   </ul>
 <% end %>
 
-<% if can?(:admin, StockTransfer) %>
-  <ul class="nav nav-sidebar">
-    <%= main_menu_item('Stock Transfers', admin_stock_transfers_path, 'exchange') %>
-  </ul>
-<% end %>
+<%# if can?(:admin, StockTransfer) %>
+  <!--<ul class="nav nav-sidebar">-->
+    <%#= main_menu_item('Stock Transfers', admin_stock_transfers_path, 'exchange') %>
+  <!--</ul>-->
+<%# end %>
 
 <% if can?(:admin, Blog) %>
     <ul class="nav nav-sidebar">

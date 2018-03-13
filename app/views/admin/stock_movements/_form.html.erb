@@ -1,0 +1,10 @@
+<div data-hook="admin_stock_movements_form_fields">
+  <%= f.field_container :quantity, class: ['form-group'] do %>
+      <%= f.label :quantity, t(:quantity) %>
+      <%= f.text_field :quantity, class: 'form-control' %>
+  <% end %>
+  <%= f.field_container :stock_item_id, class: ['form-group'] do %>
+      <%= f.label :stock_item_id, t(:stock_item_id) %>
+      <%= f.select :stock_item_id, options_for_select(@stock_location.stock_items.collect{|item| ["#{item.product.name} - (Code: #{item.product.code})", item.id]}, f.object.stock_item_id), {}, class: 'form-control' %>
+  <% end %>
+</div>
