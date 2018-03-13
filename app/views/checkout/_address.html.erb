@@ -46,7 +46,6 @@
             <div class="row">
               <div class="col-md-12 shipping-address-form billing-form">
                 <%= render 'checkout/address_fields', form_builder: ship_form, address_type: 'Shipping' %>
-                <%= form.check_box :use_shipping, value: true, checked: true, class: 'hidden' %>
               </div>
             </div>
           </div>
@@ -58,4 +57,5 @@
       </div>
     </div>
 <% end %>
+
 <%= render 'shared/form_validation_script' %>

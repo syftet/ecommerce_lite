@@ -36,9 +36,39 @@ class Order < ApplicationRecord
   friendly_id :number, slug_column: :number, use: :slugged
 
   has_many :line_items
+  belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Address'
+  has_one :shipment
+
+  accepts_nested_attributes_for :line_items
+  accepts_nested_attributes_for :ship_address
+  # accepts_nested_attributes_for :payments
+  # accepts_nested_attributes_for :shipments
+
+  attr_accessor :shipping_method
+
+  def next
+    if self.state == 'address'
+      self.state = 'delivery'
+    elsif self.state == 'delivery'
+      self.state = 'payment'
+    end
+    self.save
+  end
 
   def contents
     @contents ||= OrderContents.new(self)
+  end
+
+  def update_with_params(params, permitted_params)
+    if params[:state] == 'address'
+      self.update_attributes(permitted_params)
+    elsif params[:state] == 'delivery'
+      if init_shipment(permitted_params.delete(:shipping_method))
+        self.update_attributes(permitted_params)
+      else
+        false
+      end
+    end
   end
 
   def completed?
@@ -60,4 +90,16 @@ class Order < ApplicationRecord
       reward_point.save
     end
   end
+
+  def init_shipment(shipping_method)
+    shipping = ShippingMethod.find_by_id(shipping_method)
+    u_shipment = self.shipment || self.build_shipment
+    u_shipment.cost = shipping.rate
+    u_shipment.address_id = self.ship_address.id
+    u_shipment.tracking = shipping.code
+    u_shipment.shipping_method_id = shipping.id
+    u_shipment.state = 'pending'
+    u_shipment.save!
+  end
+
 end

@@ -17,6 +17,7 @@ class CheckoutController < ApplicationController
   #
   # before_action :setup_for_current_state
   # before_action :add_store_credit_payments, only: [:update]
+  before_action :validate_state, only: [:edit]
   #
   # helper 'orders'
   layout 'product'
@@ -24,32 +25,14 @@ class CheckoutController < ApplicationController
 
   # Updates the order and advances to the next state (when possible.)
   def update
-    if @order.update_from_params(params, permitted_checkout_attributes, request.headers.env)
-      @order.temporary_address = !params[:save_user_address]
-      unless @order.next
-        flash[:error] = @order.errors.full_messages.join("\n")
-        redirect_to(checkout_state_path(@order.state)) && return
-      end
-
-      if @order.completed? && !@order.payment_failed?
-        @current_order = nil
-        flash.notice = t(:order_processed_successfully)
-        flash['order_completed'] = true
-        redirect_to completion_route
+    if @order.update_with_params(params, permitted_checkout_attributes)
+      if @order.next
+        redirect_to checkout_state_path(@order.state)
       else
-        if params[:failed_id].present?
-          redirect_to checkout_state_path(@order.state, failed_id: params[:failed_id])
-        else
-          redirect_to checkout_state_path(@order.state)
-        end
+
       end
     else
-      message = []
-      @order.errors.each do |key, msg|
-        message.push("#{key.to_s.gsub('.', ' ').humanize} #{msg}")
-      end
-      flash[:error] = message.join("\n")
-      render :edit
+      render @order.state
     end
   end
 
@@ -62,9 +45,20 @@ class CheckoutController < ApplicationController
       @title = "SSL Secured Payment Processing - BrandCruz"
       @order.state = 'payment'
     end
+    @order.state = params[:state] if params[:state]
   end
 
   private
+
+  def permitted_checkout_attributes
+    params[:order].permit!
+  end
+
+  def validate_state
+    if @order.state == 'address'
+      before_address
+    end
+  end
 
   def unknown_state?
     (params[:state] && !@order.has_checkout_step?(params[:state])) ||
@@ -167,10 +161,7 @@ class CheckoutController < ApplicationController
   end
 
   def before_address
-    # if the user has a default address, a callback takes care of setting
-    # that; but if he doesn't, we need to build an empty one here
-    @order.bill_address ||= Address.build_default
-    @order.ship_address ||= Address.build_default if @order.checkout_steps.include?('delivery')
+    @order.ship_address ||= Address.build_default
   end
 
   def before_delivery

@@ -1,0 +1,48 @@
+<% content_for :page_title do %>
+    <%= plural_resource_name(ShippingMethod) %>
+<% end %>
+
+<% content_for :page_actions do %>
+    <%= button_link_to t(:new_shipping_method), new_admin_shipping_method_path, :class => "btn-success", :icon => 'add', :id => 'admin_new_shipping_method_link' %>
+<% end if can? :create, ShippingMethod %>
+
+<% if @shipping_methods.any? %>
+    <table class="table" id='listing_shipping_methods'>
+      <thead>
+      <tr data-hook="admin_shipping_methods_index_headers">
+        <th>
+          Name
+        </th>
+        <th>
+          Internal
+        </th>
+        <th>
+          Code
+        </th>
+        <th class="text-center">
+          Rate
+        </th>
+        <th data-hook="admin_shipping_methods_index_header_actions" class="actions"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @shipping_methods.each do |shipping_method| %>
+          <tr>
+            <td><%= shipping_method.admin_name + ' / ' if shipping_method.admin_name.present? %><%= shipping_method.name %></td>
+            <td><%= shipping_method.admin_name %></td>
+            <td><%= shipping_method.code %></td>
+            <td><%= shipping_method.rate %></td>
+            <td data-hook="admin_shipping_methods_index_row_actions" class="actions actions-2 text-right">
+              <%= link_to_edit shipping_method, url: edit_admin_shipping_method_path(shipping_method), no_text: true %>
+              <%= link_to_delete shipping_method, url: admin_shipping_method_path(shipping_method), no_text: true %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="alert alert-info no-objects-found">
+      <%= t(:no_resource_found, resource: plural_resource_name(ShippingMethod)) %>,
+      <%= link_to(t(:add_one), new_admin_shipping_method_path) if can? :create, ShippingMethod %>!
+    </div>
+<% end %>

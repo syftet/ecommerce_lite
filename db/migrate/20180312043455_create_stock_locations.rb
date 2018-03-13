@@ -3,7 +3,7 @@ class CreateStockLocations < ActiveRecord::Migration[5.1]
     create_table :stock_locations do |t|
       t.string :name
       t.boolean :default, default: false
-      t.string :address1
+      t.string :address
       t.string :city
       t.string :state
       t.string :zipcode

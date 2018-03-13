@@ -33,8 +33,18 @@ Rails.application.routes.draw do
   end
   resources :carts
   get '/checkout', to: 'checkout#edit', as: :cart_checkout
+  get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
   patch '/checkout/update/:state', to: 'checkout#update', as: :update_checkout
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  # Payment Gateway
+
+  post '/paypal', :to => "paypal#express", :as => :paypal_express
+  get '/paypal/confirm', :to => "paypal#confirm", :as => :confirm_paypal
+  get '/paypal/cancel', :to => "paypal#cancel", :as => :cancel_paypal
+  get '/paypal/notify', :to => "paypal#notify", :as => :notify_paypal
+
+  # END PAYMENT #
 
   # Admin routes and resources
 
@@ -53,6 +63,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:destroy, :edit, :update]
     end
     resources :home_sliders
+    resources :shipping_methods
 
     resources :stock_locations do
       resources :stock_movements
