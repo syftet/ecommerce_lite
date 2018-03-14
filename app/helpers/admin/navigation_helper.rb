@@ -157,7 +157,7 @@ module Admin
       name = options[:name] || t(:delete)
       options[:class] = "btn btn-danger btn-sm delete-resource"
       options[:data] = {confirm: t(:are_you_sure), action: 'remove'}
-      link_to_with_icon 'delete', name, url, options
+      link_to_with_icon 'trash', name, url, options
     end
 
     def link_to_with_icon(icon_name, text, url, options = {})

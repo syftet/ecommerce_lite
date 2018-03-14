@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313120708) do
+ActiveRecord::Schema.define(version: 20180313154713) do
+
+  create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "firstname"
+    t.string "lastname"
+    t.string "address"
+    t.string "city"
+    t.string "zipcode"
+    t.string "phone"
+    t.string "state"
+    t.string "company"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "admin_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -155,6 +169,8 @@ ActiveRecord::Schema.define(version: 20180313120708) do
     t.datetime "shipped_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "special_instructions"
+    t.string "collection_point"
   end
 
   create_table "product_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -215,6 +231,43 @@ ActiveRecord::Schema.define(version: 20180313120708) do
     t.integer "user_id"
     t.string "email"
     t.boolean "is_approved", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rewards_points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "order_id"
+    t.float "points", limit: 24, default: 0.0
+    t.string "reason"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shipments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "tracking"
+    t.string "number"
+    t.decimal "cost", precision: 10, default: "0"
+    t.datetime "shipped_at"
+    t.integer "order_id"
+    t.integer "address_id"
+    t.string "state"
+    t.integer "stock_location_id"
+    t.decimal "adjustment_total", precision: 10, default: "0"
+    t.decimal "promo_total", precision: 10, default: "0"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "shipping_method_id"
+  end
+
+  create_table "shipping_methods", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "display_on"
+    t.datetime "deleted_at"
+    t.string "admin_name"
+    t.string "code"
+    t.string "tracking_url"
+    t.string "rate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

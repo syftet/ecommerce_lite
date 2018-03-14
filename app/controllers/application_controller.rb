@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
       order = Order.new
       order.guest_token = get_token
       order.user_id = current_user.id if current_user.present?
+      order.state = 'address'
       order.save!
     end
     order
