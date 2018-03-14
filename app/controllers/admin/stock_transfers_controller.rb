@@ -1,13 +1,16 @@
 module Admin
   class StockTransfersController < BaseController
-    before_action :set_stock_transfer, only: [:edit, :update, :destroy]
+    before_action :set_stock_transfer, only: [:show, :edit, :update, :destroy]
 
     def index
       @stock_transfers = StockTransfer.all
     end
 
+    def show
+
+    end
+
     def new
-      @stock_transfer = StockTransfer.new
     end
 
     def create

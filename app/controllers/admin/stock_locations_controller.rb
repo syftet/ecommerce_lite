@@ -1,6 +1,6 @@
 module Admin
   class StockLocationsController < BaseController
-    before_action :set_stock_location, only: [:edit, :update, :destroy]
+    before_action :set_stock_location, only: [:edit, :update, :destroy, :stock_items]
 
     def index
       @stock_locations = StockLocation.all
@@ -41,6 +41,10 @@ module Admin
         flash[:error] = 'Unable to deleted Stock Location.'
       end
       redirect_to admin_stock_locations_path
+    end
+
+    def stock_items
+      @stock_items = @stock_location.stock_items
     end
 
     private

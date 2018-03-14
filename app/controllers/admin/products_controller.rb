@@ -3,7 +3,10 @@ module Admin
     before_action :set_product, only: [:edit, :update, :destroy, :stock]
 
     def index
-      @products = Product.master_active
+      respond_to do |format|
+        format.html { @products = Product.master_active }
+        format.json { @products = Product.all }
+      end
     end
 
     def new

@@ -55,6 +55,9 @@ Rails.application.routes.draw do
     resources :home_sliders
 
     resources :stock_locations do
+      member do
+        get :stock_items
+      end
       resources :stock_movements
     end
     resources :stock_items

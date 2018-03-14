@@ -3,9 +3,9 @@ class StockTransfer < ApplicationRecord
   belongs_to :destination_location, class_name: 'StockLocation'
   has_many :stock_movements, as: :originator
 
-  def to_param
-    number
-  end
+  # def to_param
+  #   number
+  # end
 
   def source_movements
     find_stock_location_with_location_id(source_location_id)
