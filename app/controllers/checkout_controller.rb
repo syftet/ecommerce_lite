@@ -7,17 +7,17 @@ class CheckoutController < ApplicationController
   # before_action :ensure_valid_state_lock_version, only: [:update]
   # before_action :set_state_if_present
   #
-  # before_action :ensure_order_not_completed
-  # before_action :ensure_checkout_allowed
+  before_action :ensure_order_not_completed
+  before_action :ensure_checkout_allowed
   # # before_action :ensure_sufficient_stock_lines
   # before_action :ensure_valid_state
   #
   # before_action :associate_user
   # before_action :check_authorization
   #
-  # before_action :setup_for_current_state
+  before_action :setup_for_current_state
   # before_action :add_store_credit_payments, only: [:update]
-  before_action :validate_state, only: [:edit]
+  # before_action :validate_state, only: [:edit]
   #
   # helper 'orders'
   layout 'product'
@@ -134,13 +134,14 @@ class CheckoutController < ApplicationController
   end
 
   def ensure_checkout_allowed
-    unless @order.checkout_allowed?
-      redirect_to cart_checkout_path
+    unless @order.line_items.count > 0
+      flash[:error] = "Your shopping cart is empty"
+      redirect_to products_path
     end
   end
 
   def ensure_order_not_completed
-    redirect_to cart_checkout_path if @order.completed? && !@order.payment_failed?
+    redirect_to products_path if @order.completed?
   end
 
   def ensure_sufficient_stock_lines
@@ -165,14 +166,14 @@ class CheckoutController < ApplicationController
   end
 
   def before_delivery
-    return if params[:order].present?
-
-    packages = @order.shipments.map(&:to_package)
-    @differentiator = Stock::Differentiator.new(@order, packages)
+    unless @order.ship_address.present?
+      redirect_to checkout_state_path('address')
+    end
   end
 
   def before_payment
-    if @order.checkout_steps.include? "delivery"
+    before_address
+    unless @order.shipment.present?
       packages = @order.shipments.map(&:to_package)
       @differentiator = Stock::Differentiator.new(@order, packages)
       @differentiator.missing.each do |variant, quantity|
@@ -200,25 +201,12 @@ class CheckoutController < ApplicationController
     end
   end
 
-  def rescue_from_spree_gateway_error(exception)
-    flash.now[:error] = t(:spree_gateway_error_flash_for_checkout)
-    @order.errors.add(:base, exception.message)
-    render :edit
-  end
-
   def check_authorization
     if current_user.present?
       @order.user_id == current_user.id
     else
       authorize!(:edit, current_order, cookies[:guest_token])
     end
-  end
-
-  def sanitize_zip_code
-    order_params = params[:order]
-    return unless order_params
-    strip_zip(order_params[:bill_address_attributes])
-    strip_zip(order_params[:ship_address_attributes])
   end
 
   def strip_zip(address_params)

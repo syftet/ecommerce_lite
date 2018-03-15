@@ -2,33 +2,24 @@ class Search
   attr_accessor :taxon, :terms, :page
 
   def initialize(params, taxon = nil)
-    p taxon
     self.terms = params
     self.taxon = taxon
     self.page = params[:page] || 1
   end
 
   def result
-    p '********************************'
-    p taxon
     if taxon.present?
-      p 'taxon present'
-      p taxon
       result_object = taxon.products.joins(:variants) #.joins(:prices)
     else
-      result_object = Product.joins(:variants) #.joins(:prices)
+      result_object = Product.joins(:variants)
     end
 
     if terms['product_type'] == 'recent'
       result_object = result_object.where("products.created_at >= ?", 15.days.ago)
     end
 
-    if terms['product_type'] == 'sale'
-      result_object = result_object.where('products.promotionable = true')
-    end
-
-    if terms['product_type'] == 'sale'
-      result_object = result_object.where('products.promotionable = true')
+    if terms['product_type'] == 'sale' || terms['q'] == 'discount'
+      result_object = result_object.where('products.discountable = true')
     end
 
     if terms['product_type'] == 'featured'
@@ -44,7 +35,7 @@ class Search
     end
 
     if terms[:min] && terms[:max]
-      result_object = result_object.where("prices.amount between #{terms[:min]} and #{terms[:max]}")
+      result_object = result_object.where("products.sale_price between #{terms[:min]} and #{terms[:max]}")
     end
 
     if terms[:size].present?
@@ -52,12 +43,12 @@ class Search
     end
 
     if terms[:color].present?
-      result_object = result_object.where('variants.color_image = ?', terms[:color])
+      result_object = result_object.where('variants.color = ?', terms[:color])
     end
 
     result_object = result_object.distinct
     result_object = sort_by(result_object)
-    result_object.page(page).per(terms['per_page'] || 20 )#Syftet.config.product_per_page)
+    result_object.page(page).per(terms['per_page'] || 20) #Syftet.config.product_per_page)
   end
 
 
@@ -65,14 +56,14 @@ class Search
 
     if terms[:taxon].present?
       category = Taxon.find_by_id(terms[:taxon])
-      result_object = category.present? ? category.products.joins(:variants).joins(:prices) : Product.joins(:variants).joins(:prices).where(id: 0)
+      result_object = category.present? ? category.products.joins(:variants) : Product.joins(:variants)
     else
-      result_object = Product.joins(:variants).joins(:prices)
+      result_object = Product.joins(:variants)
     end
 
     if terms['q'] == 'featured'
       result_object = result_object.where('products.is_featured = true')
-      end
+    end
     if terms['q'] == 'top_rate'
       result_object = result_object.joins(:reviews).order("reviews.rating DESC")
     end
@@ -82,10 +73,10 @@ class Search
     end
 
     if terms['q'] == 'discount'
-      result_object = result_object.where('products.promotionable = true')
-      end
+      result_object = result_object.where('products.discountable = true')
+    end
     if terms['q'] == 'sale'
-      result_object = result_object.where('products.promotionable = true')
+      result_object = result_object.where('products.discountable = true')
     end
 
     if terms[:name].present?
@@ -111,9 +102,9 @@ class Search
     sort_result = result_object
     case terms[:sort]
       when 'price_low'
-        sort_result = result_object.reorder('prices.amount')
+        sort_result = result_object.reorder('products.sale_price')
       when 'price_high'
-        sort_result = result_object.reorder('prices.amount desc')
+        sort_result = result_object.reorder('products.sale_price desc')
       when 'rating'
       else
         sort_result = result_object.reorder('products.created_at desc')

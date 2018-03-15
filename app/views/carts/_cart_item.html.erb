@@ -27,9 +27,7 @@
   </td>
 
   <td class="product-quantity">
-    <div class="qty add-to-cart-select-quantity quantity-adder quantity">
-      <label for="qty" class="quantity-selector">Qty:</label>
-
+    <div class="qty add-to-cart-select-quantity update-cart-quantity quantity-adder quantity" style="width: 110px">
       <div class="quantity-number">
         <span class="add-down add-action" data-step="-1" data-item-id="<%= line_item.id %>">-</span>
         <input name="name" maxlength="12" value="<%= line_item.quantity %>" title="Qty" class="input-text qty qty-line-item-<%= line_item.id %>" type="text">

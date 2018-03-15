@@ -44,6 +44,14 @@ class Product < ApplicationRecord
     "P00#{Product.last.present? ? (Product.last.id + 1) : 1}"
   end
 
+  def on_stock
+    if total_on_hand > 0
+      "<span class='product-in-stock'> In Stock </span>"
+    else
+      "<span class='product-out-stock'> Out Of Stock </span>"
+    end
+  end
+
   def price
     discountable ? discount_price : sale_price
   end
@@ -54,6 +62,11 @@ class Product < ApplicationRecord
 
   def flat_discount
     sale_price - discount
+  end
+
+  def discount_amount
+    return 0 unless discountable
+    is_amount ? discount : (sale_price * (discount / 100.0))
   end
 
   def percentage_discount
@@ -77,11 +90,7 @@ class Product < ApplicationRecord
   end
 
   def total_on_hand
-    2 #TODO: Calculate stock
-  end
-
-  def on_stock
-    true
+    stock_items.count
   end
 
 end

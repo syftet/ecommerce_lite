@@ -1,0 +1,54 @@
+<% content_for :page_actions do %>
+    <%# if can?(:fire, order) %>
+    <%# if order.send("can_approve?") %>
+    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#approve-modal">-->
+    <!--<span class="icon icon-approve"></span>Approve-->
+    <!--</button>-->
+    <%# else %>
+    <%# events.delete('approve') %>
+    <%#= event_links(order, events) %>
+    <%# end %>
+    <%# end %>
+    <%# if can?(:resend, order) %>
+    <%#= button_link_to t(:resend, scope: 'admin.order.events', default: t(:resend)),
+                           resend_admin_order_url(order),
+                           method: :post,
+                           icon: 'envelope'
+    %>
+    <%# end %>
+<% end %>
+
+<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
+<!--Launch demo modal-->
+<!--</button>-->
+
+<!-- Modal -->
+<div class="modal fade" id="approve-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= form_for ['approve', :admin, order], method: :put do |f| %>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Order Approve</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <%= f.label :shipment_date %>
+              <%= f.text_field :shipment_date, class: 'form-control datepicker' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :shipment_progress %>
+              <%= f.text_field :shipment_progress, class: 'form-control' %>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <%= raw f.submit raw("Approve"), class: 'btn btn-primary' %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -5,5 +5,5 @@ $(".price-line-item-<%= @line_item.id %>").html("<%= amount_with_currency(@line_
 $(".qty-line-item-<%= @line_item.id %>").val("<%= @line_item.quantity %>");
 $("#shopping-cart-doopdown, .shopping-cart-doopdown").html("<%= escape_javascript(render 'shared/cart_items', current_order: @order).html_safe %>");
 $(".mini-cart-items").html("<%= line_item_count %>");
-$(".mini-cart-total, .cart-sub-total, .cart-total-amount").html("<%= amount_with_currency(@order.amount) %>");
+$(".mini-cart-total, .cart-sub-total, .cart-total-amount").html("<%= amount_with_currency(@order.total) %>");
 <%end%>

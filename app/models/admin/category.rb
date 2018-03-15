@@ -1,6 +1,7 @@
 class Admin::Category < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
+  self.table_name = 'admin_categories'
 
   after_save :set_permalink
 
@@ -18,4 +19,9 @@ class Admin::Category < ApplicationRecord
       update_column(:permalink, slug)
     end
   end
+
+  def self.menu
+    self.where('parent_id is NULL')
+  end
+
 end

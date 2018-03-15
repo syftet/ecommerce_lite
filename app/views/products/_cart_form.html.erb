@@ -102,24 +102,6 @@
             }, 100);
 
             attached_slider();
-
-            if ($(".alert").text() == 'Please select color') {
-                $(".alert").addClass('hidden');
-            }
-        });
-
-        $('#order-populate').submit(function () {
-//            $('#service-unavailable').modal();
-//            return false;
-            if ($('.select_varient').length >= 1 && !$('.select_varient').is(':checked')) {
-                popupMessage('Please select color', 'alert-danger');
-                return false
-            }
-
-            if ($('.size-selection').length >= 1 && $('#size').val() == '') {
-                popupMessage('Please select size', 'alert-danger');
-                return false
-            }
         });
 
         $("#product-zoom").elevateZoom({

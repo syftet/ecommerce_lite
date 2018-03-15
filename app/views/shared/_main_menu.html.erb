@@ -10,7 +10,7 @@
         <span class="fa fa-search"></span>
 
         <div class="active-content">
-          <form action="<%#= products_path %>" method="get" class="input-group search-category">
+          <form action="<%= products_path %>" method="get" class="input-group search-category">
             <input name="name" maxlength="60" class="form-control search-category-input" type="text" size="20" placeholder="Search Products">
 
             <div class="input-group-btn">
@@ -69,18 +69,16 @@
                         <span class="bubble-text-label label-hot"><%= t(:hot) %></span>
                       </a>
                     </li>
-                    <%# Taxonomy.all.each do |taxm| %>
-                    <li class="menu-item">
-                      <%#= link_to '#nof' do %>
-                      <%#= taxm.name %> <span class="caret"></span>
-                      <%# end %>
-                      <ul class="top-sub-menu">
-                        <%# taxm.taxons.where('parent_id IS NULL').each do |taxon| %>
-                        <%#= raw draw_nav_menu_tree(taxon) %>
-                        <%# end %>
-                      </ul>
-                    </li>
-                    <%# end %>
+                    <% Admin::Category.menu.each do |cat| %>
+                        <li class="menu-item">
+                          <%= link_to '#nof' do %>
+                              <%= cat.name %> <span class="caret"></span>
+                          <% end %>
+                          <ul class="top-sub-menu">
+                            <%= render 'shared/sub_menu', submenu: cat.sub_categories, menu: cat %>
+                          </ul>
+                        </li>
+                    <% end %>
                   </ul>
                 </div>
               </nav>

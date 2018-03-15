@@ -14,9 +14,9 @@ class CartsController < ApplicationController
         add_or_remove_quantity = params[:quantity].to_i
         existing_quantity = @line_item.quantity + add_or_remove_quantity
         if add_or_remove_quantity > 0
-          @line_item = @order.contents.add(@line_item.variant, add_or_remove_quantity, {})
+          @line_item = @order.contents.add(@line_item.product, add_or_remove_quantity, {})
         elsif add_or_remove_quantity < 0 && existing_quantity > 0
-          @line_item = @order.contents.remove(@line_item.variant, add_or_remove_quantity.abs, {})
+          @line_item = @order.contents.remove(@line_item.product, add_or_remove_quantity.abs, {})
         else
           @error = "Line item quantity can't be 0"
         end

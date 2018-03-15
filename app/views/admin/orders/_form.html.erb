@@ -1,0 +1,48 @@
+<div data-hook="admin_order_form_fields">
+  <% if @line_item.try(:errors).present? %>
+      <%= render 'spree/admin/shared/error_messages', target: @line_item %>
+  <% end %>
+
+  <%# if Order.checkout_step_names.include?(:delivery) %>
+  <%= render partial: "admin/orders/shipment", collection: [@order.shipment], locals: {order: order} %>
+  <%# else %>
+  <%#= render "admin/orders/line_items", order: order %>
+  <%# end %>
+
+  <%#= render "admin/orders/adjustments",
+             adjustments: @order.line_item_adjustments,
+             order: order,
+             title: t(:line_item_adjustments)
+  %>
+  <%#= render "admin/orders/adjustments",
+             adjustments: @order.shipment_adjustments,
+             order: order,
+             title: t(:shipment_adjustments)
+  %>
+  <%#= render "admin/orders/adjustments",
+             adjustments: @order.adjustments,
+             order: order,
+             title: t(:order_adjustments)
+  %>
+
+
+  <%= javascript_tag do %>
+      var order_number = '<%= @order.number %>';
+      var shipments = [];
+
+      <% [@order.shipment].each do |shipment| %>
+          shipments.push(
+          <%#== shipment.as_json(
+                       root: false,
+                       only: [
+                               :id, :tracking, :number, :state, :stock_location_id
+                       ], include: [
+                                          :inventory_units, :stock_location
+                                  ]).to_json
+          %>
+          );
+      <% end %>
+
+      <%= render partial: 'admin/shared/update_order_state', handlers: [:js] %>
+  <% end %>
+</div>

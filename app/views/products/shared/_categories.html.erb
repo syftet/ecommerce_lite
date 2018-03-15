@@ -4,17 +4,13 @@
   </h3>
   <ul class="product-categories">
 
-    <% [].each do |taxm| %>
+    <% @categories.each do |category| %>
         <li class="menu-item">
           <%= link_to '#nof' do %>
-              <%= taxm.name %>
+              <%= category.name %>
           <% end %>
-          <span data-ref="top-cat-taxm-<%= taxm.id %>" class='pull-right collapse-ref'> <i class='fa fa-plus'></i> </span>
-          <ul class="top-sub-menu" id="top-cat-taxm-<%= taxm.id %>">
-            <% taxm.taxons.where('parent_id IS NULL').each do |taxon| %>
-                <%= raw draw_category_tree(taxon, (@taxon.present? ? @taxon.id : '')) %>
-            <% end %>
-          </ul>
+          <span data-ref="top-cat-taxm-<%= category.id %>" class='pull-right collapse-ref'> <i class='fa fa-plus'></i> </span>
+          <%= render 'products/shared/sub_category', subcategories: category.sub_categories, category: category if category.sub_categories.present? %>
         </li>
     <% end %>
   </ul>

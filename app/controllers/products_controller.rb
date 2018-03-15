@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
     # @searcher = build_searcher(params.merge(include_images: true))
     # @products = @searcher.retrieve_products
     @products = Search.new(params).result
-    @taxonomies = Admin::Category.includes(:sub_categories)
+    @categories = Admin::Category.where("parent_id IS NULL")
     respond_to do |format|
       format.html {}
       format.js {}

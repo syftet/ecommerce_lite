@@ -46,7 +46,7 @@ class OrderContents
     # shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
     # PromotionHandler::Cart.new(order, line_item).activate
     # Adjustable::AdjustmentsUpdater.update(line_item)
-    # TaxRate.adjust(order, [line_item]) if options[:line_item_created] TODO: Not consider taxt this time
+    # TaxRate.adjust(order, [line_item]) if options[:line_item_created]
     persist_totals
     line_item
   end
@@ -93,7 +93,6 @@ class OrderContents
   def remove_from_line_item(variant, quantity, options = {})
     line_item = grab_line_item_by_variant(variant, true, options)
     line_item.quantity -= quantity
-    line_item.target_shipment= options[:shipment]
 
     if line_item.quantity.zero?
       order.line_items.destroy(line_item)

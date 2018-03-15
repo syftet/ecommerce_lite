@@ -38,8 +38,6 @@ module ProductHelper
   end
 
   def get_additional_images(product)
-    # variant = product.master # Variant.where(product_id: product.id, is_master: true).first
-    # variant.images.order(:id) # Asset.where(viewable_id: variant.id).order(:id)
     product.images
   end
 
@@ -57,6 +55,16 @@ module ProductHelper
 
   def amount_with_currency(amount, currency = '$')
     "#{currency}#{amount}"
+  end
+
+  def discount_price(product)
+    return unless product.discountable
+    discount_amount = product.sale_price
+    raw("<del>
+      <span class='price-amount discount-amount'>
+        #{amount_with_currency(discount_amount)}
+       </span>
+      </del>")
   end
 
   # Order

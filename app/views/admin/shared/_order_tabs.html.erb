@@ -1,0 +1,54 @@
+<% content_for :page_title do %>
+    <%= link_to t(:orders), admin_orders_path %> /
+    <%= link_to @order.number, edit_admin_order_path(@order) %>
+<% end %>
+
+<% content_for :sidebar do %>
+    <ul class="nav nav-pills nav-stacked" data-hook="admin_order_tabs">
+      <% if (can? :update, @order) && (@order.shipment) %>
+          <li<%== ' class="active"' if current == :cart %> data-hook='admin_order_tabs_cart_details'>
+            <%= link_to_with_icon 'edit', 'Cart', cart_admin_order_url(@order) %>
+          </li>
+      <% end %>
+
+      <% if can?(:update, @order) %>
+          <li<%== ' class="active"' if current == :customer_details %> data-hook='admin_order_tabs_customer_details'>
+            <%= link_to_with_icon 'user', 'Customer', admin_order_customer_url(@order) %>
+          </li>
+      <% end %>
+
+      <% if can? :update, @order %>
+          <li<%== ' class="active"' if current == :shipments %> data-hook='admin_order_tabs_shipment_details'>
+            <%= link_to_with_icon 'road', 'Shipment', edit_admin_order_url(@order) %>
+          </li>
+      <% end %>
+
+      <%# if can? :index, Adjustment %>
+      <li<%#== ' class="active"' if current == :adjustments %> data-hook='admin_order_tabs_adjustments'>
+        <%#= link_to_with_icon 'wrench', t(:adjustments), admin_order_adjustments_url(@order) %>
+      </li>
+      <%# end %>
+
+      <%# if can?(:index, Payment) %>
+      <li<%#== ' class="active"' if current == :payments %> data-hook='admin_order_tabs_payments'>
+        <%#= link_to_with_icon 'credit-card', t(:payments), admin_order_payments_url(@order) %>
+      </li>
+      <%# end %>
+
+      <%# if can? :index, ReturnAuthorization %>
+      <%# if @order.completed? %>
+      <li<%#== ' class="active"' if current == :return_authorizations %> data-hook='admin_order_tabs_return_authorizations'>
+        <%#= link_to_with_icon 'transfer', t(:return_authorizations), admin_order_return_authorizations_url(@order) %>
+      </li>
+      <%# end %>
+      <%# end %>
+
+      <%# if can? :index, CustomerReturn %>
+      <%# if @order.completed? %>
+      <li<%== ' class="active"' if current == :customer_returns %>>
+        <%= link_to_with_icon 'transfer', 'Customer Return', admin_order_customer_returns_url(@order) %>
+      </li>
+      <%# end %>
+      <%# end %>
+    </ul>
+<% end %>

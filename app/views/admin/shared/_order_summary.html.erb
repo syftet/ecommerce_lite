@@ -1,0 +1,110 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t(:summary) %></h3>
+  </div>
+
+  <table class="table table-condensed table-bordered" id="order_tab_summary" data-hook>
+    <tbody class="additional-info">
+      <tr>
+        <td id="order_status" width="35%" data-hook>
+          <strong><%= t(:status) %>:</strong>
+        </td>
+        <td>
+          <span class="state label label-<%= @order.state %>">
+            <%= t(@order.state, :scope => :order_state) %>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td data-hook='admin_order_tab_subtotal_title'>
+          <strong><%= t(:subtotal) %>:</strong>
+        </td>
+        <td id='item_total'>
+          <%= amount_with_currency(@order.total) %>
+        </td>
+      </tr>
+
+      <%# if @order.checkout_steps.include?("delivery") && @order.ship_total > 0 %>
+        <tr>
+          <td data-hook='admin_order_tab_ship_total_title'>
+            <strong><%= t(:ship_total) %>:</strong>
+          </td>
+          <td id='ship_total'>
+            <%= @order.total %>
+          </td>
+        </tr>
+      <%# end %>
+
+      <%# if @order.included_tax_total != 0 %>
+        <tr>
+          <td data-hook='admin_order_tab_included_tax_title'>
+            <strong><%= t(:tax_included) %>:</strong>
+          </td>
+          <td id='included_tax_total'>
+            <%#= @order.display_included_tax_total.to_html %>
+          </td>
+        </tr>
+      <%# end %>
+
+      <tr>
+        <td data-hook='admin_order_tab_total_title'>
+          <strong><%= t(:total) %>:</strong>
+        </td>
+        <td id='order_total'><%= @order.total %></td>
+      </tr>
+
+      <% if @order.completed? %>
+        <tr>
+          <td>
+            <strong><%= t(:shipment) %>:</strong>
+          </td>
+          <td id='shipment_status'>
+            <span class="state label label-<%= @order.shipment_state %>">
+              <%= t(@order.shipment_state, :scope => :shipment_states, :default => [:missing, "none"]) %>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong><%= t(:payment) %>:</strong>
+          </td>
+          <td id='payment_status'>
+            <span class="state label label-<%= @order.payment_state %>">
+              <%= t(@order.payment_state, :scope => :payment_states, :default => [:missing, "none"]) %>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td data-hook='admin_order_tab_date_completed_title'>
+            <strong><%= t(:date_completed) %>:</strong>
+          </td>
+          <td id='date_complete'>
+            <%= pretty_time(@order.completed_at) %>
+          </td>
+        </tr>
+      <% end %>
+
+      <% if false #@order.approved? %>
+        <tr>
+          <td><strong><%= t(:approver) %></strong></td>
+          <td><%= @order.approver.email %></td>
+        </tr>
+        <tr>
+          <td><strong><%= t(:approved_at) %></strong></td>
+          <td><%= pretty_time(@order.approved_at) %></td>
+        </tr>
+      <% end %>
+
+      <% if false #@order.canceled? && @order.canceler && @order.canceled_at %>
+        <tr>
+          <td><strong><%= t(:canceler) %></strong></td>
+          <td><%= @order.canceler.email %></td>
+        </tr>
+        <tr>
+          <td><strong><%= t(:canceled_at) %></strong></td>
+          <td><%= pretty_time(@order.canceled_at) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

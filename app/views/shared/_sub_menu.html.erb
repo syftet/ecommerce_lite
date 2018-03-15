@@ -1,0 +1,11 @@
+<ul>
+  <% submenu.each do |sub| %>
+      <li>
+        <%= link_to sub.name, categories_path(sub.permalink), class: ('' == sub.id ? 'active' : '') %>
+        <% if sub.sub_categories.any? %>
+            <span data-ref='top-<%= sub.id %>' class='pull-right tri-label-collapse'> <i class='fa fa-angle-right'></i> </span>
+        <% end %>
+        <%= render 'shared/sub_menu', submenu: sub.sub_categories, menu: sub if sub.sub_categories.present? %>
+      </li>
+  <% end %>
+</ul>

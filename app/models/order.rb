@@ -38,6 +38,7 @@ class Order < ApplicationRecord
   has_many :line_items
   belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Address'
   has_one :shipment
+  belongs_to :user
 
   accepts_nested_attributes_for :line_items
   accepts_nested_attributes_for :ship_address
@@ -45,6 +46,14 @@ class Order < ApplicationRecord
   # accepts_nested_attributes_for :shipments
 
   attr_accessor :shipping_method
+
+  def you_saved
+    line_items.collect { |item| item.product.discount_amount }.sum
+  end
+
+  def adjustment_total
+    0
+  end
 
   def next
     if self.state == 'address'

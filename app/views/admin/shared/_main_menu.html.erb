@@ -1,3 +1,9 @@
+<% if can? :admin, Order %>
+    <ul class="nav nav-sidebar">
+      <%= main_menu_item('Orders', admin_orders_path, 'list') %>
+    </ul>
+<% end %>
+
 <ul class="nav nav-sidebar">
   <%= main_menu_item('Categories', admin_categories_path, 'list') %>
 </ul>
@@ -39,9 +45,9 @@
 <% end %>
 
 <% if can?(:admin, StockTransfer) %>
-  <ul class="nav nav-sidebar">
-    <%= main_menu_item('Stock Transfers', admin_stock_transfers_path, 'exchange') %>
-  </ul>
+    <ul class="nav nav-sidebar">
+      <%= main_menu_item('Stock Transfers', admin_stock_transfers_path, 'exchange') %>
+    </ul>
 <% end %>
 
 <% if can?(:admin, Blog) %>

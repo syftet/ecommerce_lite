@@ -31,6 +31,9 @@ Rails.application.routes.draw do
     get :reset, on: :collection
     get :shipped_track
   end
+
+  get '/c/*id', to: 'categories#show', as: :categories
+
   resources :carts
   get '/checkout', to: 'checkout#edit', as: :cart_checkout
   get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
@@ -73,6 +76,61 @@ Rails.application.routes.draw do
     end
     resources :stock_items
     resources :stock_transfers
+
+    resources :orders, except: [:show] do
+      member do
+        get :cart
+        post :resend
+        get :open_adjustments
+        get :close_adjustments
+        put :approve
+        put :cancel
+        put :resume
+      end
+
+      resources :state_changes, only: [:index]
+
+      resource :customer, controller: "orders/customer_details"
+      resources :customer_returns, only: [:index, :new, :edit, :create, :update] do
+        member do
+          put :refund
+        end
+      end
+
+      resources :adjustments
+      resources :return_authorizations do
+        member do
+          put :fire
+        end
+      end
+      resources :payments do
+        member do
+          put :fire
+        end
+
+        resources :log_entries
+        resources :refunds, only: [:new, :create, :edit, :update]
+      end
+
+      resources :reimbursements, only: [:index, :create, :show, :edit, :update] do
+        member do
+          post :perform
+        end
+      end
+    end
+
+    resources :users do
+      member do
+        get :addresses
+        put :addresses
+        put :clear_api_key
+        put :generate_api_key
+        get :items
+        get :orders
+        get :login
+      end
+      resources :store_credits
+    end
   end
   get '/admin', to: 'admin/dashboard#index', as: :admin
 
