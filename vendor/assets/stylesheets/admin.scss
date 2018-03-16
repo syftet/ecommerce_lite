@@ -24,6 +24,8 @@
 @import 'filters';
 @import 'home_slider';
 @import 'blog';
+@import 'admin_label';
+@import "select2";
 
 #main-part {
   padding: 15px 35px 0;
@@ -118,4 +120,8 @@ label {
     border: 1px solid #e0e0e0 !important;
     border-radius: 2px !important;
   }
+}
+
+.js-filter-select {
+  width: 60px;
 }

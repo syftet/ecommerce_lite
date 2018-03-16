@@ -31,7 +31,7 @@ class Search
     end
 
     if terms[:name].present?
-      result_object = result_object.where("lower(name) like '%#{terms[:name]}%'")
+      result_object = result_object.where("lower(products.name) like '%#{terms[:name]}%'")
     end
 
     if terms[:min] && terms[:max]
@@ -43,7 +43,7 @@ class Search
     end
 
     if terms[:color].present?
-      result_object = result_object.where('variants.color = ?', terms[:color])
+      result_object = result_object.where('products.color = ?', terms[:color])
     end
 
     result_object = result_object.distinct

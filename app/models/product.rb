@@ -28,6 +28,10 @@ class Product < ApplicationRecord
   scope :master_active, -> { where(is_active: true, product_id: nil) }
   scope :in_stock, -> { joins(:stock_items).where('count_on_hand > ? OR track_inventory = ?', 0, false) }
 
+  def self.new_arrivals
+    where('created_at >= ?', 15.days.ago)
+  end
+
   def master?
     !product.present?
   end

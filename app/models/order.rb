@@ -10,6 +10,8 @@ class Order < ApplicationRecord
       shipped: 'Shipped'
   }
 
+  ORDER_STATES = %w(address delivery payment completed approved canceled)
+
   ORDER_ALL_SHIPMENT_STATE = {
       processing: 'Processing',
       payment_failed: 'Payment failed',
@@ -33,6 +35,8 @@ class Order < ApplicationRecord
   }
 
   extend FriendlyId
+  include GenerateNumber
+
   friendly_id :number, slug_column: :number, use: :slugged
 
   has_many :line_items
@@ -45,10 +49,18 @@ class Order < ApplicationRecord
   # accepts_nested_attributes_for :payments
   # accepts_nested_attributes_for :shipments
 
-  attr_accessor :shipping_method
+  attr_accessor :shipping_method, :prefix
 
   def you_saved
     line_items.collect { |item| item.product.discount_amount }.sum
+  end
+
+  def net_total
+    if shipment.present?
+      (self.total || 0) + (shipment.cost || 0)
+    else
+      self.total
+    end
   end
 
   def adjustment_total

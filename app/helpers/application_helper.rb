@@ -50,7 +50,7 @@ module ApplicationHelper
   end
 
   def currency_symbol
-    '$'
+    @settings.currency_symbol
   end
 
   def color_filters(taxon = nil)

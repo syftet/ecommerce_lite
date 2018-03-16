@@ -1,0 +1,53 @@
+<div class="modal fade bs-search-modal-lg active" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button aria-label="Close" data-dismiss="modal" class="close btn btn-sm btn-primary pull-right" type="button">
+          <span aria-hidden="true">x</span></button>
+        <h4 id="gridSystemModalLabel" class="modal-title">ENTER YOUR KEYWORD</h4>
+      </div>
+      <div class="modal-body">
+        <div class="toggle-overlay-container">
+          <div class="search-box">
+            <form method="get" id="search_form" class="input-group search-category" action="<%= products_path %>">
+              <input name="name" id="search-term-name" maxlength="60" class="form-control search-category-input" type="text" size="20" placeholder="Search Products">
+
+              <div class="input-group-addon search-category-container">
+                <div class="select">
+                  <%= select_tag :search_category, options_for_select(Admin::Category.all.collect { |cat| [cat.name, categories_path(cat.permalink)] }), {id: 'search-category', prompt: 'Select search category'} %>
+                </div>
+              </div>
+              <div class="input-group-btn">
+                <label class="btn btn-link btn-search submit-search">
+                  <span class="title-search hidden">Search</span>
+                  <input type="submit" class="fa searchsubmit" value="">
+                </label>
+              </div>
+            </form>
+          </div>
+          <div class="dropdown-toggle-button" data-target=".toggle-overlay-container"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        search_form = $('#search_form');
+        $('.submit-search').click(function (e) {
+            if ($('#search-term-name').val() == '') {
+                alert('Enter your search terms');
+                e.preventDefault();
+                return false
+            }
+            action = $('#search-category').val();
+            document.getElementById('search-category').disabled = true;
+            if (action != '') {
+                e.preventDefault();
+                search_form.attr('action', action);
+                search_form.submit();
+            }
+        });
+    })
+</script>

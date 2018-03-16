@@ -13,4 +13,26 @@
 //= require jquery
 //= require rails-ujs
 //= require turbolinks
+//= require select2
 //= require_tree .
+
+handle_date_picker_fields = function () {
+    $('.datepicker').datepicker();
+
+    // Correctly display range dates
+    $('.date-range-filter .datepicker-from').datepicker('option', 'onSelect', function (selectedDate) {
+        $(".date-range-filter .datepicker-to").datepicker("option", "minDate", selectedDate);
+    });
+    $('.date-range-filter .datepicker-to').datepicker('option', 'onSelect', function (selectedDate) {
+        $(".date-range-filter .datepicker-from").datepicker("option", "maxDate", selectedDate);
+    });
+}
+
+$(document).ready(function () {
+    handle_date_picker_fields();
+});
+
+jQuery(function ($) {
+    // Make select beautiful
+    $('select.select2').chosen({width: '100%'})
+});

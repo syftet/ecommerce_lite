@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :load_order
+  before_action :load_settings
   helper_method :current_order
 
   def current_order(create_order = false)
@@ -32,6 +33,10 @@ class ApplicationController < ActionController::Base
 
   def load_order
     @order ||= Order.get_incomplete_order(get_token, current_user)
+  end
+
+  def load_settings
+    @settings = Setting.new
   end
 
   def configure_permitted_parameters

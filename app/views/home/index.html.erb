@@ -16,7 +16,7 @@
     <% end %>
   </div>
   <div class="view-more-products">
-    <%= link_to '#', class: 'btn-more' do %>
+    <%= link_to products_path, class: 'btn-more' do %>
         <%= t(:view_more) %> <i class="fa fa-plus"></i>
     <% end %>
   </div>
@@ -52,9 +52,9 @@
               </div>
             </div>
             <div class="cta-button">
-              <a href="#">
-                discover <i class="fa fa-plus"></i>
-              </a>
+              <%= link_to products_path do %>
+                  discover <i class="fa fa-plus"></i>
+              <% end %>
             </div>
           </div>
         </div>

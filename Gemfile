@@ -42,6 +42,7 @@ gem 'rmagick'
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'social-share-button'
 gem 'kaminari'
+gem 'select2-rails' #, '~> 3.5.9.1'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

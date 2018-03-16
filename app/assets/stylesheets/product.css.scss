@@ -10,6 +10,9 @@
     -o-transition: all .5s ease 0s;
     transition: all .5s ease 0s;
     min-height: 410px;
+    //-webkit-box-shadow: 1px 2px 3px #cccccc;
+    //-moz-box-shadow: 1px 2px 3px #cccccc;
+    //box-shadow: 1px 2px 3px #cccccc;
     a {
       color: #dfdfdf;
       &:hover {

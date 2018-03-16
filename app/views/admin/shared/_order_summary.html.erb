@@ -1,59 +1,70 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"><%= t(:summary) %></h3>
+    <h3 class="panel-title">
+      Summary
+    </h3>
   </div>
 
   <table class="table table-condensed table-bordered" id="order_tab_summary" data-hook>
     <tbody class="additional-info">
-      <tr>
-        <td id="order_status" width="35%" data-hook>
-          <strong><%= t(:status) %>:</strong>
-        </td>
-        <td>
+    <tr>
+      <td id="order_status" width="35%" data-hook>
+        <strong>
+          Status:
+        </strong>
+      </td>
+      <td>
           <span class="state label label-<%= @order.state %>">
-            <%= t(@order.state, :scope => :order_state) %>
+            <%= @order.state.capitalize %>
           </span>
-        </td>
-      </tr>
-      <tr>
-        <td data-hook='admin_order_tab_subtotal_title'>
-          <strong><%= t(:subtotal) %>:</strong>
-        </td>
-        <td id='item_total'>
-          <%= amount_with_currency(@order.total) %>
-        </td>
-      </tr>
+      </td>
+    </tr>
+    <tr>
+      <td data-hook='admin_order_tab_subtotal_title'>
+        <strong>
+          Subtotal:
+        </strong>
+      </td>
+      <td id='item_total'>
+        <%= amount_with_currency(@order.total) %>
+      </td>
+    </tr>
 
-      <%# if @order.checkout_steps.include?("delivery") && @order.ship_total > 0 %>
-        <tr>
-          <td data-hook='admin_order_tab_ship_total_title'>
-            <strong><%= t(:ship_total) %>:</strong>
-          </td>
-          <td id='ship_total'>
-            <%= @order.total %>
-          </td>
-        </tr>
-      <%# end %>
+    <tr>
+      <td data-hook='admin_order_tab_ship_total_title'>
+        <strong>
+          Shipment Total:
+        </strong>
+      </td>
+      <td id='ship_total'>
+        <%= amount_with_currency(@order.shipment.cost) if @order.shipment %>
+      </td>
+    </tr>
 
-      <%# if @order.included_tax_total != 0 %>
-        <tr>
-          <td data-hook='admin_order_tab_included_tax_title'>
-            <strong><%= t(:tax_included) %>:</strong>
-          </td>
-          <td id='included_tax_total'>
-            <%#= @order.display_included_tax_total.to_html %>
-          </td>
-        </tr>
-      <%# end %>
+    <%# if @order.included_tax_total != 0 %>
+    <tr>
+      <td data-hook='admin_order_tab_included_tax_title'>
+        <strong><%= t(:tax_included) %>:</strong>
+      </td>
+      <td id='included_tax_total'>
+        <%#= @order.display_included_tax_total.to_html %>
+        0
+      </td>
+    </tr>
+    <%# end %>
 
-      <tr>
-        <td data-hook='admin_order_tab_total_title'>
-          <strong><%= t(:total) %>:</strong>
-        </td>
-        <td id='order_total'><%= @order.total %></td>
-      </tr>
+    <tr>
+      <td data-hook='admin_order_tab_total_title'>
+        <strong>
+          Net Total:
+        </strong>
+      </td>
+      <td id='order_total'>
+        <%= amount_with_currency(@order.net_total) %>
+      </td>
+    </tr>
 
-      <% if @order.completed? %>
+    <% if @order.completed? %>
         <tr>
           <td>
             <strong><%= t(:shipment) %>:</strong>
@@ -82,9 +93,9 @@
             <%= pretty_time(@order.completed_at) %>
           </td>
         </tr>
-      <% end %>
+    <% end %>
 
-      <% if false #@order.approved? %>
+    <% if false #@order.approved?      %>
         <tr>
           <td><strong><%= t(:approver) %></strong></td>
           <td><%= @order.approver.email %></td>
@@ -93,9 +104,9 @@
           <td><strong><%= t(:approved_at) %></strong></td>
           <td><%= pretty_time(@order.approved_at) %></td>
         </tr>
-      <% end %>
+    <% end %>
 
-      <% if false #@order.canceled? && @order.canceler && @order.canceled_at %>
+    <% if false #@order.canceled? && @order.canceler && @order.canceled_at      %>
         <tr>
           <td><strong><%= t(:canceler) %></strong></td>
           <td><%= @order.canceler.email %></td>
@@ -104,7 +115,7 @@
           <td><strong><%= t(:canceled_at) %></strong></td>
           <td><%= pretty_time(@order.canceled_at) %></td>
         </tr>
-      <% end %>
+    <% end %>
     </tbody>
   </table>
 </div>
