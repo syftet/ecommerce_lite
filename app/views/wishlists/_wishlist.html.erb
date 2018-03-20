@@ -1,0 +1,30 @@
+<tr id="wishlist-<%= wishlist.id %>">
+  <td class="product-remove">
+    <div>
+      <%= link_to 'x', wishlist_path(wishlist), method: :delete, confirm: 'Are you sure?', remote: true, class: 'remove remove_from_wishlist' %>
+    </div>
+  </td>
+  <td class="product-thumbnail">
+    <a href="<%= product_path(wishlist.product) %>">
+      <%= mini_image(wishlist.product) %>
+    </a>
+  </td>
+  <td class="product-name">
+    <%= link_to wishlist.product.name, product_path(wishlist.product) %>
+  </td>
+  <td class="product-price">
+      <span class="price">
+        <%= amount_with_currency(wishlist.product.price) %>
+      </span>
+  </td>
+  <td class="product-stock-status">
+    <%= raw wishlist.product.on_stock %>
+  </td>
+  <td class="product-add-to-cart">
+    <div class="add-cart">
+      <a title="Add to cart" rel="nofollow" href="<%= product_path(wishlist.product) %>" class="button product_type_variable add_to_cart_button btn btn-primary">
+        Select options
+      </a>
+    </div>
+  </td>
+</tr>

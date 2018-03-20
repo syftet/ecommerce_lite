@@ -1,0 +1,81 @@
+<div class="col-sm-12">
+  <h1 class="public-title" style="margin-top: 10px">My Account</h1>
+</div>
+
+<div data-hook="account-summary" class="account-summary">
+  <div class="row clearfix">
+    <div class="col-lg-12 clearfix">
+      <div class="col-sm-6">
+        <dl id="user-info">
+          <dt>Email</dt>
+          <dd><%= current_user.email %> (<a href="<%= edit_user_registration_path %>">Edit</a>)</dd>
+        </dl>
+        <dl id="user-info">
+          <dt>Total Rewards Points</dt>
+          <dd>
+            <i class="fa fa-certificate">
+              <%= current_user.total_rewards %>
+            </i>
+          </dd>
+        </dl>
+
+        <dl id="user-info">
+          <dt>Available Rewards Point</dt>
+          <dd>
+            <i class="fa fa-certificate">
+              <%= current_user.available_rewards %>
+            </i>
+          </dd>
+        </dl>
+      </div>
+      <div class="col-sm-6">
+        <h3 class="public-title text-left">Credit point history</h3>
+        <% if current_user.rewards_points %>
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th> Date</th>
+                <th> Type</th>
+                <th> Amount</th>
+                <th> Reason</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% current_user.rewards_points.each do |rp| %>
+                  <tr>
+                    <td><%= rp.created_at.strftime('%B %d, %Y') %></td>
+                    <td><%= rp.points > 0 ? 'Credit' : 'Debit' %></td>
+                    <td><%= rp.points %></td>
+                    <td><%= rp.reason %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-hook="account_my_orders" class="account-my-orders">
+
+  <h3 class="public-title text-left">My Orders</h3>
+  <table class="table table-striped order-summary">
+    <thead class="active">
+    <tr>
+      <th class="order-number"> Order</th>
+      <th class="order-date">Date</th>
+      <th class="order-status">Status</th>
+      <th class="order-total">Order Total</th>
+      <th class="order-shipment-state">Shipment State</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @orders.each do |order| %>
+        <%= render 'users/order', order: order %>
+    <% end %>
+    </tbody>
+  </table>
+  <br>
+
+</div>

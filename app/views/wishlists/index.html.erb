@@ -1,0 +1,49 @@
+<% content_for :breadcrumb do %>
+    <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb('Wishlist') %>
+<% end %>
+
+<section id="main" class="site-main">
+  <section id="main-container" class=" inner">
+    <div id="main-content" class="main-content col-xs-12">
+      <div id="primary" class="content-area">
+        <div id="content" class="site-content" role="main">
+
+          <h1 class="public-title text-left">Wishlist</h1>
+
+          <article id="wishlists" class="post-143 page type-page status-publish hentry">
+            <div class="entry-content-page">
+              <table class="table table-bordered shop_table cart wishlist_table">
+                <thead>
+                <tr>
+                  <th class="product-remove"></th>
+                  <th class="product-thumbnail"></th>
+                  <th class="product-name">
+                    <span class="nobr">Product Name</span>
+                  </th>
+                  <th class="product-price">
+                    <span class="nobr">
+                        Unit Price
+                    </span>
+                  </th>
+                  <th class="product-stock-status">
+                    <span class="nobr">
+                        Stock Status
+                    </span>
+                  </th>
+                  <th class="product-add-to-cart"></th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                <% @wishlists.each do |wishlist| %>
+                    <%= render wishlist %>
+                <% end %>
+                </tbody>
+              </table>
+
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

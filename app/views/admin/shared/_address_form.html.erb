@@ -1,0 +1,70 @@
+<% s_or_b = type.chars.first %>
+
+<div id="<%= type %>" data-hook="address_fields">
+  <%= field_container f.object, :firstname, class: ["form-group", "#{type}-row"] do %>
+      <%= f.label :firstname, t(:first_name) %>
+      <%= f.text_field :firstname, class: 'form-control' %>
+      <%= error_message_on f.object, :firstname %>
+  <% end %>
+
+  <%= field_container f.object, :lastname, class: ["form-group", "#{type}-row"] do %>
+      <%= f.label :lastname, t(:last_name) %>
+      <%= f.text_field :lastname, class: 'form-control' %>
+      <%= error_message_on f.object, :lastname %>
+  <% end %>
+
+  <%# if Config[:company] %>
+  <%= field_container f.object, :company, class: ["form-group", "#{type}-row"] do %>
+      <%= f.label :company, t(:company) %>
+      <%= f.text_field :company, class: 'form-control' %>
+      <%= error_message_on f.object, :company %>
+  <% end %>
+  <%# end %>
+
+  <%= field_container f.object, :address1, class: ["form-group", "#{type}-row"] do %>
+      <%= f.label :address, t(:street_address) %>
+      <%= f.text_field :address, class: 'form-control' %>
+      <%= error_message_on f.object, :address1 %>
+  <% end %>
+
+  <%= field_container f.object, :city, class: ["form-group", "#{type}-row"] do %>
+      <%= f.label :city, t(:city) %>
+      <%= f.text_field :city, class: 'form-control' %>
+      <%= error_message_on f.object, :city %>
+  <% end %>
+
+  <%= field_container f.object, :zipcode, class: ["form-group", "#{type}-row"] do %>
+      <%= f.label :zipcode, t(:zip) %>
+      <%= f.text_field :zipcode, class: 'form-control' %>
+      <%= error_message_on f.object, :zipcode %>
+  <% end %>
+
+  <div class="form-group <%= "#{type}-row" %>">
+    <%= f.label :country_id, t(:country) %>
+    <span id="<%= s_or_b %>country">
+      <%= f.text_field :country, class: 'form-control' %>
+    </span>
+  </div>
+
+  <div class="form-group <%= "#{type}-row" %>">
+    <%= f.label :state_id, t(:state) %>
+    <span id="<%= s_or_b %>state">
+      <%= f.text_field :state, class: 'form-control state_name' %>
+      <%#= f.collection_select :state_id, f.object.country.states.sort, :id, :name, {include_blank: true}, {class: 'select2', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
+    </span>
+  </div>
+
+  <%= field_container f.object, :phone, class: ["form-group", "#{type}-row"] do %>
+      <%= f.label :phone, t(:phone) %>
+      <%= f.phone_field :phone, class: 'form-control' %>
+      <%= error_message_on f.object, :phone %>
+  <% end %>
+</div>
+
+<% content_for :head do %>
+    <%= javascript_tag do %>
+        $(document).ready(function(){
+        $('span#<%= s_or_b %>country .select2').on('change', function() { update_state('<%= s_or_b %>'); });
+        });
+    <% end %>
+<% end %>

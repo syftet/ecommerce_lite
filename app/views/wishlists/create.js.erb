@@ -1,0 +1,6 @@
+<% if @status %>
+popupMessage('Product has been added to wishlist', 'alert-info');
+$('.wishlist-product-<%= @product.id %>').html("<%= escape_javascript(wishlist_link(@product.id)).html_safe %>");
+<%else%>
+popupMessage('Unable to add wishlist added', 'alert-error');
+<%end%>
