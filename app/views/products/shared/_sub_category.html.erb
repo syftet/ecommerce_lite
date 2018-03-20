@@ -1,11 +1,11 @@
 <ul id="top-cat-taxm-<%= category.id %>">
   <% subcategories.each do |sub| %>
       <li>
-        <%= link_to sub.name, categories_path(sub.permalink), class: ('' == sub.id ? 'active' : '') %>
+        <%= link_to sub.name, categories_path(sub.permalink), class: (selected.id == sub.id ? 'active' : '') %>
         <% if sub.sub_categories.any? %>
             <span data-ref='top-cat-taxm-<%= sub.id %>' class='pull-right collapse-ref'> <i class='fa fa-plus'></i> </span>
         <% end %>
-        <%= render 'products/shared/sub_category', subcategories: sub.sub_categories, category: sub if sub.sub_categories.present? %>
+        <%= render 'products/shared/sub_category', subcategories: sub.sub_categories, selected: @category, category: sub if sub.sub_categories.present? %>
       </li>
   <% end %>
 </ul>

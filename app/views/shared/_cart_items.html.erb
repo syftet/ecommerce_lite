@@ -1,7 +1,7 @@
 <div class="cart-item">
   <% if current_order.present? %>
       <% current_order.line_items.each do |line_item| %>
-          <ul class="clearfix mb20">
+          <ul class="clearfix">
             <li class="item-img-width">
               <%= mini_image(line_item.product) %>
             </li>
@@ -11,6 +11,9 @@
               </p>
                 <span>
                   <%= currency_symbol %><%= line_item.price %> * <%= line_item.quantity %>
+                </span>
+                <span class="pull-right">
+                  <%= amount_with_currency(line_item.price * line_item.quantity) %>
                 </span>
             </li>
           </ul>

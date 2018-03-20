@@ -51,6 +51,18 @@ class Order < ApplicationRecord
 
   attr_accessor :shipping_method, :prefix
 
+  def can_approve?
+    completed? && self.state != 'approved'
+  end
+
+  def can_cancel?
+    self.state == 'approved'
+  end
+
+  def can_resume?
+    self.state == 'canceled'
+  end
+
   def you_saved
     line_items.collect { |item| item.product.discount_amount }.sum
   end

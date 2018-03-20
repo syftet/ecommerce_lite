@@ -177,9 +177,9 @@ class OrdersController < ApplicationController
   def apply_coupon_code
     assign_order_with_lock
 
-    if params[:order] && params[:order][:coupon_code] && @order.present?
+    if params[:orders] && params[:orders][:coupon_code] && @order.present?
 
-      @order.coupon_code = params[:order][:coupon_code]
+      @order.coupon_code = params[:orders][:coupon_code]
 
       handler = PromotionHandler::Coupon.new(@order).apply
 
@@ -193,8 +193,8 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    if params[:order]
-      params[:order].permit(*permitted_order_attributes)
+    if params[:orders]
+      params[:orders].permit(*permitted_order_attributes)
     else
       {}
     end

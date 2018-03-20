@@ -2,7 +2,7 @@ module Admin
   module StockMovementsHelper
     def pretty_originator(stock_movement)
       if stock_movement.originator.respond_to?(:number)
-        if stock_movement.originator.respond_to?(:order)
+        if stock_movement.originator.respond_to?(:orders)
           link_to stock_movement.originator.number, [:edit, :admin, stock_movement.originator.order]
         else
           stock_movement.originator.number

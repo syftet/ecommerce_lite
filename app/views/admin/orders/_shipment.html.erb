@@ -1,18 +1,17 @@
 <div id="<%= "shipment_#{shipment.id}" %>" data-hook="admin_shipment_form" class="panel panel-default">
-
-  <%#= render partial: "admin/variants/split", formats: :js %>
-
   <div class="panel-heading stock-location no-borderb" data-hook="stock-location">
     <h1 class="panel-title">
       <span class="shipment-number"><%= shipment.number %></span>
       -
       <span class="shipment-state"><%= t("shipment_states.#{shipment.state}") %></span>
       <%= t(:package_from) %>
-      <strong class="stock-location-name" data-hook="stock-location-name">'<%= shipment.stock_location.name if shipment.stock_location.present? %>'</strong>
-      <%# if shipment.ready? and can? :update, shipment %>
-          <%#= link_to t(:ship), 'javascript:;', class: 'ship pull-right btn btn-success', data: {'shipment-number' => shipment.number} %>
+      <strong class="stock-location-name" data-hook="stock-location-name">
+        '<%= shipment.stock_location.name if shipment.stock_location.present? %>'
+      </strong>
+      <% if shipment.ready? and can? :update, shipment %>
+          <%= link_to t(:ship), 'javascript:;', class: 'ship pull-right btn btn-success', data: {'shipment-number' => shipment.number} %>
           <div class='clearfix'></div>
-      <%# end %>
+      <% end %>
     </h1>
   </div>
 
@@ -24,51 +23,45 @@
     <th width="15%" class="text-center"><%= t(:price) %></th>
     <th width="15%" class="text-center"><%= t(:quantity) %></th>
     <th width="15%" class="text-center"><%= t(:total) %></th>
-    <th class="orders-actions actions text-center" data-hook="admin_order_form_line_items_header_actions"></th>
+    <th class="orders-actions actions text-center"></th>
     </thead>
 
     <tbody data-shipment-number="<%= shipment.number %>" data-order-number="<%= order.number %>">
-    <%#= render 'admin/orders/shipment_manifest', shipment: shipment %>
+    <%= render 'admin/orders/shipment_items', shipment: shipment %>
 
-    <% unless true #shipment.shipped? %>
+    <% unless shipment.shipped? %>
         <tr class="edit-method is-hidden total">
-          <td colspan="5">
+          <td colspan="4">
             <div class="field alpha five columns">
               <%= label_tag 'selected_shipping_rate_id', t(:shipping_method) %>
-              <%= select_tag :selected_shipping_rate_id,
-                             options_for_select(shipment.shipping_rates.map { |sr| ["#{sr.name} #{sr.display_price}", sr.id] }, shipment.selected_shipping_rate_id),
+              <%= select_tag :shipping_method_id, options_for_select(ShippingMethod.all.collect { |sm| ["#{sm.name}(#{sm.rate})", sm.id] }, shipment.shipping_method_id),
                              {class: 'select2', data: {'shipment-number' => shipment.number}} %>
             </div>
           </td>
-          <td class="actions text-center">
+          <td class="actions text-center" colspan="2">
             <% if can? :update, shipment %>
-                <%= link_to_with_icon 'cancel', t('actions.cancel'), "#", class: 'cancel-method btn btn-primary btn-sm', data: {action: 'cancel'}, title: t('actions.cancel'), no_text: true %>
-                <%= link_to_with_icon 'save', t('actions.save'), "#", class: 'save-method btn btn-success btn-sm', data: {'shipment-number' => shipment.number, action: 'save'}, title: t('actions.save'), no_text: true %>
+                <%= link_to_with_icon 'save', 'Save', "#", class: 'save-method btn btn-success btn-sm', data: {'shipment-number' => shipment.number, action: 'save'}, title: t('actions.save'), no_text: true %>
             <% end %>
           </td>
         </tr>
     <% end %>
 
     <tr class="show-method total">
-      <%# if rate = shipment.selected_shipping_rate %>
+      <% if shipment.shipping_method %>
           <td colspan="4">
             <strong>
-              <%#= rate.name %>
-              <%#= "(#{@order.collection_point})" if @order.collection_point %>
+              <%= shipment.shipping_method.name %>
+              <%= "(#{@order.collection_point})" if @order.collection_point %>
             </strong>
           </td>
-          <td class="total text-center">
-            <%#= shipment.display_cost.to_display %>
+          <td class="total text-center" colspan="2">
+            <%= amount_with_currency(shipment.cost) %>
           </td>
-      <%# else %>
-          <!--<td colspan='5'><%#= t(:no_shipping_method_selected) %></td>-->
-      <% #end %>
-
-      <td class="actions text-center">
-        <%# if ((can? :update, shipment) and !shipment.shipped?) %>
-            <%#= link_to_with_icon 'edit', t('edit'), "javascript:;", class: 'edit-method with-tip btn btn-sm btn-primary', data: {action: 'edit'}, no_text: true %>
-        <%# end %>
-      </td>
+      <% else %>
+          <td colspan='6'>
+            <%= t(:no_shipping_method_selected) %>
+          </td>
+      <% end %>
     </tr>
 
 
@@ -79,8 +72,7 @@
       </td>
       <td class="actions">
         <% if can? :update, shipment %>
-            <%= link_to_with_icon 'cancel', t('actions.cancel'), "#", :class => 'cancel-tracking btn btn-primary btn-sm', :data => {:action => 'cancel'}, :title => t('actions.cancel'), :no_text => true %>
-            <%= link_to_with_icon 'save', t('actions.save'), "#", :class => 'save-tracking btn btn-success btn-sm', :data => {'shipment-number' => shipment.number, :action => 'save'}, :title => t('actions.save'), :no_text => true %>
+            <%= link_to_with_icon 'save', 'Save', "#", :class => 'save-tracking btn btn-success btn-sm', :data => {'shipment-number' => shipment.id, :action => 'save'}, :title => 'Save shipment tracking', :no_text => true %>
         <% end %>
       </td>
     </tr>
@@ -96,7 +88,7 @@
     <tr class="show-tracking total">
       <td colspan="5" class="tracking-value">
         <% if shipment.tracking.present? %>
-            <strong><%= t(:tracking) %>:</strong> <%#= link_to_tracking(shipment, target: '_blank') %>
+            <strong><%= t(:tracking) %>:</strong> <%= link_to_tracking(shipment, target: '_blank') %>
         <% else %>
             <%= t(:no_tracking_present) %>
         <% end %>
@@ -111,3 +103,24 @@
   </table>
 
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.save-tracking').click(function () {
+            shipment_id = $(this).attr('data-shipment-number');
+            $.ajax({
+                url: '<%= admin_shipment_tracking_path %>',
+                type: 'get',
+                dataType: 'script',
+                data: {shipment_id: shipment_id, tracking: $(this).parents('tr').find('input').val()},
+                success: function (e) {
+
+                },
+                error: function (e) {
+
+                }
+            });
+            return false;
+        });
+    });
+</script>

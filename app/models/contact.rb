@@ -16,7 +16,7 @@
 
 
 class Contact < ApplicationRecord
-  after_create :send_email_notification
+  # after_create :send_email_notification
 
   def send_email_notification
     NotificationMailer.send_contact_notification(self).deliver_now

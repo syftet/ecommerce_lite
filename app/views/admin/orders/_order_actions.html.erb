@@ -1,26 +1,22 @@
 <% content_for :page_actions do %>
-    <%# if can?(:fire, order) %>
-    <%# if order.send("can_approve?") %>
-    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#approve-modal">-->
-    <!--<span class="icon icon-approve"></span>Approve-->
-    <!--</button>-->
-    <%# else %>
-    <%# events.delete('approve') %>
-    <%#= event_links(order, events) %>
-    <%# end %>
-    <%# end %>
-    <%# if can?(:resend, order) %>
-    <%#= button_link_to t(:resend, scope: 'admin.order.events', default: t(:resend)),
+    <% if can?(:fire, order) %>
+        <% if order.send("can_approve?") %>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#approve-modal">
+              <span class="fa fa-check"></span>Approve
+            </button>
+        <% else %>
+            <% events.delete('approve') %>
+            <%= raw event_links(order, events) %>
+        <% end %>
+    <% end %>
+    <% if can?(:resend, order) %>
+        <%= button_link_to t(:resend, scope: 'admin.order.events', default: t(:resend)),
                            resend_admin_order_url(order),
                            method: :post,
-                           icon: 'envelope'
-    %>
-    <%# end %>
+                           icon: ' fa fa-envelope'
+        %>
+    <% end %>
 <% end %>
-
-<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
-<!--Launch demo modal-->
-<!--</button>-->
 
 <!-- Modal -->
 <div class="modal fade" id="approve-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

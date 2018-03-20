@@ -55,12 +55,12 @@ module ApplicationHelper
 
   def color_filters(taxon = nil)
     variants = filter_variant(taxon)
-    variants.map(&:color).compact
+    variants.collect { |vr| vr.color if vr.color.present? }.compact
   end
 
   def size_filters(taxon = nil)
     variants = filter_variant(taxon)
-    variants.map(&:size).compact
+    variants.collect { |vr| vr.size if vr.size.present? }.compact
   end
 
   def filter_variant(taxon)
@@ -70,6 +70,10 @@ module ApplicationHelper
     else
       Product.all.limit(10)
     end
+  end
+
+  def link_to_tracking(shipment, target)
+    link_to shipment.tracking, "/shipment/tracking/#{shipment.tracking}", {target: target}
   end
 
 end

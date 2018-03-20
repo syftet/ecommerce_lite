@@ -1,4 +1,4 @@
-class CommentsController < BaseController
+class CommentsController < ApplicationController
 
   def create
     blog = Blog.friendly.find(params[:blog_id])

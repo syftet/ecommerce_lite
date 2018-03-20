@@ -41,7 +41,7 @@
                 </div>
                 <div class="radio">
                   <%= label_tag :guest_checkout_false do %>
-                      <%= radio_button_tag :guest_checkout, false, !guest, disabled: @order.cart? %>
+                      <%#= radio_button_tag :guest_checkout, false, !guest, disabled: @order.cart? %>
                       <%= t(:say_no) %>
                   <% end %>
                 </div>
@@ -56,7 +56,7 @@
 
   <div class="row">
 
-    <div class="col-md-6" data-hook="ship_address_wrapper">
+    <div class="col-md-12" data-hook="ship_address_wrapper">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h1 class="panel-title"><%= t(:shipping_address) %></h1>
@@ -68,30 +68,6 @@
               <% end %>
           <% else %>
               <%= render 'admin/shared/address', address: @order.ship_address %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-
-    <div data-hook="bill_address_wrapper" class="col-md-6">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h1 class="panel-title"><%= t(:billing_address) %></h1>
-        </div>
-
-        <div class="panel-body">
-          <% if can? :edit, @order.user %>
-              <%= f.fields_for :bill_address do |ba_form| %>
-                  <div class="form-group">
-                    <span data-hook="use_billing">
-                      <%= check_box_tag 'order[use_shipping]', '1', @order.shipping_eq_billing_address? %>
-                      <%= label_tag 'order[use_shipping]', t(:use_shipping_address) %>
-                    </span>
-                  </div>
-                  <%= render 'admin/shared/address_form', f: ba_form, type: "billing" %>
-              <% end %>
-          <% else %>
-              <%= render 'admin/shared/address', address: @order.bill_address %>
           <% end %>
         </div>
       </div>

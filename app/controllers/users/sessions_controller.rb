@@ -30,6 +30,8 @@ class Users::SessionsController < Devise::SessionsController
     set_flash_message(:alert, :invalid) unless @error.empty?
     respond_to do |format|
       format.js {
+        @location = session.delete(:user_redirect_to)
+        p @location
         render layout: false
       }
       format.html {

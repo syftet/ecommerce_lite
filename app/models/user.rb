@@ -16,6 +16,10 @@ class User < ApplicationRecord
     end
   end
 
+  def total_rewards
+    rewards_points.collect { |rp| rp.points > 0 ? rp.points : 0 }.sum
+  end
+
   def available_rewards
     rewards_points.sum(:points)
   end

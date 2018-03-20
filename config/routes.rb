@@ -76,6 +76,7 @@ Rails.application.routes.draw do
     end
     resources :stock_items
     resources :stock_transfers
+    get :shipment_tracking, to: 'orders#shipment_tracking'
 
     resources :orders, except: [:show] do
       member do
@@ -90,7 +91,7 @@ Rails.application.routes.draw do
 
       resources :state_changes, only: [:index]
 
-      resource :customer, controller: "orders/customer_details"
+      resource :customer, controller: "orders/customers"
       resources :customer_returns, only: [:index, :new, :edit, :create, :update] do
         member do
           put :refund

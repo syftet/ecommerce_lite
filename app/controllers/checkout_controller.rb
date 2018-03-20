@@ -51,7 +51,7 @@ class CheckoutController < ApplicationController
   private
 
   def permitted_checkout_attributes
-    params[:order].permit!
+    params[:orders].permit!
   end
 
   def validate_state
@@ -109,9 +109,9 @@ class CheckoutController < ApplicationController
   end
 
   def ensure_valid_state_lock_version
-    if params[:order] && params[:order][:state_lock_version]
+    if params[:orders] && params[:orders][:state_lock_version]
       @order.with_lock do
-        unless @order.state_lock_version == params[:order].delete(:state_lock_version).to_i
+        unless @order.state_lock_version == params[:orders].delete(:state_lock_version).to_i
           #flash[:error] = t(:order_already_updated)
           #redirect_to(checkout_state_path(@order.state)) && return TODO: Need to activate
         end
@@ -191,7 +191,7 @@ class CheckoutController < ApplicationController
       @order.add_store_credit_payments
 
       # Remove other payment method parameters.
-      params[:order].delete(:payments_attributes)
+      params[:orders].delete(:payments_attributes)
       params.delete(:payment_source)
 
       # Return to the Payments page if additional payment is needed.

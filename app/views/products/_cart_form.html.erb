@@ -54,6 +54,7 @@
     var quantity_field = $('#quantity');
     $(function () {
         var assets = {};
+        var currency = "<%= currency_symbol %>";
         <% @product.variants.each do |v| %>
         var vid = '<%= v.id %>';
         assets[vid] = {};
@@ -80,38 +81,16 @@
             var product_price = $(this).attr('data-variant-price');
             var offer_price = $(this).attr('data-variant-offer');
             $('.color-name').html("Color:    " + color_name);
-            $('.product-amount').html(product_price);
-            $('.discount-amount').html(offer_price);
+            $('.product-amount').html(currency + product_price);
+            $('.discount-amount').html(currency + offer_price);
             $("#product-gallery").html('').removeClass("slick-initialized slick-slider slick-vertical");
-            $('.zoomContainer').remove();
             $.each(assets[id], function (indx, img) {
                 $("#product-gallery").append(tiny_item(img));
             });
-
-            $("#product-zoom").elevateZoom({
-                zoomType: "inner",
-                responsive: !0,
-                gallery: "product-gallery",
-                cursor: "crosshair",
-                galleryActiveClass: "product-active",
-                loadingIcon: "<%#= image_url('ajax-loader.gif') %>"
-            });
-
-            setTimeout(function () {
-                $("#product-gallery .selection:first-child").find('a').addClass('product-active').trigger('click');
-            }, 100);
-
+            activate_zoom();
             attached_slider();
         });
-
-        $("#product-zoom").elevateZoom({
-            zoomType: "inner",
-            responsive: !0,
-            gallery: "product-gallery",
-            cursor: "crosshair",
-            galleryActiveClass: "product-active",
-            loadingIcon: "<%#= image_url('ajax-loader.gif') %>"
-        });
+        activate_zoom();
     });
 
     function tiny_item(images) {
@@ -143,5 +122,23 @@
             new_quantity = new_quantity <= 0 ? 1 : new_quantity;
         }
         quantity_field.val(new_quantity)
+    }
+
+    function activate_zoom() {
+        $('.zoomContainer').remove();
+
+        $("#product-zoom").elevateZoom({
+//            zoomType: "inner",
+            scrollZoom: true,
+            responsive: !0,
+            gallery: "product-gallery",
+            cursor: "crosshair",
+            galleryActiveClass: "product-active"
+        });
+
+        setTimeout(function () {
+            $("#product-gallery .selection:first-child").find('a').addClass('product-active').trigger('click');
+        }, 500);
+
     }
 </script>

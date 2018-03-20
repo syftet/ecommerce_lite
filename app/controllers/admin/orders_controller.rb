@@ -60,7 +60,7 @@ module Admin
     end
 
     def update
-      if @order.update_attributes(params[:order]) && @order.line_items.present?
+      if @order.update_attributes(params[:orders]) && @order.line_items.present?
         @order.update_with_updater!
         unless @order.completed?
           # Jump to next step if order is not completed.
@@ -86,7 +86,7 @@ module Admin
     end
 
     def approve
-      if @order.update_attributes({shipment_date: params[:order][:shipment_date], shipment_progress: params[:order][:shipment_progress]})
+      if @order.update_attributes({shipment_date: params[:orders][:shipment_date], shipment_progress: params[:orders][:shipment_progress]})
         @order.approved_by(current_user)
         @order.credit_rewards_point
       end
@@ -117,6 +117,15 @@ module Admin
       respond_with(@order) { |format| format.html { redirect_to :back } }
     end
 
+    def shipment_tracking
+      @shipment = Shipment.find_by_id(params[:shipment_id])
+      @shipment.update_attribute(:tracking, params[:tracking])
+    end
+
+    def customer
+
+    end
+
     private
     def order_params
       params[:created_by_id] = current_user.try(:id)
@@ -130,7 +139,7 @@ module Admin
 
     # Used for extensions which need to provide their own custom event links on the order details view.
     def initialize_order_events
-      @order_events = %w{approve cancel resume}
+      @order_events = %w{cancel resume}
     end
 
     def model_class

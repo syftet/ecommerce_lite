@@ -29,7 +29,7 @@ class Product < ApplicationRecord
   scope :in_stock, -> { joins(:stock_items).where('count_on_hand > ? OR track_inventory = ?', 0, false) }
 
   def self.new_arrivals
-    where('created_at >= ?', 15.days.ago)
+    where('created_at >= ? and product_id IS NULL', 15.days.ago)
   end
 
   def master?
@@ -56,7 +56,7 @@ class Product < ApplicationRecord
     end
   end
 
-  def price
+  def price(user = nil)
     discountable ? discount_price : sale_price
   end
 

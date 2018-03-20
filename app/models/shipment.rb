@@ -1,5 +1,3 @@
-require 'ostruct'
-
 class Shipment < ApplicationRecord
   extend FriendlyId
   friendly_id :number, slug_column: :number, use: :slugged
@@ -18,13 +16,25 @@ class Shipment < ApplicationRecord
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :inventory_units
 
-  scope :pending, -> { with_state('pending') }
-  scope :ready, -> { with_state('ready') }
-  scope :shipped, -> { with_state('shipped') }
-  scope :trackable, -> { where("tracking IS NOT NULL AND tracking != ''") }
-  scope :with_state, ->(*s) { where(state: s) }
-  # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
-  scope :reverse_chronological, -> { order('coalesce(spree_shipments.shipped_at, spree_shipments.created_at) desc', id: :desc) }
+  # scope :pending, -> { with_state('pending') }
+  # scope :ready, -> { with_state('ready') }
+  # scope :shipped, -> { with_state('shipped') }
+  # scope :trackable, -> { where("tracking IS NOT NULL AND tracking != ''") }
+  # scope :with_state, ->(*s) { where(state: s) }
+  # # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
+  # scope :reverse_chronological, -> { order('coalesce(spree_shipments.shipped_at, spree_shipments.created_at) desc', id: :desc) }
+
+  def with_state(s)
+    state == s
+  end
+
+  def ready?
+    order.completed? && with_state('ready')
+  end
+
+  def shipped?
+    self.with_state('shipped')
+  end
 
   def add_shipping_method(shipping_method, selected = false)
     shipping_rates.create(shipping_method: shipping_method, selected: selected, cost: cost)

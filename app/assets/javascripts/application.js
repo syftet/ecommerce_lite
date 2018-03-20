@@ -41,6 +41,12 @@ $(document).on('turbolinks:load', function () {
             e.preventDefault();
             return false
         });
+        var current_url = window.location.href;
+        current_url = current_url.split('#');
+        login = current_url[current_url.length - 1];
+        if (login == 'login') {
+            $('#modalLoginForm').modal();
+        }
     });
 });
 
@@ -61,7 +67,7 @@ function popupMessage(message, klass) {
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function () {
-    //scrollFunction()
+    scrollFunction()
 };
 
 function scrollFunction() {

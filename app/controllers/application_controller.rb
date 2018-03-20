@@ -29,6 +29,13 @@ class ApplicationController < ActionController::Base
     token
   end
 
+  def custom_authenticate_user!
+    unless current_user.present?
+      session[:user_redirect_to] = request.original_url
+      redirect_to "#{root_path}#login"
+    end
+  end
+
   protected
 
   def load_order

@@ -43,99 +43,22 @@ module Admin
       end
     end
 
-    def preference_field_tag(name, value, options)
-      case options[:type]
-        when :integer
-          text_field_tag(name, value, preference_field_options(options))
-        when :boolean
-          hidden_field_tag(name, 0, id: "#{name}_hidden") +
-              check_box_tag(name, 1, value, preference_field_options(options))
-        when :string
-          text_field_tag(name, value, preference_field_options(options))
-        when :password
-          password_field_tag(name, value, preference_field_options(options))
-        when :text
-          text_area_tag(name, value, preference_field_options(options))
-        else
-          text_field_tag(name, value, preference_field_options(options))
-      end
-    end
-
-    def preference_field_for(form, field, options)
-      case options[:type]
-        when :integer
-          form.text_field(field, preference_field_options(options))
-        when :boolean
-          form.check_box(field, preference_field_options(options))
-        when :string
-          form.text_field(field, preference_field_options(options))
-        when :password
-          form.password_field(field, preference_field_options(options))
-        when :text
-          form.text_area(field, preference_field_options(options))
-        else
-          form.text_field(field, preference_field_options(options))
-      end
-    end
-
-    def preference_field_options(options)
-      field_options = case options[:type]
-                        when :integer
-                          {
-                              size: 10,
-                              class: 'input_integer form-control'
-                          }
-                        when :boolean
-                          {}
-                        when :string
-                          {
-                              size: 10,
-                              class: 'input_string form-control'
-                          }
-                        when :password
-                          {
-                              size: 10,
-                              class: 'password_string form-control'
-                          }
-                        when :text
-                          {
-                              rows: 15,
-                              cols: 85,
-                              class: 'form-control'
-                          }
-                        else
-                          {
-                              size: 10,
-                              class: 'input_string form-control'
-                          }
-                      end
-
-      field_options.merge!({
-                               readonly: options[:readonly],
-                               disabled: options[:disabled],
-                               size: options[:size]
-                           })
-    end
-
-    def preference_fields(object, form)
-      return unless object.respond_to?(:preferences)
-      fields = object.preferences.keys.map { |key|
-        if object.has_preference?(key)
-          form.label("preferred_#{key}", t(key) + ": ") +
-              preference_field_for(form, "preferred_#{key}", type: object.preference_type(key))
+    def event_links(order, events)
+      html = ""
+      events.each do |event|
+        if order.send("can_#{event}?")
+          html += link_to admin_order_state_changes_path(order_id: order.id, status: event), class: 'btn btn-success' do
+            raw "<i class='fa fa-#{event}'></i> #{event.capitalize}"
+          end
         end
-      }
-      safe_join(fields, '<br />'.html_safe)
+      end
+      html
     end
 
     # renders hidden field and link to remove record using nested_attributes
     def link_to_icon_remove_fields(f)
       url = f.object.persisted? ? [:admin, f.object] : '#'
       link_to_with_icon('delete', '', url, class: "spree_remove_fields btn btn-sm btn-danger", data: {action: 'remove'}, title: t(:remove)) + f.hidden_field(:_destroy)
-    end
-
-    def spree_dom_id(record)
-      dom_id(record, 'syftet')
     end
 
     I18N_PLURAL_MANY_COUNT = 2.1

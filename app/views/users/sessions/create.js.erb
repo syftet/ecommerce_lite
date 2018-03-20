@@ -1,5 +1,10 @@
 <% if @error.present? %>
 popupMessage("<%= @error %>", 'alert alert-danger');
 <%else%>
-  location.reload();
+if (<%= @location.present? %>) {
+    window.location.href = "<%= @location %>"
+}
+else {
+    location.reload();
+}
 <%end%>

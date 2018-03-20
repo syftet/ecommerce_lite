@@ -27,17 +27,21 @@
     <div class="container">
       <%= yield %>
     </div>
-    <%#= render 'products/compare_modal' %>
+    <%= render 'products/compare_modal' %>
+    <%= render 'products/shared/quickview_modal' %>
     <footer id="syftet-footer" class="syftet-footer" role="contentinfo">
       <%= render 'shared/footer' %>
       <%= render 'shared/public_footer' %>
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110543805-1"></script>
       <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+              dataLayer.push(arguments)
+          }
+          ;
+          gtag('js', new Date());
 
-        gtag('config', 'UA-110543805-1');
+          gtag('config', 'UA-110543805-1');
       </script>
     </footer>
   </div>

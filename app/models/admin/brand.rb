@@ -7,6 +7,8 @@ class Admin::Brand < ApplicationRecord
   after_save :set_permalink
   before_destroy :check_product
 
+  self.table_name = 'admin_brands'
+
   private
 
   def set_permalink
@@ -15,10 +17,5 @@ class Admin::Brand < ApplicationRecord
 
   def check_product
     !products.present?
-    # if products.present?
-    #   products.update_all(is_active: false)
-    #   update_attributes(is_active: false)
-    #   false
-    # end
   end
 end

@@ -523,9 +523,33 @@
   top: 0;
   left: 0;
   right: 0;
-  background: #dfdfdf;
+  background: #fdfdfd;
   transition: all 0.5s ease;
   z-index: 1000;
+  -webkit-box-shadow: 1px 2px 3px #cccccc;
+  -moz-box-shadow: 1px 2px 3px #cccccc;
+  box-shadow: 1px 2px 3px #cccccc;
+  .site-logo-link {
+    display: none;
+  }
+
+  .header-right {
+    padding: 0 15px 0 0;
+  }
+  .syftet-mainmenu #primary-menu > li a {
+    padding: 15px 20px 15px 0;
+  }
+
+  .syftet-mainmenu {
+    #primary-menu {
+      .top-sub-menu {
+        top: 50px;
+      }
+      .bubble-text-label {
+        display: none;
+      }
+    }
+  }
 }
 
 .search-category-container {

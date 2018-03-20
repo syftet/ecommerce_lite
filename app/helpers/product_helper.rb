@@ -1,11 +1,11 @@
 module ProductHelper
-  def product_preview_image(product)
+  def product_preview_image(product, url = false)
     if product.images.present?
-      image = product.images.first
-      image_tag(image.file.url(:product), class: 'image-hover product-image')
+      image_url = product.images.first.file.url(:product)
     else
-      image_tag(no_image, class: 'image-hover product-image')
+      image_url = no_image
     end
+    url ? image_url : image_tag(image_url, class: 'image-hover product-image')
   end
 
   def mini_image(variant, size = 50)
@@ -65,6 +65,14 @@ module ProductHelper
         #{amount_with_currency(discount_amount)}
        </span>
       </del>")
+  end
+
+  def categories(product)
+    tags = []
+    product.categories.each do |cat|
+      tags.push("<span> #{link_to cat.name, categories_path(cat.permalink)} </span>")
+    end
+    tags.join(' | ')
   end
 
   # Order

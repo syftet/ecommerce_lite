@@ -10,7 +10,7 @@
               <%= category.name %>
           <% end %>
           <span data-ref="top-cat-taxm-<%= category.id %>" class='pull-right collapse-ref'> <i class='fa fa-plus'></i> </span>
-          <%= render 'products/shared/sub_category', subcategories: category.sub_categories, category: category if category.sub_categories.present? %>
+          <%= render 'products/shared/sub_category', subcategories: category.sub_categories, category: category, selected: @category if category.sub_categories.present? %>
         </li>
     <% end %>
   </ul>

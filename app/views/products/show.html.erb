@@ -32,8 +32,7 @@
         </div>
         <div class="product-big-image-wrapper">
           <div class="product-details-image text-xs-center">
-            <% product_image = @product.images.first %>
-            <img src="<%= product_image.file %>" data-zoom-image="<%#= get_zoom_image_link(product_image) %>" alt="product image" id="product-zoom" class="img-fluid d-inline-block">
+            <img src="<%= product_preview_image(@product, true) %>" data-zoom-image="<%#= get_zoom_image_link(product_image) %>" alt="product image" id="product-zoom" class="img-fluid d-inline-block">
             <span class="zoom-init-image"></span>
           </div>
         </div>

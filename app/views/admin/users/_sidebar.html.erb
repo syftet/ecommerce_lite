@@ -10,7 +10,7 @@
       <li<%== ' class="active"' if current == :address %>>
         <%= link_to_with_icon 'address-book-o', 'Address', edit_admin_user_path(@user) %>
       </li>
-      <li<%== ' class="active"' if current == :order %>>
+      <li<%== ' class="active"' if current == :orders %>>
         <%= link_to_with_icon 'shopping-cart', 'Orders', edit_admin_user_path(@user) %>
       </li>
     </ul>

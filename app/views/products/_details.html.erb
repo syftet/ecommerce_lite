@@ -28,7 +28,7 @@
     <p class="price">
       <ins>
         <span class="price-amount product-amount">
-          <%= @product.price %>
+          <%= amount_with_currency(@product.price) %>
         </span>
       </ins>
       <%= discount_price(@product) %>
