@@ -43,6 +43,7 @@ gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'social-share-button'
 gem 'kaminari'
 gem 'select2-rails' #, '~> 3.5.9.1'
+gem 'annotate'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -53,6 +54,8 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'rspec-rails'
+
 end
 
 group :development do

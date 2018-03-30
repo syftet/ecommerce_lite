@@ -93,6 +93,7 @@ class Order < ApplicationRecord
   end
 
   def update_with_params(params, permitted_params)
+
     if params[:state] == 'address'
       self.update_attributes(permitted_params)
     elsif params[:state] == 'delivery'
@@ -100,7 +101,7 @@ class Order < ApplicationRecord
         self.update_attributes(permitted_params)
       else
         false
-      end
+     end
     end
   end
 

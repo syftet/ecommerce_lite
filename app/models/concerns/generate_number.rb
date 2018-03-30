@@ -5,8 +5,6 @@ module GenerateNumber
   DEFAULT_LENGTH = 9
   NUMBERS = (0..9).to_a.freeze
   LETTERS = ('A'..'Z').to_a.freeze
-  @candidates = NUMBERS + LETTERS
-  @random = Random.new
 
   included do
     validates(:number, presence: true, uniqueness: true)
@@ -26,7 +24,7 @@ module GenerateNumber
 
   def new_candidate(length)
     candidates = NUMBERS + LETTERS
-    (self.prefix || 'OR-') + length.times.map { candidates.sample(random: @random) }.join
+    (self.prefix || 'OR-') + length.times.map { candidates.sample(random: Random.new) }.join
   end
 
 end
