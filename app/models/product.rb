@@ -85,14 +85,6 @@ class Product < ApplicationRecord
     should_track_inventory?
   end
 
-  def volume
-    (width || 0) * (height || 0) * (depth || 0)
-  end
-
-  def dimension
-    (width || 0) + (height || 0) + (depth || 0)
-  end
-
   def total_on_hand
     stock_items.count
   end

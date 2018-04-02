@@ -4,6 +4,7 @@ class StockItem < ApplicationRecord
   has_many :stock_movements, dependent: :nullify
 
   validates :stock_location, :product, presence: true
+
   validates :product_id, uniqueness: {scope: [:stock_location_id, :deleted_at]}, allow_blank: true
 
   validates :count_on_hand, numericality: {
