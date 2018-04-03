@@ -1,0 +1,26 @@
+<div class="footer-link-wrapper" style="background-color: rgb(239, 239, 239); margin-top: 20px; text-align: center;">
+  <div>
+    <ul style="padding-top: 15px;">
+      <li style="list-style: none; display: inline-block; margin: 0 !important;">
+        <%= link_to 'My Account', my_account_url, style: 'color: #333333;' %> </li>
+      <li style="list-style: none; display: inline-block; margin: 0 !important;"> |</li>
+      <li style="list-style: none; display: inline-block; margin: 0 !important;">
+        <%= link_to 'Help & Contact us', contact_us_url, style: 'color: #333333;' %></li>
+      <% if @order.present? %>
+          <li style="list-style: none; display: inline-block; margin: 0 !important;"> |</li>
+          <li style="list-style: none; display: inline-block; margin: 0 !important;">
+            <%= link_to 'Order Status & Tracking', order_shipped_track_url(@order.id), style: 'color: #333333;' %></li>
+      <% end %>
+      <li style="list-style: none; display: inline-block; margin: 0 !important;"> |</li>
+      <li style="list-style: none; display: inline-block; margin: 0 !important;">
+        <%= link_to "FAQ’s", faq_url, style: 'color: #333333;' %></li>
+    </ul>
+  </div>
+
+  <div align="center">
+    <p style=" color: #a0a0a0; text-align: center; padding-bottom: 10px; font-size: 13px;">
+      © 2009–2017 - <a href="http://tangailenterprise.com" style="color: #333333;"> linesbeauty.com </a> #120, Las
+      Vegas, NV 89148, USA
+    </p>
+  </div>
+</div>

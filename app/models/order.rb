@@ -1,3 +1,41 @@
+# == Schema Information
+#
+# Table name: orders
+#
+#  id                     :integer          not null, primary key
+#  number                 :string(255)
+#  item_total             :decimal(10, )    default(0)
+#  total                  :decimal(10, )    default(0)
+#  state                  :string(255)
+#  adjustment_total       :decimal(10, )    default(0)
+#  user_id                :integer
+#  completed_at           :datetime
+#  ship_address_id        :integer
+#  payment_total          :decimal(10, )    default(0)
+#  shipment_state         :string(255)
+#  payment_state          :string(255)
+#  email                  :string(255)
+#  currency               :string(255)
+#  created_by_id          :string(255)
+#  shipment_total         :decimal(10, )    default(0)
+#  promo_total            :decimal(10, )    default(0)
+#  item_count             :integer
+#  approver_id            :integer
+#  approved_at            :datetime
+#  confirmation_delivered :boolean
+#  guest_token            :string(255)
+#  canceled_at            :datetime
+#  canceler_id            :integer
+#  store_id               :integer
+#  shipment_date          :date
+#  shipment_progress      :integer          default(0)
+#  shipped_at             :datetime
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  special_instructions   :text(65535)
+#  collection_point       :string(255)
+#
+
 # require 'order/checkout'
 class Order < ApplicationRecord
   PAYMENT_STATES = %w(balance_due credit_owed failed paid void)

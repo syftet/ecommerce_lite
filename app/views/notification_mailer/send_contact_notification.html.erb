@@ -1,0 +1,22 @@
+<%= content_for :email_subject do %>
+    Contact request from "<%= @contact.full_name %>"
+<% end %>
+
+<p>
+
+  <b>Name: </b><%= @contact.full_name %><br>
+  <b>Email: </b><%= @contact.email %><br>
+  <b>Inquiry Type: </b> <%= @contact.inquiry_type %> <br/>
+
+  <% if @contact.phone.present? %>
+      <b>Phone: </b><%= @contact.phone %><br>
+  <% end %>
+
+  <% if @contact.order_number.present? %>
+      Order Number: <%= @contact.order_number %> <br/>
+  <% end %>
+
+  <b> Message: </b> <br/>
+  <%= @contact.message %>
+
+</p>
