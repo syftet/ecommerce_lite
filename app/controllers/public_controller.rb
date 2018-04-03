@@ -29,11 +29,15 @@ class PublicController < ApplicationController
       Mail::Address.new(email)
       newsletter = NewsletterSubscription.find_or_initialize_by(email: email)
       if newsletter.save!
+        p 'iopiopipoiop'
         cookies[:hidemodal] = 1
       else
+        p newsletter.errors
         @message = newsletter.errors.first
       end
     rescue => ex
+      p 'sdfsdfsdfsdf'
+      p ex.message
       @message = "Email address not valid: #{ex.message}"
     end
     respond_to do |format|

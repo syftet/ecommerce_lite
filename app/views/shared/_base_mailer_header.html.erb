@@ -1,0 +1,20 @@
+<div style="margin-top: 10px" class="header-logo-wrapper">
+  <img src="<%= image_url('logo.png') %>" alt="Line's Beauty" style="float: none;"/>
+</div>
+
+<div class="menu-link-wrapper" style="background-color: black; width: 100%; margin-top: 10px;">
+  <ul style="padding: 20px;">
+    <li style="list-style: none; display: inline-block; margin: 0 !important;">
+      <%= link_to 'HOME', root_url, style: 'padding: 7px; color: #ffffff; display: inline-block;' %>
+    </li>
+    <li style="list-style: none; display: inline-block; margin: 0 !important;">
+      <%= link_to 'PRODUCTS', products_url, style: 'padding: 7px; color: #ffffff; display: inline-block;' %>
+    </li>
+    <li style="list-style: none; display: inline-block; margin: 0 !important;">
+      <%= link_to 'DISCOUNT', promotion_products_url('discount'), style: 'padding: 7px; color: #ffffff; display: inline-block;' %>
+    </li>
+    <li style="list-style: none; display: inline-block; margin: 0 !important;">
+      <%= link_to 'NEW ARRIVAL', promotion_products_url('new'), style: 'padding: 7px; color: #ffffff; display: inline-block;' %>
+    </li>
+  </ul>
+</div>

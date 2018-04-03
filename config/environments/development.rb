@@ -27,7 +27,26 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
+
+  #for mailer root url
+  config.action_mailer.default_url_options = {host: 'localhost', port: 3000}
+  config.action_mailer.asset_host = 'https://www.bequent.com'
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address: '162.221.186.242',
+      port: 587,
+      domain: 'bequent.com',
+      user_name: 'info@bequent.com',
+      password: 'cLQGdN6rIJG7',
+      :authentication => :login,
+      :enable_starttls_auto => true,
+      :openssl_verify_mode => 'none'
+
+      # authentication: 'plain',
+      # enable_starttls_auto: true
+  }
 
   config.action_mailer.perform_caching = false
 

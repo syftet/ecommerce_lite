@@ -298,7 +298,7 @@ ActiveRecord::Schema.define(version: 20180313154777) do
   create_table "stock_locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.boolean "default", default: false
-    t.string "address"
+    t.string "address1"
     t.string "city"
     t.string "state"
     t.string "zipcode"

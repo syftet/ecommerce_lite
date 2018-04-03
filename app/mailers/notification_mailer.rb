@@ -7,7 +7,7 @@ class NotificationMailer < ApplicationMailer
 
   def send_subscription_notification(email)
     @email = email
-    mail(to: email, subject: "Lienesbeauty subscription gift", from: 'shop@lienesbeauty.com')
+    mail(to: email, subject: 'E-commerce Lite subscription gift', from: 'shop@lienesbeauty.com')
   end
 
 end
