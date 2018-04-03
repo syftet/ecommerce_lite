@@ -20,7 +20,7 @@ require 'rails_helper'
 
 RSpec.describe Address, type: :model do
 
-  it 'returns full name removing sapace' do
+  it 'returns full name removing space' do
     address = Address.new(
       firstname: 'John',
       lastname: 'Doe'

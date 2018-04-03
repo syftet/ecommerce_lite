@@ -64,14 +64,14 @@ class Product < ApplicationRecord
   validates_presence_of :name, :code, :cost_price, :sale_price, :is_active, :slug
   validates_uniqueness_of :code
 
+  after_create :create_stock_items
+
   scope :active, -> { where(is_active: true) }
   scope :master, -> { where(product_id: nil) }
   scope :master_active, -> { where(is_active: true, product_id: nil) }
   scope :in_stock, -> { joins(:stock_items).where('count_on_hand > ? OR track_inventory = ?', 0, false) }
-
-  def self.new_arrivals
-    where('created_at >= ? and product_id IS NULL', 15.days.ago)
-  end
+  scope :featured, -> { master_active.where(is_featured: true) }
+  scope :new_arrivals, -> { master_active.where('created_at >= ?', 15.days.ago) }
 
   def master?
     !product.present?
@@ -127,7 +127,14 @@ class Product < ApplicationRecord
   end
 
   def total_on_hand
-    stock_items.count
+    stock_items.sum(:count_on_hand)
   end
 
+  private
+
+  def create_stock_items
+    StockLocation.where(propagate_all_variants: true).each do |stock_location|
+      stock_location.propagate_product(self)
+    end
+  end
 end
