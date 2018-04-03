@@ -8,25 +8,26 @@ class Search
   end
 
   def result
-    if taxon.present?
-      result_object = taxon.products.joins(:variants) #.joins(:prices)
+   if taxon.present?
+    result_object = taxon.products#.joins(:variants) #.joins(:prices)
     else
-      result_object = Product.joins(:variants)
-    end
+      result_object = Product.all#.joins(:variants)
+   end
+   p terms[:product_type]
 
-    if terms['product_type'] == 'recent'
+    if terms[:product_type] == 'recent'
       result_object = result_object.where("products.created_at >= ?", 15.days.ago)
     end
 
-    if terms['product_type'] == 'sale' || terms['q'] == 'discount'
+    if terms[:product_type] == 'sale' || terms[:q] == 'discount'
       result_object = result_object.where('products.discountable = true')
     end
 
-    if terms['product_type'] == 'featured'
+    if terms[:product_type] == 'featured'
       result_object = result_object.where('products.is_featured = true')
     end
 
-    if terms['product_type'] == 'top_rate'
+    if terms[:product_type] == 'top_rate'
       result_object = result_object.joins(:reviews).order("reviews.rating DESC")
     end
 
@@ -39,7 +40,7 @@ class Search
     end
 
     if terms[:size].present?
-      result_object = result_object.where("variants.size = '#{terms[:size]}'")
+      result_object = result_object.where("products.size = '#{terms[:size]}'")
     end
 
     if terms[:color].present?
@@ -48,7 +49,7 @@ class Search
 
     result_object = result_object.distinct
     result_object = sort_by(result_object)
-    result_object.page(page).per(terms['per_page'] || 20) #Syftet.config.product_per_page)
+    result_object.page(page).per(terms[:per_page] || 20) #Syftet.config.product_per_page)
   end
 
 

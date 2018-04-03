@@ -19,7 +19,7 @@ RSpec.describe Product, type: :model do
     it 'should return last product id+1 ' do
       @p = Product.create
       product = Product.generate_code
-      expect(product).to eq('P001')
+      expect(product).to eq('P00150')
     end
   end
 

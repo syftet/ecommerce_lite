@@ -50,7 +50,6 @@ RSpec.describe Order, type: :model do
     end
   end
 
-
   describe '.net_total' do
     before(:each) do
       @order = Order.new(
@@ -165,16 +164,6 @@ RSpec.describe Order, type: :model do
         order = Order.get_incomplete_order("gusest",@user)
         expect(order.payment_total).to eq(30)
       end
-    end
-
-    describe ".collect_rewards_point" do
-      before(:each) do
-        @orde = Order.create(approved_at:DateTime.now)
-        @orde.user.create()
-      end
-         it "should " do
-
-         end
     end
 
   end
