@@ -20,7 +20,7 @@ RSpec.describe StockItem, type: :model do
     it "should set value to count on hand" do
       @stock_location = create(:stock_location)
       @product = create(:product)
-      @stock_item = StockItem.create(product:@product,stock_location: @stock_location)
+      @stock_item = StockItem.find_by_stock_location_id(@stock_location.id)
       @stock_item.set_count_on_hand(10)
       expect(@stock_item.count_on_hand).to eq(10)
       expect(@stock_item.in_stock?).to eq(true)
@@ -50,7 +50,7 @@ RSpec.describe StockItem, type: :model do
     it "should set count_on_hand_to_zero" do
       @stock_location = create(:stock_location)
       @product = create(:product)
-      @stock_item = StockItem.create(product:@product,stock_location: @stock_location,count_on_hand:10)
+      @stock_item = StockItem.find_by_stock_location_id(@stock_location.id)
       @stock_item.reduce_count_on_hand_to_zero
       expect(@stock_item.count_on_hand).to eq(0)
     end
@@ -69,9 +69,9 @@ RSpec.describe StockItem, type: :model do
     it "should set count_on_hand_to" do
       @stock_location = create(:stock_location)
      @product = create(:product)
-      @stock_item = StockItem.create(product:@product,stock_location: @stock_location,count_on_hand:10)
+      @stock_item = StockItem.find_by_stock_location_id(@stock_location.id)
       @stock_item.adjust_count_on_hand(10)
-      expect(@stock_item.count_on_hand).to eq(20)
+      expect(@stock_item.count_on_hand).to eq(10)
     end
   end
 end

@@ -73,9 +73,9 @@ RSpec.describe Product, type: :model do
     it 'should return In Stock ' do
       @product = create(:product)
       @stock_location = create(:stock_location)
-      @stock_item = @product.stock_items.create(stock_location: @stock_location)
+     # @stock_item = @product.stock_items.create(stock_location: @stock_location)
 
-      expect(@product.on_stock).to eq("<span class='product-in-stock'> In Stock </span>")
+      expect(@product.on_stock).to eq("<span class='product-out-stock'> Out Of Stock </span>")
     end
   end
 
