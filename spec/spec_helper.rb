@@ -13,7 +13,10 @@
 # it.
 
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' do
+  add_filter "/models/ability"
+  add_filter "/models/admin.rb"
+end
 
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration

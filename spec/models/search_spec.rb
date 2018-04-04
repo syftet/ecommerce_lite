@@ -26,7 +26,6 @@ RSpec.describe Search, type: :model do
       params = { product_type: 'recent', page: 1 }
       @search = Search.new(params)
       result_object = @search.result
-      # p result_object
       expect(result_object.size).to eq(5)
     end
 
@@ -48,7 +47,6 @@ RSpec.describe Search, type: :model do
       params = { name: 'apon', page: 1 }
       @search = Search.new(params)
       result_object = @search.result
-      p result_object
       expect(result_object.size).to eq(1)
     end
 
@@ -56,7 +54,6 @@ RSpec.describe Search, type: :model do
       params = { min:10,max:20 , page: 1 }
       @search = Search.new(params)
       result_object = @search.result
-      p result_object
       expect(result_object.size).to eq(1)
     end
 

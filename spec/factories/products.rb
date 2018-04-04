@@ -41,10 +41,10 @@
 
 FactoryBot.define do
   factory :product do
-    name 'Joe'
+    name 'Joeee'
     description 'This is description'
-    code 'eewerr'
-    slug 'slug'
+    code Product.generate_code
+    slug 'sluggg'
     # factory :product_with_stock_items do
     #   after(:create) do |product|
     #     p 'sdsdsd'

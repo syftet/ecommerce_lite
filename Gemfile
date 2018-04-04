@@ -57,6 +57,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'simplecov', require: false
   gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :development do
