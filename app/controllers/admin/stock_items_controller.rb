@@ -5,7 +5,7 @@ module Admin
     def create
       product = Product.find(params[:product_id])
       stock_location = StockLocation.find(params[:stock_location_id])
-      stock_movement = sto ck_location.stock_movements.build(stock_movement_params)
+      stock_movement = stock_location.stock_movements.build(stock_movement_params)
       stock_movement.stock_item = stock_location.set_up_stock_item(product)
 
       if stock_movement.save

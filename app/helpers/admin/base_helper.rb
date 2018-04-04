@@ -61,6 +61,73 @@ module Admin
       link_to_with_icon('delete', '', url, class: "spree_remove_fields btn btn-sm btn-danger", data: {action: 'remove'}, title: t(:remove)) + f.hidden_field(:_destroy)
     end
 
+    def preference_fields(object, form)
+      return unless object.respond_to?(:preferences)
+      fields = object.class::PREFERENCES.map { |preference|
+        if preference.present?
+          form.label("preferred_#{preference[:field]}", t(preference[:field]) + ": ") +
+              preference_field_for(form, "preferred_#{preference[:field]}", type: preference[:type])
+        end
+      }
+      safe_join(fields, '<br />'.html_safe)
+    end
+
+    def preference_field_for(form, field, options)
+      case options[:type]
+        when :integer
+          form.text_field(field, preference_field_options(options))
+        when :boolean
+          form.check_box(field, preference_field_options(options))
+        when :string
+          form.text_field(field, preference_field_options(options))
+        when :password
+          form.password_field(field, preference_field_options(options))
+        when :text
+          form.text_area(field, preference_field_options(options))
+        else
+          form.text_field(field, preference_field_options(options))
+      end
+    end
+
+    def preference_field_options(options)
+      field_options = case options[:type]
+                        when :integer
+                          {
+                              size: 10,
+                              class: 'input_integer form-control'
+                          }
+                        when :boolean
+                          {}
+                        when :string
+                          {
+                              size: 10,
+                              class: 'input_string form-control'
+                          }
+                        when :password
+                          {
+                              size: 10,
+                              class: 'password_string form-control'
+                          }
+                        when :text
+                          {
+                              rows: 15,
+                              cols: 85,
+                              class: 'form-control'
+                          }
+                        else
+                          {
+                              size: 10,
+                              class: 'input_string form-control'
+                          }
+                      end
+
+      field_options.merge!({
+                               readonly: options[:readonly],
+                               disabled: options[:disabled],
+                               size: options[:size]
+                           })
+    end
+
     I18N_PLURAL_MANY_COUNT = 2.1
 
     def plural_resource_name(resource_class)

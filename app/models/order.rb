@@ -40,6 +40,7 @@
 class Order < ApplicationRecord
   PAYMENT_STATES = %w(balance_due credit_owed failed paid void)
   SHIPMENT_STATES = %w(backorder canceled partial processing pending ready shipped delivered canceled refunded )
+  PREFIX = 'OR-'
   ORDER_SHIPMENT_STATE = {
       processing: 'Processing',
       payment_failed: 'Payment failed',
@@ -87,7 +88,11 @@ class Order < ApplicationRecord
   # accepts_nested_attributes_for :payments
   # accepts_nested_attributes_for :shipments
 
-  attr_accessor :shipping_method, :prefix
+  attr_accessor :shipping_method
+
+  def prefix
+    Order::PREFIX
+  end
 
   def can_approve?
     completed? && self.state != 'approved'
@@ -136,10 +141,12 @@ class Order < ApplicationRecord
       self.update_attributes(permitted_params)
     elsif params[:state] == 'delivery'
       if init_shipment(permitted_params.delete(:shipping_method))
-        self.update_attributes(permitted_params)
+        self.update_attributes(permitted_params.merge({shipment_state: 'pending'}))
       else
         false
-     end
+      end
+    elsif params[:state] == 'payment'
+      payment_params = get_payment_params(params)
     end
   end
 
@@ -163,6 +170,10 @@ class Order < ApplicationRecord
     end
   end
 
+  def create_payment
+
+  end
+
   def init_shipment(shipping_method)
     shipping = ShippingMethod.find_by_id(shipping_method)
     u_shipment = self.shipment || self.build_shipment
@@ -172,6 +183,10 @@ class Order < ApplicationRecord
     u_shipment.shipping_method_id = shipping.id
     u_shipment.state = 'pending'
     u_shipment.save!
+  end
+
+  def get_payment_params(params)
+
   end
 
 end
