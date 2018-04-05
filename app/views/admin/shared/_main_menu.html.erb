@@ -26,18 +26,6 @@
     </ul>
 <% end %>
 
-<% if can?(:admin, User) %>
-    <ul class="nav nav-sidebar">
-      <%= main_menu_item('Slider', admin_home_sliders_path, 'picture-o') %>
-    </ul>
-<% end %>
-
-<% if can?(:admin, ShippingMethod) %>
-    <ul class="nav nav-sidebar">
-      <%= main_menu_item('Shipping Method', admin_shipping_methods_path, 'ship') %>
-    </ul>
-<% end %>
-
 <% if can?(:admin, StockLocation) %>
     <ul class="nav nav-sidebar">
       <%= main_menu_item('Stock Locations', admin_stock_locations_path, 'archive') %>
@@ -47,6 +35,24 @@
 <% if can?(:admin, StockTransfer) %>
     <ul class="nav nav-sidebar">
       <%= main_menu_item('Stock Transfers', admin_stock_transfers_path, 'exchange') %>
+    </ul>
+<% end %>
+
+<% if can?(:admin, ShippingMethod) %>
+    <ul class="nav nav-sidebar">
+      <%= main_menu_item('Shipping Method', admin_shipping_methods_path, 'ship') %>
+    </ul>
+<% end %>
+
+<% if can?(:admin, PaymentMethod) %>
+    <ul class="nav nav-sidebar">
+      <%= main_menu_item('Payment Method', admin_payment_methods_path, 'money') %>
+    </ul>
+<% end %>
+
+<% if can?(:admin, User) %>
+    <ul class="nav nav-sidebar">
+      <%= main_menu_item('Slider', admin_home_sliders_path, 'picture-o') %>
     </ul>
 <% end %>
 

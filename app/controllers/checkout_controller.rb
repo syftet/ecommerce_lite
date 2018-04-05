@@ -51,7 +51,7 @@ class CheckoutController < ApplicationController
   private
 
   def permitted_checkout_attributes
-    params[:orders].permit!
+    params[:order].permit!
   end
 
   def validate_state

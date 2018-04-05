@@ -68,6 +68,8 @@ Rails.application.routes.draw do
     resources :home_sliders
     resources :shipping_methods
 
+    resources :payment_methods
+
     resources :stock_locations do
       member do
         get :stock_items

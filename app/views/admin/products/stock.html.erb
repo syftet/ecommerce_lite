@@ -23,7 +23,7 @@
     <tbody>
     <% @products.each do |product| %>
       <% if product.stock_items.present? %>
-        <tr id="<%= spree_dom_id product %>" data-hook="admin_product_stock_management_index_rows">
+        <tr id="<%#= spree_dom_id product %>" data-hook="admin_product_stock_management_index_rows">
           <td class="image text-center">
             <% if product.images.present? %>
               <%= image_tag product.images.first.file.url(:mini) %>
