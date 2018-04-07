@@ -7,7 +7,7 @@ RSpec.describe CategoriesController, type: :controller do
       @category = Admin::Category.create(name: Faker::Name.first_name,description:"this is description")
     end
     it "should respons " do
-      get :show ,params:{product_id: @category.permalink}
+      get :show ,params:{id: @category.permalink}
       expect(response.status).to eq(200)
       end
     it "should respons html format" do

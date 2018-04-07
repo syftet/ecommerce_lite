@@ -31,6 +31,7 @@ module Admin
         if @blog.save
           format.html { redirect_to admin_blogs_path, notice: 'Blog was successfully created.' }
           format.json { render :show, status: :created, location: @blog }
+
         else
           format.html { render :new }
           format.json { render json: @blog.errors, status: :unprocessable_entity }

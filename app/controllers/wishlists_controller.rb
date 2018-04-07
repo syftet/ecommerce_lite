@@ -15,6 +15,9 @@ class WishlistsController < ApplicationController
   def destroy
     wishlist = current_user.wishlists.find_by_id(params[:id])
     wishlist.destroy
+    respond_to do |format|
+      format.js
+    end
   end
 
   def index
