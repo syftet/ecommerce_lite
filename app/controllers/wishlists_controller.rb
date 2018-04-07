@@ -3,10 +3,14 @@ class WishlistsController < ApplicationController
   layout 'product'
 
   def create
-    @product = Product.find_by_id(params[:product_id])
-    wishlist = current_user.wishlists.find_or_initialize_by(product_id: @product.id)
-    @status = wishlist.save
+      @product = Product.find_by_id(params[:product_id])
+      wishlist = current_user.wishlists.find_or_initialize_by(product_id: @product.id)
+      @status = wishlist.save
+      respond_to do |format|
+        format.js
+      end
   end
+
 
   def destroy
     wishlist = current_user.wishlists.find_by_id(params[:id])

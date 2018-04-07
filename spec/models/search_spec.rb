@@ -26,7 +26,7 @@ RSpec.describe Search, type: :model do
       params = { product_type: 'recent', page: 1 }
       @search = Search.new(params)
       result_object = @search.result
-      expect(result_object.size).to eq(5)
+      expect(result_object.size).to eq(4)
     end
 
     it 'should return 1 product' do
