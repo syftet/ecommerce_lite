@@ -9,11 +9,12 @@ module Admin
       stock_movement.stock_item = stock_location.set_up_stock_item(product)
 
       if stock_movement.save
+        P "success"
         flash[:success] = 'Stock successfully added.'
       else
+        P"unable"
         flash[:error] = 'unable to add stock'
       end
-
       redirect_to admin_products_path
     end
 
