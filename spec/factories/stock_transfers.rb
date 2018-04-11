@@ -14,6 +14,8 @@
 
 FactoryBot.define do
   factory :stock_transfer do
-    
+    transfer_type "shipping"
+    reference "reference"
+    number Faker:: Number.digit
   end
 end
