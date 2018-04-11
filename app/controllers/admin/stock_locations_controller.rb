@@ -54,7 +54,7 @@ module Admin
     end
 
     def stock_location_params
-      params.require(:stock_location).permit(:name, :default, :address1, :city,
+      params.require(:stock_location).permit(:name, :default, :address, :city,
                                              :state, :zipcode, :country, :phone,
                                              :active, :backorderable_default,
                                              :propagate_all_variants, :admin_name)
