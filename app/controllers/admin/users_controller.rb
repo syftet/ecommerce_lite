@@ -15,7 +15,6 @@ module Admin
     end
 
     def edit
-
     end
 
     def show
