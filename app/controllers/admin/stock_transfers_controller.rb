@@ -17,12 +17,10 @@ module Admin
       params[:product].each_with_index do |product_id, i|
         products[product_id.to_i] += params[:quantity][i].to_i
       end
-
       stock_transfer = StockTransfer.create(reference: params[:reference])
       stock_transfer.transfer(source_location,
                               destination_location,
                               products)
-
       flash[:success] = t(:stock_successfully_transferred)
       redirect_to admin_stock_transfer_path(stock_transfer)
     end

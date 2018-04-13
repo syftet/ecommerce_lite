@@ -1,6 +1,6 @@
 module Admin
   class ShippingMethodsController < BaseController
-    before_action :set_shipping_method, only: [:edit, :update]
+    before_action :set_shipping_method, only: [:edit, :update, :destroy]
 
     def index
       @shipping_methods = ShippingMethod.all
@@ -20,7 +20,6 @@ module Admin
     end
 
     def edit
-
     end
 
     def update
@@ -33,7 +32,7 @@ module Admin
     end
 
     def destroy
-      @object.destroy
+      @shipping_method.destroy
       flash[:success] = 'successfully removed'
       redirect_to admin_shipping_methods_path
     end
