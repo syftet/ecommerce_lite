@@ -14,7 +14,7 @@ module Admin
       else
         flash[:error] = 'unable to add stock'
       end
-      redirect_to admin_products_path
+      redirect_to stock_admin_product_path(product)
     end
 
     def update

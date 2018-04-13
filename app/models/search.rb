@@ -8,12 +8,12 @@ class Search
   end
 
   def result
-   if taxon.present?
-    result_object = taxon.products#.joins(:variants) #.joins(:prices)
+    if taxon.present?
+      result_object = taxon.products.master_active #.joins(:variants) #.joins(:prices)
     else
-      result_object = Product.all#.joins(:variants)
-   end
-   p terms[:product_type]
+      result_object = Product.master_active #.joins(:variants)
+    end
+    p terms[:product_type]
 
     if terms[:product_type] == 'recent'
       result_object = result_object.where("products.created_at >= ?", 15.days.ago)
@@ -102,13 +102,13 @@ class Search
   def sort_by(result_object)
     sort_result = result_object
     case terms[:sort]
-      when 'price_low'
-        sort_result = result_object.reorder('products.sale_price')
-      when 'price_high'
-        sort_result = result_object.reorder('products.sale_price desc')
-      when 'rating'
-      else
-        sort_result = result_object.reorder('products.created_at desc')
+    when 'price_low'
+      sort_result = result_object.reorder('products.sale_price')
+    when 'price_high'
+      sort_result = result_object.reorder('products.sale_price desc')
+    when 'rating'
+    else
+      sort_result = result_object.reorder('products.created_at desc')
     end
     sort_result
   end

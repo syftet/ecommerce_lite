@@ -4,7 +4,7 @@
         <% unless deep %>
             <i class="fa fa-long-arrow-down"></i>
         <% end %>
-        <%= link_to sub.name, admin_category_path(sub.name) %>
+        <%= link_to sub.name, admin_category_path(sub) %>
         <div class="actions">
           <%= link_to new_admin_category_path(parent_id: sub.id), title: 'Add category under this category', :class => 'btn btn-default btn-xs' do %>
               <i class='fa fa-plus'></i>
