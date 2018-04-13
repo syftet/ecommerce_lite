@@ -5,7 +5,7 @@
 #  id                     :integer          not null, primary key
 #  name                   :string(255)
 #  default                :boolean          default(FALSE)
-#  address                :string(255)
+#  address1               :string(255)
 #  city                   :string(255)
 #  state                  :string(255)
 #  zipcode                :string(255)
@@ -43,7 +43,7 @@ class StockLocation < ApplicationRecord
   end
 
   def stock_item_or_create(product)
-    stock_item(product) || stock_items.create(product_id: product.id)
+    stock_item(product) || stock_items.create(product_id: product)
   end
 
   def count_on_hand(product)

@@ -3,22 +3,6 @@
   <%= t(:new_stock_transfer) %>
 <% end %>
 
-<script type='text/template' id='transfer_product_template'>
-  {{#each products}}
-  <tr>
-    <td>{{name}}</td>
-    <td class='text-center'>{{quantity}}</td>
-    <td class='actions actions-1 text-center'>
-      <button class='icon_link btn btn-danger btn-sm transfer_remove_product' data-product-id='{{id}}'>
-        <span class='fa fa-times' data-product-id='{{id}}'></span>
-      </button>
-      <input type='hidden' id='product[]' name='product[]' value='{{id}}'>
-      <input type='hidden' id='quantity[]' name='quantity[]' value='{{quantity}}'>
-    </td>
-  </tr>
-  {{/each}}
-</script>
-
 <%= form_tag admin_stock_transfers_path, :method => :post do %>
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -35,7 +19,7 @@
         </div>
         <div class="form-group" id="receive_stock_field">
           <div class="checkbox">
-            <label for="receive_stock">
+            <label for="transfer_receive_stock">
               <%= check_box_tag :transfer_receive_stock %>
               <%= t('receive_stock') %>
             </label>
@@ -103,332 +87,300 @@
   </div>
 
   <div class="form-actions" data-hook="buttons">
-    <%= button t(:transfer_stock), 'plus transfer_transfer' %>
+    <%= submit_tag 'Transfer Stock', class: 'btn btn-primary transfer_transfer' %>
+    <%#= button t(:transfer_stock), 'plus transfer_transfer' %>
   </div>
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
-    var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-        hasProp = {}.hasOwnProperty;
+    var locations = [];
+    var products = [];
+    var source_element = $('#transfer_source_location_id');
+    var destination_element = $('#transfer_destination_location_id');
+    $(function () {
+        source_element.change(function () {
+            populate_destination();
+            clear_products();
+            refresh_products();
+        });
 
-    $(function() {
-        var TransferAddProducts, TransferLocations, TransferStockItem, TransferProduct, TransferProducts, transfer_add_products, transfer_locations, transfer_products;
-        TransferProduct = (function() {
-            function TransferProduct(product1) {
-                this.product = product1;
-                this.id = this.product.id;
-                this.name = this.product.name + " - " + this.product.code;
-                this.quantity = 0;
+        $('#transfer_receive_stock').change(function (event) {
+            receive_stock_change(event)
+        });
+
+        $.getJSON('/admin/stock_locations', (function (data) {
+            var i, len, ref;
+            ref = data.stock_locations;
+            for (i = 0, len = ref.length; i < len; i++) {
+                locations.push(ref[i]);
             }
 
-            TransferProduct.prototype.add = function(quantity) {
-                return this.quantity += quantity;
-            };
+            if (locations.length < 2) {
+                force_receive_stock();
+            }
+            populate_source();
+            populate_destination();
+        }));
 
-            return TransferProduct;
-
-        })();
-        TransferStockItem = (function(superClass) {
-            extend(TransferStockItem, superClass);
-
-            function TransferStockItem(stock_item) {
-                this.stock_item = stock_item;
-                TransferStockItem.__super__.constructor.call(this, this.stock_item.product);
-                this.count_on_hand = this.stock_item.count_on_hand;
-                this.name = this.product.name + " - " + this.product.code + " (" + this.count_on_hand + ")";
+        $('button.transfer_add_product').click(function (event) {
+            event.preventDefault();
+            if ($('#transfer_product').select2('data').length > 0) {
+                add_product();
+            } else {
+                alert('Please select a product first');
             }
 
-            TransferStockItem.prototype.add = function(quantity) {
-                this.quantity += quantity;
-                if (this.quantity > this.count_on_hand) {
-                    return this.quantity = this.count_on_hand;
-                }
-            };
+        });
 
-            return TransferStockItem;
+        $('#transfer-products-table').on('click', '.transfer_remove_product', function (event) {
+            event.preventDefault();
+            remove_product($(event.target));
+        });
 
-        })(TransferProduct);
-        TransferLocations = (function() {
-            function TransferLocations() {
-                this.source = $('#transfer_source_location_id');
-                this.destination = $('#transfer_destination_location_id');
-                this.source.change((function(_this) {
-                    return function() {
-                        return _this.populate_destination();
-                    };
-                })(this));
-                $('#transfer_receive_stock').change((function(_this) {
-                    return function(event) {
-                        return _this.receive_stock_change(event);
-                    };
-                })(this));
-                $.getJSON('/admin/stock_locations', (function(_this) {
-                    return function(data) {
-                        var location;
-                        _this.locations = (function() {
-                            var i, len, ref, results;
-                            ref = data.stock_locations;
-                            results = [];
-                            for (i = 0, len = ref.length; i < len; i++) {
-                                location = ref[i];
-                                results.push(location);
-                            }
-                            return results;
-                        })();
-                        if (_this.locations.length < 2) {
-                            _this.force_receive_stock();
-                        }
-                        _this.populate_source();
-                        return _this.populate_destination();
-                    };
-                })(this));
+        $('input.transfer_transfer').click(function () {
+            if (!(products.length > 0)) {
+                alert('no products to transfer');
+                return false;
             }
-
-            TransferLocations.prototype.force_receive_stock = function() {
-                $('#receive_stock_field').hide();
-                $('#transfer_receive_stock').prop('checked', true);
-                return this.toggle_source_location(true);
-            };
-
-            TransferLocations.prototype.is_source_location_hidden = function() {
-                return $('#transfer_source_location_id_field').css('visibility') === 'hidden';
-            };
-
-            TransferLocations.prototype.toggle_source_location = function(hide) {
-                if (hide == null) {
-                    hide = false;
-                }
-                this.source.trigger('change');
-                if (this.is_source_location_hidden() && !hide) {
-                    $('#transfer_source_location_id_field').css('visibility', 'visible');
-                    return $('#transfer_source_location_id_field').show();
-                } else {
-                    $('#transfer_source_location_id_field').css('visibility', 'hidden');
-                    return $('#transfer_source_location_id_field').hide();
-                }
-            };
-
-            TransferLocations.prototype.receive_stock_change = function(event) {
-                this.toggle_source_location(event.target.checked);
-                return this.populate_destination(!event.target.checked);
-            };
-
-            TransferLocations.prototype.populate_source = function() {
-                this.populate_select(this.source);
-                return this.source.trigger('change');
-            };
-
-            TransferLocations.prototype.populate_destination = function(except_source) {
-                if (except_source == null) {
-                    except_source = true;
-                }
-                if (this.is_source_location_hidden()) {
-                    return this.populate_select(this.destination);
-                } else {
-                    return this.populate_select(this.destination, parseInt(this.source.val()));
-                }
-            };
-
-            TransferLocations.prototype.populate_select = function(select, except) {
-                var i, len, location, ref;
-                if (except == null) {
-                    except = 0;
-                }
-                select.children('option').remove();
-                ref = this.locations;
-                for (i = 0, len = ref.length; i < len; i++) {
-                    location = ref[i];
-                    if (location.id !== except) {
-                        select.append($('<option></option>').text(location.name).attr('value', location.id));
-                    }
-                }
-                return select.select2();
-            };
-
-            return TransferLocations;
-
-        })();
-        TransferProducts = (function() {
-            function TransferProducts() {
-                $('#transfer_source_location_id').change((function(_this) {
-                    return function() {
-                        return _this.refresh_products();
-                    };
-                })(this));
-            }
-
-            TransferProducts.prototype.receiving_stock = function() {
-                return $("#transfer_receive_stock:checked").length > 0;
-            };
-
-            TransferProducts.prototype.refresh_products = function() {
-                if (this.receiving_stock()) {
-                    return this._search_transfer_products();
-                } else {
-                    return this._search_transfer_stock_items();
-                }
-            };
-
-            TransferProducts.prototype._search_transfer_products = function() {
-                return this.build_select('/admin/products', 'product_name_or_sku_cont');
-            };
-
-            TransferProducts.prototype._search_transfer_stock_items = function() {
-                var stock_location_id;
-                stock_location_id = $('#transfer_source_location_id').val();
-                return this.build_select(("/admin/stock_locations/" + stock_location_id + "/stock_items"), 'variant_product_name_or_variant_sku_cont');
-            };
-
-            TransferProducts.prototype.format_product_result = function(result) {
-                return result.name + " - " + result.code;
-            };
-
-            TransferProducts.prototype.build_select = function(url, query) {
-                return $('#transfer_product').select2({
-                    minimumInputLength: 3,
-                    ajax: {
-                        url: url,
-                        dataType: "json",
-                        data: function(term, page) {
-                            var query_object;
-                            query_object = {};
-                            query_object[query] = term;
-                            return {
-                                q: term
-                            };
-                        },
-                        processResults: function(data, page) {
-                            console.log('result');
-                            console.log(data);
-                            // var result;
-                            // result = data["products"] || data["stock_items"];
-                            // if (data["stock_items"] != null) {
-                            //     result = result.map(function(product) {
-                            //         return product.product;
-                            //     });
-                            // }
-                            window.products = data;
-                            return {
-                                results: data
-                            };
-                        }
-                    }
-                });
-            };
-
-            return TransferProducts;
-
-        })();
-        TransferAddProducts = (function() {
-            function TransferAddProducts() {
-                this.products = [];
-                this.template = Handlebars.compile($('#transfer_product_template').html());
-                $('#transfer_source_location_id').change((function(_this) {
-                    return function(event) {
-                        return _this.clear_products();
-                    };
-                })(this));
-                $('button.transfer_add_product').click((function(_this) {
-                    alert('addddddd');
-                    return function(event) {
-                        event.preventDefault();
-                        console.log($('#transfer_product').select2('data'));
-                        if ($('#transfer_product').select2('data').length > 0) {
-                            return _this.add_product();
-                        } else {
-                            return alert('Please select a product first');
-                        }
-                    };
-                })(this));
-                $('#transfer-products-table').on('click', '.transfer_remove_product', (function(_this) {
-                    console.log('remove');
-                    return function(event) {
-                        event.preventDefault();
-                        return _this.remove_product($(event.target));
-                    };
-                })(this));
-                $('button.transfer_transfer').click((function(_this) {
-                    alert('wqdsd');
-                    return function() {
-                        if (!(_this.products.length > 0)) {
-                            alert('no products to transfer');
-                            return false;
-                        }
-                    };
-                })(this));
-            }
-
-            TransferAddProducts.prototype.add_product = function() {
-                var quantity, product;
-                product = $('#transfer_product').select2('data')[0];
-                quantity = parseInt($('#transfer_product_quantity').val());
-                product = this.find_or_add(product);
-                product.add(quantity);
-                return this.render();
-            };
-
-            TransferAddProducts.prototype.find_or_add = function(product) {
-                var existing;
-                if (existing = this.products.find(function (v) {
-                        return v.id === product.id
-                    })) {
-                    return existing;
-                } else {
-                    product = new TransferProduct($.extend({}, product));
-                    this.products.push(product);
-                    return product;
-                }
-            };
-
-            TransferAddProducts.prototype.remove_product = function(target) {
-                var v, product_id;
-                product_id = parseInt(target.data('productId'));
-                this.products = (function() {
-                    var i, len, ref, results;
-                    ref = this.products;
-                    results = [];
-                    for (i = 0, len = ref.length; i < len; i++) {
-                        v = ref[i];
-                        if (v.id !== product_id) {
-                            results.push(v);
-                        }
-                    }
-                    return results;
-                }).call(this);
-                return this.render();
-            };
-
-            TransferAddProducts.prototype.clear_products = function() {
-                this.products = [];
-                return this.render();
-            };
-
-            TransferAddProducts.prototype.contains = function(id) {
-                return _.contains(_.pluck(this.products, 'id'), id);
-            };
-
-            TransferAddProducts.prototype.render = function() {
-                var rendered;
-                if (this.products.length === 0) {
-                    $('#transfer-products-table').hide();
-                    return $('.no-objects-found').show();
-                } else {
-                    $('#transfer-products-table').show();
-                    $('.no-objects-found').hide();
-                    rendered = this.template({
-                        products: this.products
-                    });
-                    return $('#transfer_products_tbody').html(rendered);
-                }
-            };
-
-            return TransferAddProducts;
-
-        })();
-        if ($('#transfer_source_location_id').length > 0) {
-            transfer_locations = new TransferLocations;
-            transfer_products = new TransferProducts;
-            return transfer_add_products = new TransferAddProducts;
-        }
+        });
     });
+
+    function force_receive_stock() {
+        $('#receive_stock_field').hide();
+        $('#transfer_receive_stock').prop('checked', true);
+        toggle_source_location(true);
+    }
+
+    function is_source_location_hidden() {
+        return $('#transfer_source_location_id_field').css('visibility') === 'hidden';
+    }
+
+    function toggle_source_location(hide) {
+        if (hide == null) {
+            hide = false;
+        }
+        source_element.trigger('change');
+        if (is_source_location_hidden() && !hide) {
+            $('#transfer_source_location_id_field').css('visibility', 'visible');
+            $('#transfer_source_location_id_field').show();
+        } else {
+            $('#transfer_source_location_id_field').css('visibility', 'hidden');
+            $('#transfer_source_location_id_field').hide();
+        }
+    }
+
+    function receive_stock_change(event) {
+        toggle_source_location(event.target.checked);
+        populate_destination(!event.target.checked);
+    }
+
+    function populate_source() {
+        populate_select(source_element);
+        source_element.trigger('change');
+    }
+
+    function populate_destination(except_source) {
+        if (except_source == null) {
+            except_source = true;
+        }
+
+        if (is_source_location_hidden()) {
+            return this.populate_select(destination_element);
+        } else {
+            return this.populate_select(destination_element, parseInt(source_element.val()));
+        }
+    }
+
+    function populate_select(select, except) {
+        var i, len, location, ref;
+        if (except == null) {
+            except = 0;
+        }
+        select.children('option').remove();
+        ref = locations;
+        for (i = 0, len = ref.length; i < len; i++) {
+            location = ref[i];
+            if (location.id !== except) {
+                select.append($('<option></option>').text(location.name).attr('value', location.id));
+            }
+        }
+        select.select2();
+    }
+
+    function receiving_stock() {
+        return $("#transfer_receive_stock:checked").length > 0;
+    }
+
+    function refresh_products() {
+        if (receiving_stock()) {
+            _search_transfer_products();
+        } else {
+            _search_transfer_stock_items();
+        }
+    }
+
+    function _search_transfer_products() {
+        return build_select('/admin/products', 'product_name_or_sku_cont');
+    }
+
+    function _search_transfer_stock_items() {
+        var stock_location_id;
+        stock_location_id = $('#transfer_source_location_id').val();
+        return build_select(("/admin/stock_locations/" + stock_location_id + "/stock_items"), 'variant_product_name_or_variant_sku_cont');
+    }
+
+    // function format_product_result(result) {
+    //     return result.name + " - " + result.code;
+    // }
+
+    function build_select(url, query) {
+        $('#transfer_product').select2({
+            minimumInputLength: 3,
+            ajax: {
+                url: url,
+                dataType: "json",
+                data: function (term, page) {
+                    var query_object;
+                    query_object = {};
+                    query_object[query] = term;
+                    return {
+                        q: term
+                    };
+                },
+                processResults: function (data, page) {
+                    <%#= TODO: check for stock receive %>
+                    // var result;
+                    // result = data["products"] || data["stock_items"];
+                    // if (data["stock_items"] != null) {
+                    //     result = result.map(function(product) {
+                    //         return product.product;
+                    //     });
+                    // }
+                    // products = data;
+                    return {
+                        results: data
+                    };
+                }
+            }
+        });
+    }
+
+    function transfer_product(product) {
+        return {
+            product: product,
+            id: product.id,
+            name: product.name + " - " + product.code,
+            quantity: 0
+        }
+    }
+
+    function transfer_product_add_quantity(product, quantity) {
+        product.quantity += quantity;
+        return product;
+    }
+
+    function transfer_stock_item(stock_item) {
+        return {
+            stock_item: stock_item,
+            product: stock_item,
+            id: stock_item.id,
+            count_on_hand: stock_item.count_on_hand,
+            name: stock_item.name + " - " + stock_item.code + " (" + stock_item.count_on_hand + ")",
+            quantity: 0
+        }
+    }
+
+    function transfer_stock_item_add_quantity(stock_item, quantity) {
+        stock_item.quantity += quantity;
+        if (stock_item.quantity > stock_item.count_on_hand) {
+            stock_item.quantity = stock_item.count_on_hand;
+        }
+        return stock_item;
+    }
+
+    function add_product() {
+        var quantity, product;
+        product = $('#transfer_product').select2('data')[0];
+        quantity = parseInt($('#transfer_product_quantity').val());
+        product = find_or_add(product);
+        product = receiving_stock() ? transfer_product_add_quantity(product, quantity) : transfer_stock_item_add_quantity(product, quantity);
+        render();
+    }
+
+    function find_or_add(product) {
+        var existing;
+        if (existing = products.find(function (v) {
+            return v.id === product.id
+        })) {
+            return existing;
+        } else {
+            product =  receiving_stock() ? transfer_product(product) : transfer_stock_item(product);
+            products.push(product);
+            return product;
+        }
+    }
+
+    function remove_product(target) {
+        var v, product_id;
+        product_id = parseInt(target.data('productId'));
+        console.log(product_id);
+        var i, ref, results;
+        ref = products;
+        results = [];
+        for (i = 0; i < ref.length; i++) {
+            v = ref[i];
+            if (v.id != product_id) {
+                results.push(v);
+            }
+        }
+
+        products = results;
+        render();
+    }
+
+    function clear_products() {
+        products = [];
+        render();
+    }
+
+    function contains(id) {
+        for (var i = 0; i < products.length; i++) {
+            if (products[i].name === id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function render() {
+        var rendered;
+        $('#transfer_products_tbody').html('');
+        if (products.length === 0) {
+            $('#transfer-products-table').hide();
+            $('.no-objects-found').show();
+        } else {
+            $('#transfer-products-table').show();
+            $('.no-objects-found').hide();
+            var product, regexp;
+            for (var i = 0; i < products.length; i++) {
+                rendered = set_product_attributes(products[i]);
+                $('#transfer_products_tbody').append(rendered);
+            }
+        }
+    }
+
+    function set_product_attributes(product) {
+        var product_row;
+        product_row = "<%= escape_javascript(render 'transfer_product_row').html_safe %>";
+        product_row = replace_attr(product_row, 'product-name', product.name);
+        product_row = replace_attr(product_row, 'product-quantity', product.quantity);
+        product_row = replace_attr(product_row, 'product_id', product.id);
+        return product_row;
+    }
+
+    function replace_attr(html_string, attr, value) {
+        regexp = new RegExp(attr, 'g');
+        html_string = html_string.replace(regexp, value);
+        return html_string;
+    }
 </script>

@@ -5,7 +5,7 @@ module Admin
     def index
       respond_to do |format|
         format.html { @products = Product.master_active }
-        format.json { @products = Product.all }
+        format.json { @products = Product.master_active.search_by_name_or_code(params[:q][:term]) }
       end
     end
 

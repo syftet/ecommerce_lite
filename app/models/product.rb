@@ -97,6 +97,10 @@ class Product < ApplicationRecord
     end
   end
 
+  def self.search_by_name_or_code(query_param)
+    where('products.name LIKE :q OR products.code LIKE :q', q: "%#{query_param}%")
+  end
+
   def price(user = nil)
     discountable ? discount_price : sale_price
   end

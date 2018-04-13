@@ -40,6 +40,10 @@ class StockItem < ApplicationRecord
   #   InventoryUnit.backordered_for_stock_item(self)
   # end
 
+  def self.search_by_name_or_code(query_param)
+    joins(:product).where('products.name LIKE :q OR products.code LIKE :q', q: "%#{query_param}%")
+  end
+
   def adjust_count_on_hand(value)
     with_lock do
       set_count_on_hand((count_on_hand || 0) + value)

@@ -28,7 +28,7 @@
       <legend id="stock-location-source">
         <%= t(:source) %> / <%= @stock_transfer.source_location.name %>
       </legend>
-      <%#= render :partial => 'stock_movements', :object => @stock_transfer.source_movements %>
+      <%= render :partial => 'stock_movements', :object => @stock_transfer.source_movements %>
     </fieldset>
   <% end %>
 
@@ -37,7 +37,7 @@
       <legend id="stock-location-destination">
         <%= t(:destination) %> / <%= @stock_transfer.destination_location.name %>
       </legend>
-      <%#= render :partial => 'stock_movements', :object => @stock_transfer.destination_movements %>
+      <%= render :partial => 'stock_movements', :object => @stock_transfer.destination_movements %>
     </fieldset>
   <% end %>
 

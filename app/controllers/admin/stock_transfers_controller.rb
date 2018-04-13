@@ -7,7 +7,6 @@ module Admin
     end
 
     def show
-
     end
 
     def new
@@ -16,7 +15,7 @@ module Admin
     def create
       products = Hash.new(0)
       params[:product].each_with_index do |product_id, i|
-        products[product_id] += params[:quantity][i].to_i
+        products[product_id.to_i] += params[:quantity][i].to_i
       end
 
       stock_transfer = StockTransfer.create(reference: params[:reference])

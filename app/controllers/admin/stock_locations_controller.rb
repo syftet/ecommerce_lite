@@ -44,7 +44,7 @@ module Admin
     end
 
     def stock_items
-      @stock_items = @stock_location.stock_items
+      @stock_items = @stock_location.stock_items.search_by_name_or_code(params[:q][:term])
     end
 
     private
