@@ -7,7 +7,7 @@
 <% end if can? :create, PaymentMethod %>
 
 <% if @payment_methods.any? %>
-  <table class="table sortable" id='listing_payment_methods' data-hook data-sortable-link="<%= update_positions_admin_payment_methods_url %>">
+  <table class="table sortable" id='listing_payment_methods'>
     <thead>
       <tr data-hook="admin_payment_methods_index_headers">
         <th></th>
@@ -20,7 +20,7 @@
     </thead>
     <tbody>
       <% @payment_methods.each do |method|%>
-        <tr id="<%= spree_dom_id method %>" data-hook="admin_payment_methods_index_rows">
+        <tr data-hook="admin_payment_methods_index_rows">
           <td class="move-handle text-center">
             <% if can?(:edit, method) %>
               <span class="icon icon-move handle"></span>
