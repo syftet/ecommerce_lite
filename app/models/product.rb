@@ -41,7 +41,7 @@
 
 class Product < ApplicationRecord
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :slug_candidates, use: :slugged
 
   attr_readonly :price
 
@@ -61,6 +61,7 @@ class Product < ApplicationRecord
                                   attributes.all? { |k, v| v.blank? }
                                 }
 
+
   validates_presence_of :name, :code, :cost_price, :sale_price, :is_active, :slug
   validates_uniqueness_of :code
 
@@ -72,6 +73,16 @@ class Product < ApplicationRecord
   scope :in_stock, -> { joins(:stock_items).where('count_on_hand > ? OR track_inventory = ?', 0, false) }
   scope :featured, -> { master_active.where(is_featured: true) }
   scope :new_arrivals, -> { master_active.where('created_at >= ?', 15.days.ago) }
+
+  def slug_candidates
+    [:name, :name_and_sequence]
+  end
+
+  def name_and_sequence
+    slug = name.to_param
+    sequence = Product.where("slug like '%#{slug}%'").count
+    "#{slug}--#{sequence}"
+  end
 
   def master?
     !product.present?

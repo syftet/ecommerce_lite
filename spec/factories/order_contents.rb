@@ -15,8 +15,3 @@ end
 #  sub_title  :string(255)
 #  link       :string(255)
 #
-
-class HomeSlider < ApplicationRecord
-  mount_uploader :image, Admin::HomeSliderUploader
-  validates_presence_of :image
-end
