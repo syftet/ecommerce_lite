@@ -1,6 +1,6 @@
 module Admin
   class UsersController < BaseController
-    before_action :set_user, only: [:show, :edit, :update, :orders]
+    before_action :set_user, only: [:show, :edit, :update, :orders, :addresses ]
 
     def index
       @users = collection
