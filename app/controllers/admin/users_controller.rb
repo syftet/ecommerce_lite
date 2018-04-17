@@ -1,6 +1,6 @@
 module Admin
   class UsersController < BaseController
-    before_action :set_user, only: [:show, :edit, :update]
+    before_action :set_user, only: [:show, :edit, :update, :orders]
 
     def index
       @users = collection
@@ -63,9 +63,7 @@ module Admin
     end
 
     def orders
-      params[:q] ||= {}
-      @search = Order.reverse_chronological.ransack(params[:q].merge(user_id_eq: @user.id))
-      @orders = @search.result.page(params[:page]).per(Syftet.config.admin_products_per_page)
+       @orders = @user.orders
     end
 
     private

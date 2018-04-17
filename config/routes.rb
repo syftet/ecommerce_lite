@@ -53,9 +53,16 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users do
-      collection do
+      member do
         get :addresses
+        put :addresses
+        put :clear_api_key
+        put :generate_api_key
+        get :items
+        get :orders
+        get :login
       end
+      resources :store_credits
     end
     resources :categories
     resources :brands
@@ -124,19 +131,6 @@ Rails.application.routes.draw do
           post :perform
         end
       end
-    end
-
-    resources :users do
-      member do
-        get :addresses
-        put :addresses
-        put :clear_api_key
-        put :generate_api_key
-        get :items
-        get :orders
-        get :login
-      end
-      resources :store_credits
     end
   end
   get '/admin', to: 'admin/dashboard#index', as: :admin

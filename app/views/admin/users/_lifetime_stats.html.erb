@@ -1,0 +1,29 @@
+<div data-hook="admin_user_lifetime_stats" class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title">
+      <%= t(:lifetime_stats) %>
+    </h1>
+  </div>
+  <table class="table" id="user-lifetime-stats" data-hook>
+    <tr>
+      <td width="30%"><%= t(:total_sales) %>:</td>
+      <td><%#= @user.display_lifetime_value.to_display %></td>
+    </tr>
+    <tr>
+      <td><%= t(:num_orders) %>:</td>
+      <td><%#= @user.order_count.to_i %></td>
+    </tr>
+    <tr>
+      <td><%= t(:average_order_value) %>:</td>
+      <td><%#= @user.display_average_order_value.to_display %></td>
+    </tr>
+    <tr>
+      <td><%= t('admin.user.store_credits') %>:</td>
+      <td><%#= Money.new(@user.total_available_store_credit) %></td>
+    </tr>
+    <tr>
+      <td><%= t(:member_since) %>:</td>
+      <td><%#= pretty_time(@user.created_at) %></td>
+    </tr>
+  </table>
+</div>
