@@ -173,6 +173,17 @@ module Admin
       link_to(text.html_safe, url, options)
     end
 
+    def map_icon_with_action(action)
+      case action
+        when 'void'
+          'circle-o'
+        when 'capture'
+          'money'
+        else
+          action
+      end
+    end
+
     def icon(icon_name)
       icon_name ? content_tag(:i, '', class: icon_name) : ''
     end

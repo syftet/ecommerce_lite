@@ -27,11 +27,14 @@ class CheckoutController < ApplicationController
   def update
     if @order.update_with_params(params, permitted_checkout_attributes)
       if @order.next
-        redirect_to checkout_state_path(@order.state)
-      else
-
+        if @order.completed?
+          redirect_to completion_route
+        else
+          redirect_to checkout_state_path(@order.state)
+        end
       end
     else
+      p @order.inspect
       render @order.state
     end
   end

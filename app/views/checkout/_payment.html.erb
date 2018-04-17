@@ -38,38 +38,38 @@
               <%= link_to(image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), paypal_express_url(:payment_method_id => 1), :method => :post, :id => "paypal_button") %>
 
               <script>
-                  SpreePaypalExpress.paymentMethodID = "<%#= payment_method('PaymentMethod::PayPalExpress') %>"
+                  SpreePaypalExpress.paymentMethodID = "<%= payment_method('PaymentMethod::PayPalExpress') %>"
               </script>
             </div>
 
             <div id="points" class="tab-pane fade">
-              <form action="/checkout/update/payment" role="form" method="patch">
-                <h3>Your available credit points
-                  <b> # <%= current_user.present? ? current_user.available_rewards : 0 %> </b></h3>
+              <%= form_for @order, url: update_checkout_path(@order.state) do |f| %>
+                  <h3>Your available credit points
+                    <b> # <%= current_user.present? ? current_user.available_rewards : 0 %> </b></h3>
 
-                <p>
-                  Required credit points <b> # <%= @order.total %> </b>
-                </p>
+                  <p>
+                    Required credit points <b> # <%= @order.total %> </b>
+                  </p>
 
-                <p>
-                  Remaining points
-                  <b> # <%= current_user.present? ? (current_user.available_rewards - @order.total) : 0 %> </b>
-                </p>
-                <% if current_user.present? && (current_user.available_rewards - @order.total) > 0 %>
-                    <%= radio_button_tag "[order][payments_attributes][0][payment_method_id]", payment_method('PaymentMethod::CreditPoint'), true, id: 'rewards-points', class: 'hidden' %>
-                    <div class="continue-btn clearfix">
-                      <input type="submit" class="place-order-btn pull-right" value="Confirm & Place Order">
-                    </div>
-                <% else %>
-                    <div class="alert alert-danger">
-                      Not enough rewards point to checkout this order.
-                    </div>
-                <% end %>
-              </form>
+                  <p>
+                    Remaining points
+                    <b> # <%= current_user.present? ? (current_user.available_rewards - @order.total) : 0 %> </b>
+                  </p>
+                  <% if current_user.present? && (current_user.available_rewards - @order.total) > 0 %>
+                      <%= radio_button_tag "[order][payments_attributes][payment_method_id]", payment_method('PaymentMethod::CreditPoint'), true, id: 'rewards-points', class: 'hidden' %>
+                      <div class="continue-btn clearfix">
+                        <input type="submit" class="place-order-btn pull-right" value="Confirm & Place Order">
+                      </div>
+                  <% else %>
+                      <div class="alert alert-danger">
+                        Not enough rewards point to checkout this order.
+                      </div>
+                  <% end %>
+              <% end %>
             </div>
             <div id="cash" class="tab-pane fade in">
               <%= form_for @order, url: update_checkout_path(@order.state) do |f| %>
-                  <%= radio_button_tag "[order][payments_attributes][0][payment_method_id]", 1, true, id: 'payment-cash', class: 'hidden' %>
+                  <%= radio_button_tag "[order][payments_attributes][payment_method_id]", payment_method('PaymentMethod::Cash'), true, id: 'payment-cash', class: 'hidden' %>
                   <h3>Cash On Delivery</h3>
 
                   <p>

@@ -11,9 +11,11 @@
 #  response_message  :string(255)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  number            :string(255)
 #
 
 class Payment < ApplicationRecord
+  PREFIX = 'PY-'
   include GenerateNumber
   extend FriendlyId
   friendly_id :number, slug_column: :number, use: :slugged
@@ -22,7 +24,7 @@ class Payment < ApplicationRecord
   belongs_to :payment_method
   validates :payment_method, presence: true
 
-  after_save :update_order
+  # after_save :update_order
 
   validates :amount, numericality: true
 
@@ -33,9 +35,6 @@ class Payment < ApplicationRecord
   scope :failed, -> { with_state('failed') }
 
   def update_order
-    if completed? || void?
-      order.updater.update_payment_total
-    end
 
     if order.completed?
       order.updater.update_payment_state
@@ -46,6 +45,38 @@ class Payment < ApplicationRecord
     if self.completed? || order.completed?
       order.persist_totals
     end
+  end
+
+  def actions
+    if self.state == 'captured'
+      ['refund']
+    elsif self.state == 'void'
+      []
+    else
+      ['capture', 'void',]
+    end
+  end
+
+  def captured?
+    self.state == 'captured'
+  end
+
+  def void?
+    self.state == 'void'
+  end
+
+  def prefix
+    Payment::PREFIX
+  end
+
+  def capture!(capture_amount = nil)
+    return true if captured?
+    payment_method.capture(self)
+  end
+
+  def void_transaction!
+    return true if void?
+    payment_method.void(self)
   end
 
 end

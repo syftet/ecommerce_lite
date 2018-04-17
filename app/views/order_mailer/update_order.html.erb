@@ -1,0 +1,178 @@
+<style rel="stylesheet">
+    .item-order {
+        border-right: solid 1px #dddddd;
+        margin-bottom: 10px;
+    }
+
+    .item-order:last-child {
+        border: none;
+    }
+
+    .order-progress-wrapper {
+        margin-top: 20px;
+    }
+
+    .pull-right {
+        float: right;
+    }
+
+    .track-steps ul li {
+        padding: 2px 15px;
+        border: 1px solid #000;
+        position: relative;
+        border-radius: 5px;
+        list-style: none;
+        float: left;
+        display: block;
+        margin: 0 25px 8px 0 !important;
+    }
+
+    .track-steps ul li span {
+        display: block;
+    }
+
+    .track-steps ul li:before {
+        content: " ";
+        position: absolute;
+        display: block;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 7px;
+        border-bottom-width: 0;
+        border-top-color: #444;
+        bottom: -7px;
+        left: 50%;
+        z-index: 1;
+        -webkit-transform: translate(-50%, 0);
+        -ms-transform: translate(-50%, 0);
+        -o-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+    }
+
+    .track-steps ul li:after {
+        content: " ";
+        position: absolute;
+        display: block;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 7px;
+        border-bottom-width: 0;
+        border-top-color: #fdfdfd;
+        bottom: -5px;
+        left: 50%;
+        z-index: 1;
+        -webkit-transform: translate(-50%, 0);
+        -ms-transform: translate(-50%, 0);
+        -o-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+    }
+
+    .gt-outer {
+        position: relative;
+        height: 12px;
+        background-color: #d4d4d4;
+        border-radius: 10px;
+    }
+
+    .gt-outer:after {
+        width: 12px;
+        height: inherit;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: auto;
+        background-color: #3ac8a0;
+        content: '';
+        border-radius: inherit;
+    }
+
+    .gt-inner {
+        background-color: #3ac8a0;
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        right: auto;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+<div>
+  <h5> ORDER STATUS #<%= @order.number %> </h5>
+
+  <div style="margin: 15px 0;">
+    <% @order.line_items.each do |item| %>
+        <div style="float: left; width: 48%; padding: 5px;" class="item-order">
+          <table>
+            <tr>
+              <td>
+                <% if item.variant.present? %>
+                    <img src="<%= item.variant.images.present? ? item.variant.images.first.image_link : 'assets/not_available.png' %>" alt="product image" style="margin-right: 10px;"/>
+                <% end %>
+              </td>
+              <td>
+                <b> <%= item.product.brand.name if item.product.brand.present? %> </b> <br/>
+                <b> <%= item.product.name %> </b> <br/>
+                <b style="color: #aaaaaa;"> <%= item.product.id %> </b> <br/>
+                <b> Size: <%= item.size %> </b> <br/>
+                <b> Color: <%= item.variant.color %> </b>
+              </td>
+            </tr>
+          </table>
+        </div>
+    <% end %>
+  </div>
+
+  <div style="clear: both;"></div>
+
+  <div class="order-progress-wrapper">
+    <div class="delivery-time clearfix">
+      <span class="gothamNarrowBold pull-right" style="color: #333333; font-weight: bold;">
+        Expecting Delivery On <%= @order.shipment_date.strftime('%d %b') %>
+      </span>
+
+      <div style="clear: both;"></div>
+    </div>
+
+    <div class="track-steps">
+      <ul class="floated-list clearfix" style="margin: 0 -25px;">
+        <li>
+          <span class="gothamNarrowBold" style="font-weight: bold;">Ordered</span>
+          <span><%= @order.completed_at.strftime('%d %b') %></span>
+        </li>
+        <li>
+          <span class="gothamNarrowBold" style="font-weight: bold;">Shipped</span>
+          <span><%= @order.shipped_at.strftime('%d %b') if @order.shipped_at.present? %></span>
+        </li>
+      </ul>
+    </div>
+
+    <div style="clear: both;"></div>
+
+    <div class="gt-outer">
+      <div class="gt-inner" style="width: <%= @order.shipment_progress %>%; height: 12px;"></div>
+    </div>
+  </div>
+
+  <div style="clear: both;"></div>
+
+  <hr style="margin: 30px 0;"/>
+
+  <h4 style="margin: 15px 0; color: #777777;"> DELIVERY DETAILS </h4>
+
+  <p style="color: #444444;">
+    <% if @order.ship_address.present? %>
+        <b> <%= @order.ship_address.name %> </b> <br/>
+        <b> <%= @order.ship_address.address1 %> </b> <br/>
+        <b> <%= @order.ship_address.city %>, <%= @order.ship_address.state.name %>,
+          <%= @order.ship_address.zipcode %> </b>
+        <br/>
+        <b> <%= @order.ship_address.country.name %> </b> <br/>
+        <b> T.<%= @order.ship_address.phone %> </b> <br/>
+    <% end %>
+  </p>
+</div>

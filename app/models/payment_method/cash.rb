@@ -30,20 +30,30 @@ class PaymentMethod::Cash < PaymentMethod
     payment.state != 'void'
   end
 
-  def capture(*)
-    simulated_successful_billing_response
+  def capture(payment)
+    payment.state = 'captured'
+    if payment.save
+      payment.order.update_attribute(:payment_state, 'paid')
+    end
   end
 
   def cancel(*)
     simulated_successful_billing_response
   end
 
-  def void(*)
-    simulated_successful_billing_response
+  def void(payment)
+    payment.state = 'void'
+    if payment.save
+      payment.order.update_attribute(:payment_state, 'void')
+    end
   end
 
   def source_required?
     false
+  end
+
+  def process
+    {state: 'pending', response_code: 200, response_message: 'Payment success'}
   end
 
   def credit(*)

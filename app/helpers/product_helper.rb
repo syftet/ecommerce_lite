@@ -43,17 +43,17 @@ module ProductHelper
 
   def variant_color_image_option(image_link)
     if image_link.present?
-      if image_link.length == 6
-        "background: ##{image_link};"
-      else
+      if image_link.length > 7
         "background: url(#{image_link}) center center;"
+      else
+        "background: ##{image_link};"
       end
     else
       'Default'
     end
   end
 
-  def amount_with_currency(amount, currency = '$')
+  def amount_with_currency(amount, currency = '৳')
     "#{currency}#{amount}"
   end
 

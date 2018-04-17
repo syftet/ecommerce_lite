@@ -76,4 +76,18 @@ module ApplicationHelper
     link_to shipment.tracking, "/shipment/tracking/#{shipment.tracking}", {target: target}
   end
 
+  def payment_method(type)
+    payment_method = PaymentMethod.find_by_type(type)
+    if payment_method.present?
+      payment_method.id
+    else
+      0
+    end
+  end
+
+  def pretty_time(time)
+    # [I18n.l(time.to_date, format: :long), time.strftime("%l:%M %p")].join(" ")
+    time.strftime("%l:%M %p")
+  end
+
 end
