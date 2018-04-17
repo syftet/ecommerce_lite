@@ -52,7 +52,11 @@ Rails.application.routes.draw do
   # Admin routes and resources
 
   namespace :admin do
-    resources :users
+    resources :users do
+      collection do
+        get :addresses
+      end
+    end
     resources :categories
     resources :brands
     resources :products do
