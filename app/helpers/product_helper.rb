@@ -54,7 +54,7 @@ module ProductHelper
   end
 
   def amount_with_currency(amount, currency = '৳')
-    "#{currency}#{amount}"
+    "#{currency}#{amount.round(2)}"
   end
 
   def discount_price(product)

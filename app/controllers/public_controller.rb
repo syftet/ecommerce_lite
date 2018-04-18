@@ -28,6 +28,7 @@ class PublicController < ApplicationController
     begin
       Mail::Address.new(email)
       newsletter = NewsletterSubscription.find_or_initialize_by(email: email)
+      p newsletter
       if newsletter.save!
         p 'iopiopipoiop'
         cookies[:hidemodal] = 1

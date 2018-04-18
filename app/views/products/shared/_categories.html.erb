@@ -6,7 +6,7 @@
 
     <% @categories.each do |category| %>
         <li class="menu-item">
-          <%= link_to '#nof' do %>
+          <%= link_to categories_path(category.permalink) do %>
               <%= category.name %>
           <% end %>
           <span data-ref="top-cat-taxm-<%= category.id %>" class='pull-right collapse-ref'> <i class='fa fa-plus'></i> </span>
