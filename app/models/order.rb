@@ -82,10 +82,11 @@ class Order < ApplicationRecord
   belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Address'
   has_one :shipment
   belongs_to :user
+  has_many :payments
 
   accepts_nested_attributes_for :line_items
   accepts_nested_attributes_for :ship_address
-  # accepts_nested_attributes_for :payments
+  accepts_nested_attributes_for :payments
   # accepts_nested_attributes_for :shipments
 
   attr_accessor :shipping_method
@@ -142,11 +143,18 @@ class Order < ApplicationRecord
     elsif params[:state] == 'delivery'
       if init_shipment(permitted_params.delete(:shipping_method))
         self.update_attributes(permitted_params.merge({shipment_state: 'pending'}))
-      else
-        false
       end
     elsif params[:state] == 'payment'
-      payment_params = get_payment_params(params)
+      payment = build_payment(permitted_params)
+      unless payment.errors.any?
+        self.completed_at = Time.now
+        self.state = 'completed'
+        self.shipment_state = Order::ORDER_SHIPMENT_STATE[:pending]
+        self.payment_state = payment.state == 'completed' ? 'completed' : 'balance_due'
+        if self.save
+          deliver_order_confirmation_email unless confirmation_delivered?
+        end
+      end
     end
   end
 
@@ -162,16 +170,18 @@ class Order < ApplicationRecord
     order
   end
 
+  def deliver_order_confirmation_email
+    OrderMailer.confirm_email(id).deliver_now # TODO: will send email after getting smtp credential
+    update_column(:confirmation_delivered, true)
+    update_column(:shipment_state, nil)
+  end
+
   def collect_rewards_point
     if self.user.present? && self.approved_at.present?
       reward_point = self.user.rewards_points.find_or_initialize_by(order_id: self.id, user_id: self.user_id, reason: 'Checkout')
       reward_point.points = self.line_items.sum(&:credit_point)
       reward_point.save
     end
-  end
-
-  def create_payment
-
   end
 
   def init_shipment(shipping_method)
@@ -185,8 +195,33 @@ class Order < ApplicationRecord
     u_shipment.save!
   end
 
-  def get_payment_params(params)
+  def build_payment(payments_attributes)
+    payment_method_id = payments_attributes[:payments_attributes][:payment_method_id]
+    payment_method = PaymentMethod.find_by_id(payment_method_id)
+    return false unless payment_method.present?
+    payment_params = payment_method.process
+    payment_params[:amount] = self.net_total
+    payment_params[:payment_method_id] = payment_method_id
+    payment = self.payments.build(payment_params)
+    payment.save
+    payment
+  end
 
+  def approved_by(user)
+    self.update_attributes({approver_id: user.id, approved_at: Time.current})
+  end
+
+  def credit_rewards_point
+    points = line_items.collect { |item| item.product.reward_point }.sum
+    if points > 0
+      reward_point = RewardsPoint.where(order_id: self.id, user_id: self.user_id).first
+      if reward_point.present?
+        reward_point.points = points
+        reward_point.save
+      else
+        RewardsPoint.create(order_id: self.id, user_id: self.user_id, points: points, reason: 'Order Checkout Credit Points')
+      end
+    end
   end
 
   def empty!

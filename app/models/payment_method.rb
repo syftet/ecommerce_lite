@@ -25,6 +25,10 @@ class PaymentMethod < ApplicationRecord
     Rails.application.config.spree.payment_methods
   end
 
+  def self.all_active
+    self.where(active: true)
+  end
+
   def provider_class
     raise ::NotImplementedError, 'You must implement provider_class method for this gateway.'
   end

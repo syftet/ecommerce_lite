@@ -86,7 +86,7 @@ module Admin
     end
 
     def approve
-      if @order.update_attributes({shipment_date: params[:orders][:shipment_date], shipment_progress: params[:orders][:shipment_progress]})
+      if @order.update_attributes({shipment_date: params[:order][:shipment_date], shipment_progress: params[:order][:shipment_progress], state: 'approved'})
         @order.approved_by(current_user)
         @order.credit_rewards_point
       end
@@ -98,7 +98,7 @@ module Admin
       OrderMailer.confirm_email(@order.id, true).deliver_later
       flash[:success] = t(:order_email_resent)
 
-      redirect_to :back
+      redirect_back fallback_location: admin_order_path(@order)
     end
 
     def open_adjustments

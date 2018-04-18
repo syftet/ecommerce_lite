@@ -8,3 +8,31 @@ span.label {
   background: #006621;
   color: #ffffff;
 }
+
+.label-completed {
+  background: cadetblue;
+  color: #ffffff;
+}
+
+.label-balance_due {
+  background: darkcyan;
+  color: #ffffff;
+  a {
+    color: #ffffff;
+  }
+}
+
+.label-pending {
+  background: #995522;
+  color: #ffffff;
+}
+
+.label-captured {
+  background: #5da423;
+  color: #ffffff;
+}
+
+.label-void {
+  background: #dfdfdf;
+  color: #000000 !important;
+}

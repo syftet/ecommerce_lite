@@ -1,0 +1,38 @@
+<table class="table table-bordered" id='payments' data-order-id='<%= @order.number %>'>
+  <thead>
+  <tr data-hook="payments_header">
+    <th><%= Payment.human_attribute_name(:number) %></th>
+    <th><%= raw "#{t(:date_time)}" %></th>
+    <th class="text-center"><%= t(:amount) %></th>
+    <th class="text-center"><%= t(:payment_method) %></th>
+    <th class="text-center"><%= t(:transaction_id) %></th>
+    <th class="text-center"><%= t(:payment_state) %></th>
+    <th class="actions text-center"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% payments.each do |payment| %>
+      <tr id="<%= dom_id(payment) %>" data-hook="payments_row">
+        <td><%= link_to payment.number, admin_order_payment_path(@order, payment) %></td>
+        <td><%= pretty_time(payment.created_at) %></td>
+        <td class="amount text-center"><%= amount_with_currency(payment.amount) %></td>
+        <td class="text-center"><%= payment_method_name(payment) %></td>
+        <td class="text-center"><%= payment.number %></td>
+        <td class="text-center">
+          <span class="label label-<%= payment.state %>">
+            <%= t(payment.state, scope: :payment_states, default: payment.state.capitalize) %>
+          </span>
+        </td>
+        <td class="actions actions-2 text-center">
+          <% payment.actions.each do |action| %>
+              <% if action == 'refund' %>
+                  <%= link_to_with_icon('exchange', t(:refund), new_admin_order_payment_refund_path(@order, payment), no_text: true, class: "btn btn-danger btn-sm") if can?(:create, Payment) %>
+              <% else %>
+                  <%= link_to_with_icon(map_icon_with_action(action), action.camelize, fire_admin_order_payment_path(@order, payment, e: action), method: :put, no_text: true, data: {action: action}, class: "btn btn-default btn-sm") if can?(action.to_sym, payment) %>
+              <% end %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,149 @@
+<div style="max-width: 750px; margin: auto;">
+  <div>
+    <p> HELLO <%= @order.ship_address.full_name %>!, THANK YOU FOR YOUR ORDER</p>
+  </div>
+  <div style="margin: 10px 0;">
+    <b>Details of your order are listed below:</b>
+  </div>
+  <div>
+    <table style="width: 100%; margin: 20px 0;">
+      <tr>
+        <td style="padding: 0"><b>Order:</b> <%= @order.number %></td>
+      </tr>
+      <tr>
+        <td style="padding: 0"><b>Placed:</b> <%= @order.completed_at.strftime("%m/%d/%Y %H:%M") %></td>
+      </tr>
+      <tr>
+        <td style="padding: 0"><b>Status:</b> Pending</td>
+      </tr>
+      <tr>
+        <td style="padding: 0"> Your account will be debited with the descriptor showing as “HARPERS18”</td>
+      </tr>
+    </table>
+  </div>
+  <div class="view-account-button">
+    <a style="background: #111111; padding: 10px 15px; display: inline-block; color: #fdfdfd;" href="<%= order_url(@order) %>">
+      <b> VIEW YOUR ORDER </b>
+    </a>
+  </div>
+  <div style="margin-top: 20px;">
+    <h4 style="color: #444444; margin-bottom: 20px">ORDER DETAILS</h4>
+
+    <table class="order-details-table" style="width: 100%; margin: auto;">
+      <thead>
+      <tr>
+        <th style="border-bottom: solid 1px #cccccc; padding: 5px;"> Product Name</th>
+        <th style="border-bottom: solid 1px #cccccc; padding: 5px;"> Price</th>
+        <th style="border-bottom: solid 1px #cccccc; padding: 5px;"> Qty</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @order.line_items.each do |item| %>
+          <tr>
+            <td style="width: 75%;">
+              <table style="width: 100%;">
+                <tr>
+                  <td style="border-bottom: none; padding: 15px 0;">
+                    <% if item.product.present? %>
+                        <img src="<%= item.product.images.present? ? item.product.images.first.file_url(:mini) : 'assets/not_available.png' %>" alt="product image"/>
+                    <% end %>
+                  </td>
+                  <td style="border-bottom: none; padding-left: 10px;">
+                    <b>
+                      <%= link_to product_url(item.product), target: '_blank' do %>
+                          <%= item.product.name %>
+                      <% end %>
+                    </b>
+                    <br/>
+                    <b style="color: #aaaaaa;"> SKY: <%= item.product.id %> </b> <br/>
+                    <b> Size: <%= item.size %> </b> <br/>
+                    <b>
+                      Color:
+                      <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%= variant_color_image_option(item.product.color) %>"></span>
+                      <br/>
+                      <span> <%= item.product.color_name %> </span>
+                    </b>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td><%= amount_with_currency(item.product.price) %></td>
+            <td><%= item.quantity %></td>
+          </tr>
+      <% end %>
+      <tr>
+        <td colspan="3" style="border-bottom: solid 1px #cccccc;">
+          <h2> Order summary </h2>
+          <table style="width: 100%">
+            <tbody>
+            <tr>
+              <td style="width: 50%; border-bottom: solid 1px #cccccc;">Order Subtotal</td>
+              <td style="width: 50%; border-bottom: solid 1px #cccccc; text-align: right">
+                <%= amount_with_currency(@order.total) %>
+              </td>
+            </tr>
+            <% if false # @order.promotions.present? %>
+                <tr>
+                  <td style="width: 50%; border-bottom: solid 1px #cccccc; padding: 15px 0;"> Discount / coupon</td>
+                  <td style="width: 50%; border-bottom: solid 1px #cccccc; text-align: right; padding: 15px 0;"> <%= price_with_currency(@order.adjustment_total) %> </td>
+                </tr>
+            <% end %>
+            <tr>
+              <td style="width: 50%; padding: 15px 0; border-bottom: solid 1px #cccccc;">Estimated Shipping</td>
+              <td style="color: #c6000e !important; padding: 15px 0; text-align: right; border-bottom: solid 1px #cccccc;"><%#= @order.display_ship_total.to_display %></td>
+            </tr>
+
+            <tr>
+              <td style="width: 50%; padding: 15px 0;">Estimated Sales Tax</td>
+              <td style="text-align: right; padding: 15px 0; width: 50%;">Tax included
+                in price
+              </td>
+            </tr>
+
+            <tr>
+              <td style="width: 50%; padding: 15px 0; border-bottom: solid 1px #cccccc;">Order Total</td>
+              <td style="text-align: right; width: 50%; padding: 15px 0; border-bottom: solid 1px #cccccc;">
+                <%= amount_with_currency(@order.total) %>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" style="border-bottom: solid 1px #cccccc; padding: 15px 0;">
+          Note: For more up to date please keep an eye on <%= link_to 'Your Account', my_account_url %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <h4 style="margin: 15px 0; color: #444444;">
+      DELIVERY DETAILS
+    </h4>
+
+    <b><%= @order.ship_address.full_name %></b> <br/>
+    <b><%= @order.ship_address.address %></b> <br/>
+    <b><%= @order.ship_address.city %>, <%= @order.ship_address.state %>, <%= @order.ship_address.zipcode %></b>
+    <br/>
+    <b><%= @order.ship_address.country %></b> <br/>
+    <b>T.<%= @order.ship_address.phone %></b>
+  </div>
+  <hr>
+  <div>
+    <p align="justify"> To make sure you get your items as soon as possible, we may post each item separately. Please
+      note,payment will be taken from your card or account within 48 hours.</p>
+  </div>
+  <div>
+    <p align="justify"> This email is an acknowledgement of receipt of your order. Your contract to purchase these
+      items is complete untill we send you an email confirming that the items have been dispatched to you.</p>
+  </div>
+  <div>
+    <p>P.S Remember, add your credit card to your wallet for faster checkout! </p>
+  </div>
+  <div>
+    <p>We hope to see you again soon.</p>
+  </div>
+</div>

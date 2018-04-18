@@ -1,0 +1,122 @@
+<div style="max-width: 750px; margin: auto;">
+  <div>
+    <p> HELLO <%= @order.ship_address.full_name %>!, YOUR ORDER HAS BEEN CANCELED</p>
+  </div>
+  <div style="margin: 10px 0;">
+    <b>Details of your canceled order are listed below:</b>
+  </div>
+  <div>
+    <table style="width: 100%; margin: 20px 0;">
+      <tr>
+        <td style="padding: 0"><b>Order:</b> <%= @order.number %></td>
+      </tr>
+      <tr>
+        <td style="padding: 0"><b>Placed:</b> <%= @order.completed_at.strftime("%m/%d/%Y %H:%M") %></td>
+      </tr>
+      <tr>
+        <td style="padding: 0"><b>Status:</b> Canceled</td>
+      </tr>
+    </table>
+  </div>
+  <div style="margin-top: 20px;">
+    <h4 style="color: #444444; margin-bottom: 20px">ORDER DETAILS</h4>
+
+    <table class="order-details-table" style="width: 100%; margin: auto;">
+      <thead>
+      <tr>
+        <th style="border-bottom: solid 1px #cccccc; padding: 5px;"> Product Name</th>
+        <th style="border-bottom: solid 1px #cccccc; padding: 5px;"> Price</th>
+        <th style="border-bottom: solid 1px #cccccc; padding: 5px;"> Qty</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @order.line_items.each do |item| %>
+          <tr>
+            <td style="width: 75%;">
+              <table style="width: 100%;">
+                <tr>
+                  <td style="border-bottom: none; padding: 15px 0;">
+                    <% if item.variant.present? %>
+                        <img src="<%= item.variant.images.present? ? item.variant.images.first.image_link : 'assets/not_available.png' %>" alt="product image"/>
+                    <% end %>
+                  </td>
+                  <td style="border-bottom: none; padding-left: 10px;">
+                    <b>
+                      <%= link_to product_url(item.product), target: '_blank' do %>
+                          <%= item.product.name %>
+                      <% end %>
+                    </b>
+                    <br/>
+                    <b style="color: #aaaaaa;"> <%= item.product.id %> </b> <br/>
+                    <b> Size: <%= item.size %> </b> <br/>
+                    <b>
+                      Color:
+                      <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%= variant_color_image_option(item.variant.color_image) %>"></span>
+                      &nbsp;
+                      <span> <%= item.variant.color %> </span>
+                    </b>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td><%= amount_with_currency(item.variant.price) %></td>
+            <td><%= item.quantity %></td>
+          </tr>
+      <% end %>
+      <tr>
+        <td colspan="3" style="border-bottom: solid 1px #cccccc;">
+          <h2> Order summary </h2>
+          <table style="width: 100%">
+            <tbody>
+            <tr>
+              <td style="width: 50%; border-bottom: solid 1px #cccccc;">Order Subtotal</td>
+              <td style="width: 50%; border-bottom: solid 1px #cccccc; text-align: right">
+                <%= amount_with_currency(@order.amount) %>
+              </td>
+            </tr>
+            <% if @order.promotions.present? %>
+                <tr>
+                  <td style="width: 50%; border-bottom: solid 1px #cccccc; padding: 15px 0;"> Discount / coupon</td>
+                  <td style="width: 50%; border-bottom: solid 1px #cccccc; text-align: right; padding: 15px 0;"> <%= price_with_currency(@order.adjustment_total) %> </td>
+                </tr>
+            <% end %>
+            <tr>
+              <td style="width: 50%; padding: 15px 0; border-bottom: solid 1px #cccccc;">Estimated Shipping</td>
+              <td style="color: #c6000e !important; padding: 15px 0; text-align: right; border-bottom: solid 1px #cccccc;">
+                <%= @order.display_ship_total.to_display %>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="width: 50%; padding: 15px 0; border-bottom: solid 1px #cccccc;">Estimated Sales Tax</td>
+              <td style="text-align: right; padding: 15px 0; width: 50%; border-bottom: solid 1px #cccccc;">Tax included
+                in price
+              </td>
+            </tr>
+
+            <tr>
+              <td style="width: 50%; padding: 15px 0;">Order Total</td>
+              <td style="text-align: right; width: 50%; padding: 15px 0;">
+                <%= amount_with_currency(@order.total) %>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr>
+
+  <div>
+    <p align="justify"> This email is an acknowledgement of cancel of your order. </p>
+  </div>
+  <div>
+    <p>P.S Remember, add your credit card to your wallet for faster checkout! </p>
+  </div>
+  <div>
+    <p>We hope to see you again soon.</p>
+  </div>
+</div>

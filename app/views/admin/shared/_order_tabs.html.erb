@@ -29,11 +29,11 @@
       </li>
       <%# end %>
 
-      <%# if can?(:index, Payment) %>
-      <li<%#== ' class="active"' if current == :payments %> data-hook='admin_order_tabs_payments'>
-        <%#= link_to_with_icon 'credit-card', t(:payments), admin_order_payments_url(@order) %>
-      </li>
-      <%# end %>
+      <% if can?(:index, Payment) %>
+          <li<%== ' class="active"' if current == :payments %> data-hook='admin_order_tabs_payments'>
+            <%= link_to_with_icon 'credit-card', t(:payments), admin_order_payments_url(@order) %>
+          </li>
+      <% end %>
 
       <%# if can? :index, ReturnAuthorization %>
       <%# if @order.completed? %>
@@ -44,11 +44,11 @@
       <%# end %>
 
       <%# if can? :index, CustomerReturn %>
-      <%# if @order.completed? %>
-      <li<%== ' class="active"' if current == :customer_returns %>>
-        <%= link_to_with_icon 'transfer', 'Customer Return', admin_order_customer_returns_url(@order) %>
-      </li>
-      <%# end %>
+      <% if @order.completed? %>
+          <li<%== ' class="active"' if current == :customer_returns %>>
+            <%= link_to_with_icon 'exchange', 'Customer Return', admin_order_customer_returns_url(@order) %>
+          </li>
+      <% end %>
       <%# end %>
     </ul>
 <% end %>

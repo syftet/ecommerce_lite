@@ -28,11 +28,7 @@ handle_date_picker_fields = function () {
     });
 }
 
-$(document).ready(function () {
+$(document).on('turbolinks:load', function () {
+    $('select.select2').chosen({width: '100%'});
     handle_date_picker_fields();
-});
-
-jQuery(function ($) {
-    // Make select beautiful
-    $('select.select2').chosen({width: '100%'})
 });

@@ -1,0 +1,26 @@
+<%= render partial: 'admin/shared/order_tabs', locals: {current: :payments} %>
+
+<% content_for :page_title do %>
+    /
+    <%= payment_method_name(@payment) %>
+    /
+    <span class="state <%= @payment.state %>">
+    <%= t(@payment.state, scope: :payment_states, default: @payment.state.capitalize) %>
+  </span>
+<% end %>
+
+<% content_for :page_actions do %>
+    <%= button_link_to t(:logs), admin_order_payment_log_entries_url(@order, @payment), icon: 'file' %>
+<% end %>
+
+<%#= render partial: "admin/payments/source_views/#{@payment.payment_method.method_type}",
+           locals: {
+                   payment: @payment.source.is_a?(Payment) ? @payment.source : @payment
+           }
+%>
+
+<div class="alert alert-success" data-hook="amount">
+  <%= t(:amount) %>: <%= @payment.amount %>
+</div>
+
+<%#= render 'admin/payments/capture_events' %>
