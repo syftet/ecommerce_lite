@@ -24,7 +24,7 @@
     </div>
     <%= render 'shared/main_menu' %>
     <%= yield :slider %>
-    <div class="container">
+    <div class="<%= 'container' unless (controller_name == 'home' && action_name == 'index') %>">
       <%= yield %>
     </div>
     <%= render 'products/compare_modal' %>
@@ -38,7 +38,6 @@
           function gtag() {
               dataLayer.push(arguments)
           }
-          ;
           gtag('js', new Date());
 
           gtag('config', 'UA-110543805-1');

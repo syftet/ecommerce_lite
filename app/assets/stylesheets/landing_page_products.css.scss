@@ -3,7 +3,7 @@
 }
 
 .featured-products {
-  margin-bottom: 89px;
+  margin-bottom: 20px;
   h3.title {
     color: #363a42;
     text-transform: uppercase;
@@ -26,31 +26,49 @@
   }
   .view-more-products {
     width: 100%;
+    padding: 50px 0;
+    background-image: image-url('more_product_bg.jpg');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    &:before {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.2);
+      content: '';
+    }
+    color: #ffffff;
     text-align: center;
     .btn-more {
-      color: #363a42;
-      background-color: rgba(255, 255, 255, 0);
-      font-size: 12px;
-      font-weight: 600;
+      //color: #363a42;
+      //background-color: rgba(255, 255, 255, 0);
+      //font-size: 12px;
+      //font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 5px;
-      border-bottom: 2px solid #363a42;
-      padding: 0 0 0 0;
-      position: relative;
-      &:hover {
-        color: #fcc030;
-        border-color: #fcc030;
-      }
+      //border-bottom: 2px solid #363a42;
+      //padding: 0 0 0 0;
+      //position: relative;
+      //&:hover {
+      //  color: #fcc030;
+      //  border-color: #fcc030;
+      //}
     }
   }
 }
 
 .featured-banner {
-  margin-bottom: 89px;
+  margin-bottom: 30px;
 }
 
 .we-love-landing {
-  margin-bottom: 89px;
+  margin-bottom: 30px;
   .wrapper {
     background: #3A3A45;
   }
@@ -102,7 +120,7 @@
 }
 
 .new-arrival {
-  margin-bottom: 75px;
+  margin-bottom: 25px;
 }
 
 .from-our-blog {
@@ -159,7 +177,9 @@
 }
 
 .client-testimonial {
-  margin-bottom: 89px;
+  margin-bottom: 30px;
+  background: #F8F8F8;
+  padding: 30px 0 0 10px;
   .testimonials-body {
     background-color: #6ac9bb;
     text-align: center;

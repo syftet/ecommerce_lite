@@ -8,10 +8,7 @@
       <div class="col-md-7">
         <div id="methods">
           <div class="shipment unshippable">
-            <h3 class="stock-location" data-hook="stock-location">
-              Shipping Items
-            </h3>
-            <table class="table stock-contents" data-hook="stock-missing">
+            <table class="table stock-contents">
               <colgroup>
                 <col style="width: 10%;"/>
                 <col style="width: 60%;"/>
@@ -23,6 +20,7 @@
               <th align='left'><%= t(:item) %></th>
               <th><%= t(:qty) %></th>
               <th><%= t(:price) %></th>
+              <th><%= t(:total) %></th>
               </thead>
               <tbody>
               <% current_order.line_items.each do |item| %>
@@ -30,6 +28,7 @@
                     <td class="item-image"><%= mini_image(item.product) %></td>
                     <td class="item-name"><%= item.product.name %></td>
                     <td class="item-qty"><%= item.quantity %></td>
+                    <td class="item-price"><%= item.price %></td>
                     <td class="item-price"><%= item.total %></td>
                   </tr>
               <% end %>
@@ -53,7 +52,7 @@
         </div>
 
         <div id="minstrs" class="mb10">
-          <h4><%= t(:shipping_instructions) %></h4>
+          <h5 class="mt20"><%= t(:shipping_instructions) %></h5>
           <%= form.text_area :special_instructions, :cols => 40, :rows => 4, :class => "form-control reset-border-radius" %>
         </div>
       </div>

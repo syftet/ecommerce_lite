@@ -1,7 +1,7 @@
 module Admin
   class OrdersController < BaseController
     before_action :initialize_order_events
-    before_action :load_order, only: [:edit, :update, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments, :cart]
+    before_action :load_order, only: [:edit, :update, :cancel, :resume, :approve, :resend, :open_adjustments, :close_adjustments, :cart, :track, :update_state]
 
     respond_to? :html
 
@@ -126,6 +126,45 @@ module Admin
 
     end
 
+    def track
+      @trackes = @order.shipment.trackings.order('created_at').group_by { |track| track.created_at.strftime('%A, %d %b') }
+    end
+
+    def update_state
+      order_params = params[:order]
+      status = order_params[:shipment_state]
+      update_params = {}
+      if 'payment_failed' == status
+        update_params = {
+            state: 'payment',
+            payment_state: 'failed',
+            shipment_state: nil,
+            approver_id: '',
+            shipped_at: nil,
+            confirmation_delivered: nil
+        }
+      else
+        update_params = {
+            shipment_state: status == 'processing' ? nil : status,
+            shipment_date: format_date(order_params[:shipment_date]),
+            shipment_progress: order_params[:shipment_progress].present? ? order_params[:shipment_progress] : 0,
+            # shipped_at: (!@order.shipped_at.present? && status == 'shipped') ? DateTime.now : @order.shipped_at,
+            payment_state: status == 'shipped' ? 'paid' : @order.payment_state
+        }
+      end
+      if @order.update_attributes(update_params)
+        comments = params[:comments].present? ? params[:comments] : "Order status updated to #{Spree::Order::ORDER_ALL_SHIPMENT_STATE[status.to_sym]}"
+        @order.shipment.trackings.create(comment: comments, user_id: current_user.id)
+        flash[:success] = 'Order status has been updated'
+        if @order.shipment_state == 'shipped'
+          #Spree::OrderMailer.update_order(@order).deliver_now
+        end
+        redirect_back fallback_location: admin_order_path(@order)
+      else
+        render :edit
+      end
+    end
+
     private
     def order_params
       params[:created_by_id] = current_user.try(:id)
@@ -145,5 +184,15 @@ module Admin
     def model_class
       Order
     end
+
+    def format_date(date)
+      if date.present?
+        dates = date.split('/')
+        "#{dates.last}-#{dates.first}-#{dates.second}"
+      else
+        nil
+      end
+    end
+
   end
 end

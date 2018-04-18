@@ -1,92 +1,97 @@
-<section class="client-testimonial row">
-  <div class="kc-row-container  kc-container">
-    <div class="kc-wrap-columns">
-      <div class="col-sm-7">
-        <div class="kc-col-container">
+<section class="client-testimonial">
+  <div class="container">
+    <div class="row">
 
-          <div class="kc-title-wrap ">
-            <h3 class="public-title"><%= t(:what_say_people) %></h3>
-          </div>
-          <div class="testimonial-slider">
-            <!-- Wrapper for slides -->
+      <div class="kc-row-container  kc-container">
+        <div class="kc-wrap-columns">
+          <div class="col-sm-7">
+            <div class="kc-col-container">
 
-            <% @feedbacks.each do |feedback| %>
-                <div class="owl-item active first">
-                  <div class="item">
-                    <div class="testimonials">
-                      <div class="testimonials-body">
-                        <div class="testimonials-avatar list-unstyled">
-                          <div class="avatar">
+              <div class="kc-title-wrap ">
+                <h3 class="public-title"><%= t(:what_say_people) %></h3>
+              </div>
+              <div class="testimonial-slider">
+                <!-- Wrapper for slides -->
 
-                            <%= image_tag 'male-avater.png', class: 'img-responsive' %>
-                          </div>
-                        </div>
-                        <div class="testimonials-info">
-                          <h5 class="testimonials-name mb7">
-                            <%= feedback.name %>
-                          </h5>
+                <% @feedbacks.each do |feedback| %>
+                    <div class="owl-item active first">
+                      <div class="item">
+                        <div class="testimonials">
+                          <div class="testimonials-body">
+                            <div class="testimonials-avatar list-unstyled">
+                              <div class="avatar">
 
-                          <div class="rating">
-                            <div class="star-rating" data-rating="<%= feedback.rate %>" title="Rate: <%= feedback.rate %>">
-                              ******
+                                <%= image_tag 'male-avater.png', class: 'img-responsive' %>
+                              </div>
                             </div>
-                          </div>
+                            <div class="testimonials-info">
+                              <h5 class="testimonials-name mb7">
+                                <%= feedback.name %>
+                              </h5>
 
+                              <div class="rating">
+                                <div class="star-rating" data-rating="<%= feedback.rate %>" title="Rate: <%= feedback.rate %>">
+                                  ******
+                                </div>
+                              </div>
+
+                            </div>
+                            <p class="testimonials-description">
+                              <%= feedback.message %>
+                            </p>
+                          </div>
                         </div>
-                        <p class="testimonials-description">
-                          <%= feedback.message %>
-                        </p>
                       </div>
                     </div>
-                  </div>
-                </div>
-            <% end %>
+                <% end %>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-5">
+            <ul id="lightgallery" class="clearfix">
+              <li class="loaded">
+                <%= link_to asset_path('galary/img1.jpg'), class: 'btn-more' do %>
+                    <%= image_tag 'galary/img1.jpg' %>
+                <% end %>
+              </li>
+              <li class="loaded">
+                <%= link_to asset_path('galary/img2.jpg'), class: 'btn-more' do %>
+                    <%= image_tag 'galary/img2.jpg' %>
+                <% end %>
+              </li>
+              <li class="loaded">
+                <%= link_to asset_path('galary/img3.jpg'), class: 'btn-more' do %>
+                    <%= image_tag 'galary/img3.jpg' %>
+                <% end %>
+              </li>
+              <li class="loaded">
+                <%= link_to asset_path('galary/img4.jpg'), class: 'btn-more' do %>
+                    <%= image_tag 'galary/img4.jpg' %>
+                <% end %>
+              </li>
+              <li class="loaded">
+                <%= link_to asset_path('galary/img5.jpg'), class: 'btn-more' do %>
+                    <%= image_tag 'galary/img5.jpg' %>
+                <% end %>
+              </li>
+              <li class="loaded">
+                <%= link_to asset_path('galary/img2.jpg'), class: 'btn-more' do %>
+                    <%= image_tag 'galary/img2.jpg' %>
+                <% end %>
+              </li>
+            </ul>
 
           </div>
         </div>
-      </div>
-
-      <div class="col-sm-5">
-        <ul id="lightgallery" class="clearfix">
-          <li class="loaded">
-            <%= link_to asset_path('galary/img1.jpg'), class: 'btn-more' do %>
-                <%= image_tag 'galary/img1.jpg' %>
-            <% end %>
-          </li>
-          <li class="loaded">
-            <%= link_to asset_path('galary/img2.jpg'), class: 'btn-more' do %>
-                <%= image_tag 'galary/img2.jpg' %>
-            <% end %>
-          </li>
-          <li class="loaded">
-            <%= link_to asset_path('galary/img3.jpg'), class: 'btn-more' do %>
-                <%= image_tag 'galary/img3.jpg' %>
-            <% end %>
-          </li>
-          <li class="loaded">
-            <%= link_to asset_path('galary/img4.jpg'), class: 'btn-more' do %>
-                <%= image_tag 'galary/img4.jpg' %>
-            <% end %>
-          </li>
-          <li class="loaded">
-            <%= link_to asset_path('galary/img5.jpg'), class: 'btn-more' do %>
-                <%= image_tag 'galary/img5.jpg' %>
-            <% end %>
-          </li>
-          <li class="loaded">
-            <%= link_to asset_path('galary/img2.jpg'), class: 'btn-more' do %>
-                <%= image_tag 'galary/img2.jpg' %>
-            <% end %>
-          </li>
-        </ul>
-
       </div>
     </div>
   </div>
 </section>
 
 <script type="text/javascript">
-  $(document).on('turbolinks:load', function() {
+    $(document).on('turbolinks:load', function () {
         $('.testimonial-slider').slick({
             infinite: true,
             slidesToShow: 1,

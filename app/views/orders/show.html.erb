@@ -6,14 +6,14 @@
   <div class="container">
     <div class="thanks-order-wrap">
       <div class="thanks-order-container">
-        <% if order_just_completed?(@order) %>
+        <%# if order_just_completed?(@order) %>
             <h3> THANKS FOR YOUR ORDER, <%= @order.ship_address.full_name %>! </h3>
             <h4> Your Order ID is <%= @order.number %> </h4>
-        <% end %>
+        <%# end %>
       </div>
     </div>
     <% ship_address = @order.ship_address %>
-    <% bill_address = @order.bill_address %>
+    <% bill_address = @order.ship_address %>
     <div class="bill-wrap col-lg-12">
       <div class="bill-container clearfix border-bottom row">
         <div class="col-sm-6">
@@ -132,17 +132,17 @@
                         </label>
                         <br>
                         Web ID: <%= item.product.id %> <br>
-                        Size: <%= item.variant.size %> <br>
+                        Size: <%= item.product.size %> <br>
                         color:
-                        <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%= variant_color_image_option(item.variant.color_image) %>"></span>
+                        <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%= variant_color_image_option(item.product.color) %>"></span>
                         <!--<br/>-->
-                        <span> <%= item.variant.color %> </span>
+
                       </td>
                       <td>
                         <%= item.quantity %>
                       </td>
                       <td>
-                        <%= amount_with_currency(item.variant.price) %>
+                        <%= amount_with_currency(item.product.price) %>
                       </td>
                     </tr>
                 <% end %>

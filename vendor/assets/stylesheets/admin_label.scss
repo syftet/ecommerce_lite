@@ -2,37 +2,49 @@ span.label {
   border-radius: 4px;
   padding: 3px 5px 5px 5px;
   display: inline-block;
-}
-
-.label-payment {
-  background: #006621;
   color: #ffffff;
-}
+  background: #cccccc;
 
-.label-completed {
-  background: cadetblue;
-  color: #ffffff;
-}
-
-.label-balance_due {
-  background: darkcyan;
-  color: #ffffff;
-  a {
+  &.label-payment {
+    background: #006621;
     color: #ffffff;
   }
-}
 
-.label-pending {
-  background: #995522;
-  color: #ffffff;
-}
+  &.label-completed {
+    background: cadetblue;
+    color: #ffffff;
+  }
 
-.label-captured {
-  background: #5da423;
-  color: #ffffff;
-}
+  &.label-balance_due {
+    background: darkcyan;
+    color: #ffffff;
+    a {
+      color: #ffffff;
+    }
+  }
 
-.label-void {
-  background: #dfdfdf;
-  color: #000000 !important;
+  &.label-pending {
+    background: #995522;
+    color: #ffffff;
+  }
+
+  &.label-captured {
+    background: #5da423;
+    color: #ffffff;
+  }
+
+  &.label-void {
+    background: #dfdfdf;
+    color: #000000 !important;
+  }
+
+  &.label-approved {
+    background: #5cb85c;
+    color: #ffffff !important;
+  }
+
+  &.label-delivery {
+    background: #f0ad4e;
+    color: #ffffff !important;
+  }
 }

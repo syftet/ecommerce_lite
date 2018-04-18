@@ -134,6 +134,8 @@ Rails.application.routes.draw do
     end
   end
   get '/admin', to: 'admin/dashboard#index', as: :admin
+  get '/admin/orders/:id/tracks', to: 'admin/orders#track', as: :admin_order_track
+  patch '/admin/order/:id/update_state/', to: 'admin/orders#update_state', as: :order_state
 
   # public pages
 

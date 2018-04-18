@@ -50,5 +50,11 @@
           </li>
       <% end %>
       <%# end %>
+
+      <% if can?(:index, @order) %>
+          <li<%== ' class="active"' if current == :track %> data-hook='admin_order_tabs_payments'>
+            <%= link_to_with_icon 'check', 'Track', admin_order_track_url(@order) %>
+          </li>
+      <% end %>
     </ul>
 <% end %>

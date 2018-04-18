@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180417083727) do
+ActiveRecord::Schema.define(version: 20180606053999) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "firstname"
@@ -320,7 +320,7 @@ ActiveRecord::Schema.define(version: 20180417083727) do
   create_table "stock_locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.boolean "default", default: false
-    t.string "address"
+    t.string "address1"
     t.string "city"
     t.string "state"
     t.string "zipcode"
@@ -350,6 +350,14 @@ ActiveRecord::Schema.define(version: 20180417083727) do
     t.integer "source_location_id"
     t.integer "destination_location_id"
     t.string "number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "trackings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "comment"
+    t.integer "user_id"
+    t.integer "shipment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

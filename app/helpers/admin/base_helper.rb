@@ -62,7 +62,7 @@ module Admin
     end
 
     def preference_fields(object, form)
-      return unless object.respond_to?(:preferences)
+      return unless object.class.respond_to?(:PREFERENCES)
       fields = object.class::PREFERENCES.map { |preference|
         if preference.present?
           form.label("preferred_#{preference[:field]}", t(preference[:field]) + ": ") +

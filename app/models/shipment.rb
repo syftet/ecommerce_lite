@@ -29,6 +29,8 @@ class Shipment < ApplicationRecord
 
   has_many :inventory_units, inverse_of: :shipment
 
+  has_many :trackings
+
   # validates :stock_location, presence: true
 
   attr_accessor :special_instructions

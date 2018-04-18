@@ -1,0 +1,97 @@
+<div class="panel panel-default" data-hook="customer_guest">
+
+  <div class="panel-heading">
+    <h1 class="panel-title">
+      Update Order Shipment Status
+    </h1>
+  </div>
+
+  <div class="panel-body">
+    <div data-hook="customer_fields">
+      <div class="col-lg-12">
+        <%= form_for @order, url: order_state_path(@order), html: {id: 'update-order-state'} do |f| %>
+            <div class="clearfix">
+              <div class="col-sm-6">
+                <div class="row">
+                  <%= f.select :shipment_state, options_for_select(@order.get_shipment_status.collect { |key, val| [val, key] }, f.object.shipment_state), {}, {class: 'select2'} %>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <button name="button" type="submit" class="btn btn-primary ">
+                  <span class="icon icon-save"></span> Update Status
+                </button>
+              </div>
+            </div>
+
+            <div class="row shipments-inputs clearfix" style="display: none; margin-top: 15px;">
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="input-group form-group">
+                      <%= f.text_field :shipment_date, :class => 'form-control', :value => (f.object.shipment_date.strftime('%m/%d/%Y') if f.object.shipment_date.present?), :placeholder => 'Expected shipment date' %>
+                      <span class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <%= f.number_field :shipment_progress, :class => 'form-control', :placeholder => 'Shipment progress between 1 to 100', max: '100' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="display: block;">
+                <div class="fomr-group col-sm-12">
+                  <%= text_area_tag :comments, '', class: 'form-control', placeholder: 'Comments...' %>
+                </div>
+              </div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var element = $('#order_shipment_state');
+        var shipment_date = $('#order_shipment_date');
+        shipment_date.datepicker({
+            minDate: '<%= Date.today.strftime('%m/%d/%Y') %>'
+        });
+
+        if (element.val() == 'shipped') {
+            $('.shipments-inputs').show();
+        }
+
+        element.change(function () {
+            if ($(this).val() == 'shipped') {
+                $('.shipments-inputs').show();
+                shipment_date.focus();
+            }
+            else {
+                $('.shipments-inputs').hide();
+            }
+        });
+
+        $('#update-order-state').submit(function (e) {
+            if (element.val() == 'shipped') {
+                if (shipment_date.val() == '') {
+                    alert("Please input shipment date");
+                    return false;
+                }
+
+                if ($("#order_shipment_progress").val() == '') {
+                    alert("Please input shipment progress");
+                    return false;
+                }
+
+                if ($("#comments").val() == '') {
+                    alert("Please put some comments");
+                    return false;
+                }
+            }
+        });
+    });
+</script>

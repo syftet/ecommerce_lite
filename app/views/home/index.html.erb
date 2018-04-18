@@ -1,98 +1,128 @@
 <% content_for :slider do %>
     <%= render 'shared/top_slider' %>
 <% end %>
-<%= render 'top_category_promo' %>
+
+<div class="slugan-items">
+  <div class="row">
+    <div class="col-sm-4">
+      <%= image_tag('icon-free-shipping.png') %>
+
+      <p>Free Shipping &amp; Returns</p>
+    </div>
+
+    <div class="col-sm-4">
+      <%= image_tag('icon-money.png') %>
+
+      <p>100% Money refund</p>
+    </div>
+
+    <div class="col-sm-4">
+      <%= image_tag('icon-delivery.png') %>
+
+      <p>Fast send and delivery</p>
+    </div>
+  </div>
+</div>
+
+
+
 
 <section class="featured-products">
-  <h3 class="title public-title">
-    <%= t(:featured_products) %>
-  </h3>
-
-  <div class="product-lists clearfix">
-    <% @featured_products.each do |product| %>
-        <div class="product-wrapper product col-sm-6 col-md-3">
-          <%= render 'products/product', product: product %>
-        </div>
-    <% end %>
+  <div class="container">
+    <div class="product-lists clearfix">
+      <% @featured_products.each do |product| %>
+          <div class="product-wrapper product col-sm-6 col-md-3">
+            <%= render 'products/product', product: product %>
+          </div>
+      <% end %>
+    </div>
   </div>
   <div class="view-more-products">
-    <%= link_to products_path, class: 'btn-more' do %>
+    <h3> All kind of product </h3>
+    <h5> On sale now! </h5>
+    <%= link_to products_path, class: 'btn-more btn btn-warning' do %>
         <%= t(:view_more) %> <i class="fa fa-plus"></i>
     <% end %>
   </div>
 </section>
 
+<div class="container">
+  <%= render 'top_category_promo' %>
 
-<section class="row featured-banner">
-  <div class="hidden-xs">
-    <div class="col-sm-12">
+
+  <section class="row featured-banner">
+    <div class="hidden-xs">
       <div class="col-sm-12">
-        <div class="effect-v3">
-          <a href="#" title="">
-            <img src="http://venusdemo.com/wordpress/pi/wp-content/uploads/2017/02/banner4.jpg" class="slider-image-fluid" alt="banner">
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="we-love-landing clearfix">
-  <div class="col-sm-12">
-    <div class="wrapper clearfix">
-      <div class="col-sm-6">
-        <div class="col-inner-container row">
-          <div class="call-to-action">
-            <div class="cta-desc">
-              <h2>we love bags</h2>
-
-              <div class="cta-text">A professional-looking tote for your everyday needs! This Wilsons Leather
-                tote has a canvas look with genuine leather trim and a structured silhouette. Its shiny gold-tone
-                hardware and two-tone design give it extra fashionable flair.
-              </div>
-            </div>
-            <div class="cta-button">
-              <%= link_to products_path do %>
-                  discover <i class="fa fa-plus"></i>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6">
-        <div class="row">
-          <div class="single-image-fluid effect-v1">
-            <a href="#" title="" target="_self">
-              <img src="http://venusdemo.com/wordpress/pi/wp-content/uploads/2017/06/banner5.jpg" class="single-image-fluid" alt="banner">
+        <div class="col-sm-12">
+          <div class="effect-v3">
+            <a href="#" title="">
+              <img src="http://venusdemo.com/wordpress/pi/wp-content/uploads/2017/02/banner4.jpg" class="slider-image-fluid" alt="banner">
             </a>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<%= render 'home/new_arrival' %>
+  <%= render 'home/new_arrival' %>
 
-<section class="from-our-blog row">
-  <div class="row">
+  <section class="we-love-landing clearfix">
     <div class="col-sm-12">
-      <div class="box-shadow-v1">
-        <div class="title-wrap">
-          <h3 class="public-title">
-            <%= t(:from_our_blog) %>
-          </h3>
+      <div class="wrapper clearfix">
+        <div class="col-sm-6">
+          <div class="col-inner-container row">
+            <div class="call-to-action">
+              <div class="cta-desc">
+                <h2>we love bags</h2>
+
+                <div class="cta-text">A professional-looking tote for your everyday needs! This Wilsons Leather
+                  tote has a canvas look with genuine leather trim and a structured silhouette. Its shiny gold-tone
+                  hardware and two-tone design give it extra fashionable flair.
+                </div>
+              </div>
+              <div class="cta-button">
+                <%= link_to products_path do %>
+                    discover <i class="fa fa-plus"></i>
+                <% end %>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="blog-post" id="post-lists">
-          <% @blogs.each do |blog| %>
-              <%= render 'post', blog: blog %>
-          <% end %>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="single-image-fluid effect-v1">
+              <a href="#" title="" target="_self">
+                <img src="http://venusdemo.com/wordpress/pi/wp-content/uploads/2017/06/banner5.jpg" class="single-image-fluid" alt="banner">
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <%= render 'testimonial' %>
+
+<div class="container">
+  <section class="from-our-blog row">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="box-shadow-v1">
+          <div class="title-wrap">
+            <h3 class="public-title">
+              <%= t(:from_our_blog) %>
+            </h3>
+          </div>
+
+          <div class="blog-post" id="post-lists">
+            <% @blogs.each do |blog| %>
+                <%= render 'post', blog: blog %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

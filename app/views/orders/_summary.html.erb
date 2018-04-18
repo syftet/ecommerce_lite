@@ -21,9 +21,9 @@
         <td> Estimated shipping</td>
         <td class="td-value">
           <% if @order.shipment.present? %>
-              <b> <%= @order.shipment.cost %> </b>
+              <b> <%= amount_with_currency(@order.shipment.cost) %> </b>
           <% else %>
-              <b>Free</b>
+              <b>Not Selected</b>
           <% end %>
         </td>
       </tr>
@@ -42,7 +42,7 @@
       <tr class="font-italic">
         <td> You saved</td>
         <td class="td-value">
-          <b> <%= @order.you_saved %> </b>
+          <b> <%= amount_with_currency(@order.you_saved) %> </b>
         </td>
       </tr>
       </tbody>

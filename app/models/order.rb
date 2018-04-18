@@ -103,12 +103,16 @@ class Order < ApplicationRecord
     self.state == 'approved'
   end
 
+  def approved?
+    self.state == 'approved'
+  end
+
   def can_resume?
     self.state == 'canceled'
   end
 
   def you_saved
-    line_items.collect { |item| item.product.discount_amount }.sum
+   line_items.collect { |item| item.product.discount_amount }.sum
   end
 
   def net_total
@@ -121,6 +125,14 @@ class Order < ApplicationRecord
 
   def adjustment_total
     0
+  end
+
+  def get_shipment_status
+    if ['delivered', 'canceled', 'refunded'].include? self.shipment_state
+      Order::ORDER_ALL_SHIPMENT_STATE
+    else
+      Order::ORDER_SHIPMENT_STATE
+    end
   end
 
   def next

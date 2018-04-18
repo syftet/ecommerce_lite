@@ -56,6 +56,10 @@ class PaymentMethod < ApplicationRecord
     false
   end
 
+  def type_name
+    self.type.split('::').last
+  end
+
   # Custom gateways should redefine this method. See Gateway implementation
   # as an example
   def reusable_sources(order)

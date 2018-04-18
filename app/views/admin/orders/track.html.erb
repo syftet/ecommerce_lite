@@ -1,0 +1,36 @@
+<%= render 'order_actions', order: @order, events: @order_events %>
+
+<%= render 'admin/shared/order_tabs', current: :track %>
+
+<div data-hook="admin_order_edit_header">
+  <%= render 'admin/shared/error_messages', target: @order %>
+</div>
+
+<div class="trackes track-package">
+  <%#= @trackes.inspect %>
+  <div class="shipment-details" style="margin-bottom: 10px;">
+    <% @trackes.each_with_index do |(track_date, track_infos), index| %>
+        <h4 style="margin: 15px 0 5px 0; padding: 0;"><%= index == 0 ? 'Latest update: ' + track_date : track_date %></h4>
+        <% track_infos.each do |track_info| %>
+            <div style="border-bottom: 1px solid #bfbfbf; padding: 10px 0;">
+
+              <div style="display: table; width: 100%; height: 100%;">
+                <div style="width: 150px; font-size: 14px; display: table-cell; vertical-align: top;">
+                  <%= track_info.created_at.strftime('%l:%M %p') %>
+                </div>
+                <div style="display: table-cell; vertical-align: top;">
+                  <div class="package-info">
+                    <%= track_info.comment %>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <% end %>
+    <% end %>
+
+  </div>
+</div>
+
+<h4> Order Summary </h4>
+
+<%= render 'admin/shared/order_summary' %>

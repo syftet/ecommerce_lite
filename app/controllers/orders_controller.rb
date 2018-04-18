@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
   layout 'product'
 
   def show
-    @order = Order.includes(line_items: [variant: [:option_values, :images, :product]]).find_by_number!(params[:id])
+    @order = Order.includes(line_items: [product: [:images]]).find_by_number!(params[:id])
   end
 
   def update
