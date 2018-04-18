@@ -5,11 +5,7 @@
 #  id                     :integer          not null, primary key
 #  name                   :string(255)
 #  default                :boolean          default(FALSE)
-<<<<<<< HEAD
-#  address1               :string(255)
-=======
 #  address                :string(255)
->>>>>>> 0b7a8fcd4a0fc5470d338cb9914836f587525618
 #  city                   :string(255)
 #  state                  :string(255)
 #  zipcode                :string(255)
