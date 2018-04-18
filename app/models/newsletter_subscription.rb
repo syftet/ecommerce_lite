@@ -10,7 +10,7 @@
 #
 
 class NewsletterSubscription < ApplicationRecord
-  validates :email, presence: true
+  validates :email, uniqueness: true, presence: true
   after_create :send_notification
 
   def send_notification

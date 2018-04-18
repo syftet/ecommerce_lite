@@ -1,0 +1,19 @@
+<tr>
+  <td class="order-number">
+    <%#= link_to order.number, order_path(order.number) %>
+  </td>
+  <td class="order-date">
+    <%#= order.created_at.strftime('%B %d, %Y') %>
+  </td>
+  <td class="order-status state-<%#= order.state %>">
+    <%#= order.state.camelize %>
+  </td>
+  <td class="text-primary order-total">
+    <span class="mark-text">
+      <%#= amount_with_currency(order.amount) %>
+    </span>
+  </td>
+  <td class="order-shipment-state">
+    <%#= link_to 'Shipped Track now', order_shipped_track_path(order.number) %>
+  </td>
+</tr>

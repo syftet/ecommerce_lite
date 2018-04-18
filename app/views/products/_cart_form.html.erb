@@ -39,7 +39,7 @@
             <%= button_tag class: 'btn btn-warning btn-large', id: 'add-to-cart-button', type: :submit do %>
                 ADD TO CART
             <% end %>
-            <span class="ml10">
+            <span class="ml10 wishlist-product-<%= @product.id %>">
                   <%= raw wishlist_link(@product.id) %>
             </span>
             <%= link_to product_compare_path(@product), title: 'Add to compare', class: 'compare btn', remote: true do %>
