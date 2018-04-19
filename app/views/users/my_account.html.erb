@@ -1,11 +1,14 @@
-<div class="col-sm-12">
-  <h1 class="public-title" style="margin-top: 10px">My Account</h1>
-</div>
+<% content_for :breadcrumb do %>
+    <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb("My account") %>
+<% end %>
+
+
 
 <div data-hook="account-summary" class="account-summary">
   <div class="row clearfix">
     <div class="col-lg-12 clearfix">
       <div class="col-sm-6">
+        <h1 class="public-title" >My Account</h1>
         <dl id="user-info">
           <dt>Email</dt>
           <dd><%= current_user.email %> (<a href="<%= edit_user_registration_path %>">Edit</a>)</dd>
@@ -29,7 +32,7 @@
         </dl>
       </div>
       <div class="col-sm-6">
-        <h3 class="public-title text-left">Credit point history</h3>
+        <h3 class="public-title text-center">Credit point history</h3>
         <% if current_user.rewards_points %>
             <table class="table table-striped">
               <thead>
@@ -59,7 +62,7 @@
 
 <div data-hook="account_my_orders" class="account-my-orders">
 
-  <h3 class="public-title text-left">My Orders</h3>
+  <h3 class="public-title text-center">My Orders</h3>
   <table class="table table-striped order-summary">
     <thead class="active">
     <tr>

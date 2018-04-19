@@ -153,7 +153,7 @@ module Admin
         }
       end
       if @order.update_attributes(update_params)
-        comments = params[:comments].present? ? params[:comments] : "Order status updated to #{Spree::Order::ORDER_ALL_SHIPMENT_STATE[status.to_sym]}"
+        comments = params[:comments].present? ? params[:comments] : "Order status updated to #{Order::ORDER_ALL_SHIPMENT_STATE[status.to_sym]}"
         @order.shipment.trackings.create(comment: comments, user_id: current_user.id)
         flash[:success] = 'Order status has been updated'
         if @order.shipment_state == 'shipped'
