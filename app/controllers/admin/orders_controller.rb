@@ -157,7 +157,7 @@ module Admin
         @order.shipment.trackings.create(comment: comments, user_id: current_user.id)
         flash[:success] = 'Order status has been updated'
         if @order.shipment_state == 'shipped'
-          #Spree::OrderMailer.update_order(@order).deliver_now
+          #OrderMailer.update_order(@order).deliver_now
         end
         redirect_back fallback_location: admin_order_path(@order)
       else
