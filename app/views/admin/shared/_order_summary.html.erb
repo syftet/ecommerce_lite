@@ -15,7 +15,7 @@
       </td>
       <td>
           <span class="state label label-<%= @order.state %>">
-            <%= @order.state.capitalize %>
+            <%= @order.state.capitalize if @order.state.present? %>
           </span>
       </td>
     </tr>
