@@ -9,10 +9,10 @@
       <table class="table table-condensed table-bordered" id="listing_orders" data-hook>
         <thead>
         <tr data-hook="admin_orders_index_headers">
-          <th><%= I18n.t(:completed_at, scope: 'activerecord.attributes.order') %></th>
-          <th><%=  I18n.t(:number, scope: 'activerecord.attributes.order') %></th>
-          <th><%= I18n.t(:state, scope: 'activerecord.attributes.order') %></th>
-          <th><%=  I18n.t(:total, scope: 'activerecord.attributes.order')%></th>
+          <th><%= t(:completed_at, scope: 'activerecord.attributes.order') %></th>
+          <th><%=  t(:number, scope: 'activerecord.attributes.order') %></th>
+          <th><%= t(:state, scope: 'activerecord.attributes.order') %></th>
+          <th><%=  t(:total, scope: 'activerecord.attributes.order')%></th>
         </tr>
         </thead>
         <tbody>
@@ -25,11 +25,11 @@
                 <% if order.payment_state %>
                     <div class="state <%= order.payment_state %>"><%= link_to t("payment_states.#{order.payment_state}"), admin_order_payments_path(order) %></div>
                 <% end %>
-                <%# if Order.checkout_step_names.include?(:delivery) && order.shipment_state %>
-                    <!--<div class="state <%#= order.shipment_state %>"><%#= t("shipment_states.#{order.shipment_state}") %></div>-->
-                <%# end %>
+                <% if Order.checkout_steps.include?(:delivery) && order.shipment_state %>
+                    <div class="state <%= order.shipment_state %>"><%= t("shipment_states.#{order.shipment_state}") %></div>
+                <% end %>
               </td>
-              <td class="order-total"><%#= order.display_total.to_html %></td>
+              <td class="order-total "><%= amount_with_currency(order.total) %></td>
             </tr>
         <% end %>
         </tbody>

@@ -73,6 +73,13 @@ class Order < ApplicationRecord
       enable_starttls_auto: true
   }
 
+  CHECKOUT_STEPS = {
+      address: 'Address',
+      delivery: 'Delivery',
+      payment: 'Payment',
+      complete: 'complete'
+  }
+
   extend FriendlyId
   include GenerateNumber
 
@@ -90,6 +97,7 @@ class Order < ApplicationRecord
   # accepts_nested_attributes_for :shipments
 
   attr_accessor :shipping_method
+  scope :complete, -> { where.not(completed_at: nil) }
 
   def prefix
     Order::PREFIX
@@ -105,6 +113,10 @@ class Order < ApplicationRecord
 
   def approved?
     self.state == 'approved'
+  end
+
+  def self.checkout_steps
+    CHECKOUT_STEPS.keys
   end
 
   def can_resume?

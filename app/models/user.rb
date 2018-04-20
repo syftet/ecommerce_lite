@@ -26,6 +26,7 @@
 
 class User < ApplicationRecord
   ROLES = %w(admin moderator).freeze
+  include UserReporting
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
