@@ -3,7 +3,9 @@
   <div class="section">
     <div class="container">
       <div class="page-title uppercase text-center with-bb hidden-xs">
-        <h2 class="public-title text-left mb0">Track package Order #<%= @order.number %></h2>
+        <% content_for :breadcrumb do %>
+            <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb("shipped_track", '', '', {my_account: my_account_path,order: order_path(@order)}) %>
+        <% end %>
       </div>
       <div class="chunk track-package">
         <div class="row">
@@ -46,7 +48,7 @@
                     <div class="col-sm-6 col-md-4 each-order-item">
                       <div class="media">
                         <div class="media-left">
-                          <% if item.variant.present? %>
+                          <% if item.product.present? %>
                               <%= link_to product_path(item.product) do %>
                                   <%= mini_image(item.product) %>
                               <% end %>
@@ -60,10 +62,14 @@
                             <% end %>
                           </span>
                           <b>Web ID: </b> #<%= item.product.id %>
-                          <span class="block"><b>Size:</b> <%= item.variant.size %></span>
+                          <span class="block"><b>Size:</b> <%= item.product.size %></span>
                           <span class="block">
                             <b> Color: </b>
-                            <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%= variant_color_image_option(item.variant.color_image) %>"></span>
+<<<<<<< Updated upstream
+                            <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%#= variant_color_image_option(item.product.color_image) %>"></span>
+=======
+                            <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%= variant_color_image_option(item.product.color) %>"></span>
+>>>>>>> Stashed changes
                           </span>
                         </div>
                       </div>
@@ -100,8 +106,15 @@
                 </div>
               </div>
             </div>
-            <div class="page-title gothamHTFBook uppercase">
-              <h3>Shipment Details</h3>
+            <div class="page-title gothamHTFBook ">
+              <h3 class="public-title mb0">Shipment Details</h3> </br></br>
+              <p>Tracking Id: <%= @order.shipment.tracking%></p>
+              <p>Shipment Number :<%= @order.shipment.number%></p>
+              <p>Shipment Cost: <%= @order.shipment.cost%></p>
+              <p>Shipted At: <%= @order.shipment.shipped_at%></p>
+              <p>Order Id: <%= @order.shipment.order_id%></p>
+              <p>Adjustment Total: <%= @order.shipment.adjustment_total%></p>
+              <p>Promo Total :<%= @order.shipment.promo_total%></p>
             </div>
             <div class="shipment-details">
 
