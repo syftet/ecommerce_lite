@@ -1,0 +1,57 @@
+<% content_for :page_title do %>
+    Inventory
+<% end %>
+
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <% @products.each do |product| %>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#product_<%= product.id %>" aria-expanded="true" aria-controls="collapseOne">
+              <i class="more-less glyphicon glyphicon-plus"></i>
+              <%= product.name %>  <span class="pull-right pr25"><%= product.variants_total_on_hand %></span>
+            </a>
+          </h4>
+        </div>
+        <div id="product_<%= product.id %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Status</th>
+                <th >Stock</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% product.variants_with_master.each do |variant| %>
+                  <tr>
+                    <td><%= link_to variant.name, edit_admin_product_path(variant) %></td>
+                    <td><%= variant.code %></td>
+                    <td><%= variant.is_active ? 'Active' : 'Inactive' %></td>
+                    <td><%= variant.total_on_hand  %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  <% end %>
+
+</div><!-- panel-group -->
+
+
+<script type="text/javascript">
+  function toggleIcon(e) {
+    $(e.target)
+        .prev('.panel-heading')
+        .find(".more-less")
+        .toggleClass('glyphicon-plus glyphicon-minus');
+  }
+  $('.panel-group').on('hidden.bs.collapse', toggleIcon);
+  $('.panel-group').on('shown.bs.collapse', toggleIcon);
+</script>

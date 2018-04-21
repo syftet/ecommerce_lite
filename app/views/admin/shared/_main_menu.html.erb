@@ -20,6 +20,12 @@
     </ul>
 <% end %>
 
+<% if can? :admin, Product %>
+    <ul class="nav nav-sidebar">
+      <%= main_menu_item('Inventory', inventory_admin_products_path, 'linode') %>
+    </ul>
+<% end %>
+
 <% if can? :admin, Admin::Brand %>
     <ul class="nav nav-sidebar">
       <%= main_menu_item('Brands', admin_brands_path, 'bandcamp') %>

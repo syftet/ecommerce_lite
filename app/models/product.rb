@@ -145,6 +145,14 @@ class Product < ApplicationRecord
     stock_items.sum(:count_on_hand)
   end
 
+  def variants_total_on_hand
+    sum = 0
+    variants_with_master.each do |va|
+      sum =  sum + va.total_on_hand
+    end
+    sum
+  end
+
   private
 
   def create_stock_items

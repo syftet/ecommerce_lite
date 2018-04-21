@@ -17,6 +17,7 @@
 #  updated_at             :datetime         not null
 #  role                   :string(255)
 #  name                   :string(255)
+#  ship_address_id        :integer
 #
 # Indexes
 #
@@ -36,6 +37,10 @@ class User < ApplicationRecord
   has_many :reviews
   has_many :orders
   has_many :rewards_points
+  belongs_to :ship_address, class_name: 'Address'
+
+  accepts_nested_attributes_for :ship_address
+
 
   ROLES.each do |role|
     define_method("#{role}?") do

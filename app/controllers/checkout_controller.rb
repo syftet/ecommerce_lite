@@ -175,18 +175,10 @@ class CheckoutController < ApplicationController
   end
 
   def before_payment
-    before_address
-    unless @order.shipment.present?
-      packages = @order.shipments.map(&:to_package)
-      @differentiator = Stock::Differentiator.new(@order, packages)
-      @differentiator.missing.each do |variant, quantity|
-        #@order.contents.remove(variant, quantity)
-      end
-    end
-
-    if current_user && current_user.respond_to?(:payment_sources)
-      @payment_sources = current_user.payment_sources
-    end
+   # before_address
+   unless @order.shipment.present?
+     redirect_to checkout_state_path('delivery')
+   end
   end
 
   def add_store_credit_payments

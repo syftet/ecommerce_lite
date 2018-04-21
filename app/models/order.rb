@@ -39,47 +39,49 @@
 
 # require 'order/checkout'
 class Order < ApplicationRecord
-  PAYMENT_STATES = %w(balance_due credit_owed failed paid void)
-  SHIPMENT_STATES = %w(backorder canceled partial processing pending ready shipped delivered canceled refunded )
-  PREFIX = 'OR-'
-  ORDER_SHIPMENT_STATE = {
-      processing: 'Processing',
-      payment_failed: 'Payment failed',
-      pending: 'Preparing your order',
-      ready: 'Ready to ship',
-      shipped: 'Shipped'
-  }
+  after_update :add_ship_id_to_user
 
-  ORDER_STATES = %w(address delivery payment completed approved canceled)
+  PAYMENT_STATES = %w[balance_due credit_owed failed paid void].freeze
+  SHIPMENT_STATES = %w[backorder canceled partial processing pending ready shipped delivered canceled refunded].freeze
+  PREFIX = 'OR-'.freeze
+  ORDER_SHIPMENT_STATE = {
+    processing: 'Processing',
+    payment_failed: 'Payment failed',
+    pending: 'Preparing your order',
+    ready: 'Ready to ship',
+    shipped: 'Shipped'
+  }.freeze
+
+  ORDER_STATES = %w[address delivery payment completed approved canceled].freeze
 
   ORDER_ALL_SHIPMENT_STATE = {
-      processing: 'Processing',
-      payment_failed: 'Payment failed',
-      pending: 'Preparing your order',
-      ready: 'Ready to ship',
-      shipped: 'Shipped',
-      delivered: 'Delivered',
-      canceled: 'Canceled',
-      refunded: 'Refunded'
-  }
+    processing: 'Processing',
+    payment_failed: 'Payment failed',
+    pending: 'Preparing your order',
+    ready: 'Ready to ship',
+    shipped: 'Shipped',
+    delivered: 'Delivered',
+    canceled: 'Canceled',
+    refunded: 'Refunded'
+  }.freeze
 
   ORDER_SMTP = {
-      address: 'smtp.zoho.com',
-      port: 465,
-      domain: 'lienesbeauty.com',
-      user_name: 'sales@lienesbeauty.com',
-      password: 'Shop2017',
-      authentication: :plain,
-      ssl: true,
-      enable_starttls_auto: true
-  }
+    address: 'smtp.zoho.com',
+    port: 465,
+    domain: 'lienesbeauty.com',
+    user_name: 'sales@lienesbeauty.com',
+    password: 'Shop2017',
+    authentication: :plain,
+    ssl: true,
+    enable_starttls_auto: true
+  }.freeze
 
   CHECKOUT_STEPS = {
-      address: 'Address',
-      delivery: 'Delivery',
-      payment: 'Payment',
-      complete: 'complete'
-  }
+    address: 'Address',
+    delivery: 'Delivery',
+    payment: 'Payment',
+    complete: 'complete'
+  }.freeze
 
   extend FriendlyId
   include GenerateNumber
@@ -105,15 +107,15 @@ class Order < ApplicationRecord
   end
 
   def can_approve?
-    completed? && self.state != 'approved'
+    completed? && state != 'approved'
   end
 
   def can_cancel?
-    self.state == 'approved'
+    state == 'approved'
   end
 
   def approved?
-    self.state == 'approved'
+    state == 'approved'
   end
 
   def self.checkout_steps
@@ -121,7 +123,7 @@ class Order < ApplicationRecord
   end
 
   def can_resume?
-    self.state == 'canceled'
+    state == 'canceled'
   end
 
   def cart?
@@ -134,9 +136,9 @@ class Order < ApplicationRecord
 
   def net_total
     if shipment.present?
-      (self.total || 0) + (shipment.cost || 0)
+      (total || 0) + (shipment.cost || 0)
     else
-      self.total
+      total
     end
   end
 
@@ -149,7 +151,7 @@ class Order < ApplicationRecord
   end
 
   def get_shipment_status
-    if ['delivered', 'canceled', 'refunded'].include? self.shipment_state
+    if %w[delivered canceled refunded].include? shipment_state
       Order::ORDER_ALL_SHIPMENT_STATE
     else
       Order::ORDER_SHIPMENT_STATE
@@ -157,12 +159,12 @@ class Order < ApplicationRecord
   end
 
   def next
-    if self.state == 'address'
-      self.state = 'delivery'
-    elsif self.state == 'delivery'
+    if state == 'delivery'
       self.state = 'payment'
+    elsif state == 'address'
+      self.state = 'delivery'
     end
-    self.save
+    save
   end
 
   def contents
@@ -170,12 +172,13 @@ class Order < ApplicationRecord
   end
 
   def update_with_params(params, permitted_params)
-
     if params[:state] == 'address'
-      self.update_attributes(permitted_params)
+      if update_attributes(permitted_params)
+        add_ship_id_to_user
+      end
     elsif params[:state] == 'delivery'
       if init_shipment(permitted_params.delete(:shipping_method))
-        self.update_attributes(permitted_params.merge({shipment_state: 'pending'}))
+        update_attributes(permitted_params.merge(shipment_state: 'pending'))
       end
     elsif params[:state] == 'payment'
       payment = build_payment(permitted_params)
@@ -184,7 +187,7 @@ class Order < ApplicationRecord
         self.state = 'completed'
         self.shipment_state = Order::ORDER_SHIPMENT_STATE[:pending]
         self.payment_state = payment.state == 'completed' ? 'completed' : 'balance_due'
-        if self.save
+        if save
           deliver_order_confirmation_email unless confirmation_delivered?
         end
       end
@@ -192,11 +195,11 @@ class Order < ApplicationRecord
   end
 
   def completed?
-    !self.completed_at.blank?
+    !completed_at.blank?
   end
 
   def self.get_incomplete_order(token, user)
-    order = self.where("guest_token = ? and completed_at IS NULL", token).last
+    order = where('guest_token = ? and completed_at IS NULL', token).last
     if user.present? && !order.present?
       order = user.orders.where('completed_at IS NULL').last
     end
@@ -210,18 +213,18 @@ class Order < ApplicationRecord
   end
 
   def collect_rewards_point
-    if self.user.present? && self.approved_at.present?
-      reward_point = self.user.rewards_points.find_or_initialize_by(order_id: self.id, user_id: self.user_id, reason: 'Checkout')
-      reward_point.points = self.line_items.sum(&:credit_point)
+    if user.present? && approved_at.present?
+      reward_point = user.rewards_points.find_or_initialize_by(order_id: id, user_id: user_id, reason: 'Checkout')
+      reward_point.points = line_items.sum(&:credit_point)
       reward_point.save
     end
   end
 
   def init_shipment(shipping_method)
     shipping = ShippingMethod.find_by_id(shipping_method)
-    u_shipment = self.shipment || self.build_shipment
+    u_shipment = shipment || build_shipment
     u_shipment.cost = shipping.rate
-    u_shipment.address_id = self.ship_address.id
+    u_shipment.address_id = ship_address.id
     u_shipment.tracking = shipping.code
     u_shipment.shipping_method_id = shipping.id
     u_shipment.state = 'pending'
@@ -233,26 +236,26 @@ class Order < ApplicationRecord
     payment_method = PaymentMethod.find_by_id(payment_method_id)
     return false unless payment_method.present?
     payment_params = payment_method.process
-    payment_params[:amount] = self.net_total
+    payment_params[:amount] = net_total
     payment_params[:payment_method_id] = payment_method_id
-    payment = self.payments.build(payment_params)
+    payment = payments.build(payment_params)
     payment.save
     payment
   end
 
   def approved_by(user)
-    self.update_attributes({approver_id: user.id, approved_at: Time.current})
+    update_attributes(approver_id: user.id, approved_at: Time.current)
   end
 
   def credit_rewards_point
     points = line_items.collect { |item| item.product.reward_point }.sum
     if points > 0
-      reward_point = RewardsPoint.where(order_id: self.id, user_id: self.user_id).first
+      reward_point = RewardsPoint.where(order_id: id, user_id: user_id).first
       if reward_point.present?
         reward_point.points = points
         reward_point.save
       else
-        RewardsPoint.create(order_id: self.id, user_id: self.user_id, points: points, reason: 'Order Checkout Credit Points')
+        RewardsPoint.create(order_id: id, user_id: user_id, points: points, reason: 'Order Checkout Credit Points')
       end
     end
   end
@@ -272,5 +275,11 @@ class Order < ApplicationRecord
     end
   end
 
+  def add_ship_id_to_user
 
+    if !user.nil? && !ship_address.nil?
+      user.ship_address_id = ship_address.id
+      user.save
+    end
+  end
 end

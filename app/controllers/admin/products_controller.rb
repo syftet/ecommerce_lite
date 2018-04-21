@@ -55,6 +55,10 @@ module Admin
       end
     end
 
+    def inventory
+      @products = Product.master_active
+    end
+
     private
 
     def set_product
