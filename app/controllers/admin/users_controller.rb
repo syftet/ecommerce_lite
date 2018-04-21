@@ -60,6 +60,7 @@ module Admin
         end
         render :addresses
       end
+
     end
 
     def orders
