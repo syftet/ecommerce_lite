@@ -3,11 +3,11 @@
       <%= render 'spree/admin/shared/error_messages', target: @line_item %>
   <% end %>
 
-  <%# if Order.checkout_step_names.include?(:delivery) %>
-  <%= render partial: "admin/orders/shipment", collection: [@order.shipment], locals: {order: order} %>
-  <%# else %>
-  <%#= render "admin/orders/line_items", order: order %>
-  <%# end %>
+  <% if @order.shipment.present? %>
+      <%= render partial: "admin/orders/shipment", locals: {order: order, shipment: @order.shipment} %>
+  <% else %>
+      <%= render "admin/orders/line_items", order: order %>
+  <% end %>
 
   <%#= render "admin/orders/adjustments",
              adjustments: @order.line_item_adjustments,

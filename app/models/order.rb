@@ -34,6 +34,7 @@
 #  updated_at             :datetime         not null
 #  special_instructions   :text(65535)
 #  collection_point       :string(255)
+#  tax_total              :decimal(10, )    default(0)
 #
 
 # require 'order/checkout'
@@ -123,8 +124,12 @@ class Order < ApplicationRecord
     self.state == 'canceled'
   end
 
+  def cart?
+    !completed?
+  end
+
   def you_saved
-   line_items.collect { |item| item.product.discount_amount }.sum
+    line_items.collect { |item| item.product.discount_amount }.sum
   end
 
   def net_total
@@ -137,6 +142,10 @@ class Order < ApplicationRecord
 
   def adjustment_total
     0
+  end
+
+  def shipment_cost
+    shipment.present? ? shipment.cost : 0
   end
 
   def get_shipment_status
@@ -255,7 +264,7 @@ class Order < ApplicationRecord
       updater = OrderUpdater.new(self)
       line_items.destroy_all
       updater.update_item_count
-      shipment.destroy
+      shipment.destroy if shipment.present?
 
       updater.update_totals
       updater.persist_totals

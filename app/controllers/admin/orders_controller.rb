@@ -127,7 +127,10 @@ module Admin
     end
 
     def track
-      @trackes = @order.shipment.trackings.order('created_at').group_by { |track| track.created_at.strftime('%A, %d %b') }
+      @trackes = []
+      if @order.shipment
+        @trackes = @order.shipment.trackings.order('created_at').group_by { |track| track.created_at.strftime('%A, %d %b') }
+      end
     end
 
     def update_state

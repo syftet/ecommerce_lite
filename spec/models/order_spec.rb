@@ -34,6 +34,7 @@
 #  updated_at             :datetime         not null
 #  special_instructions   :text(65535)
 #  collection_point       :string(255)
+#  tax_total              :decimal(10, )    default(0)
 #
 
 require 'rails_helper'

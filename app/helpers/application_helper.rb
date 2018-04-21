@@ -98,6 +98,10 @@ module ApplicationHelper
     end
   end
 
+  def included_tax_total(order)
+    order.tax_total > 0 ? amount_with_currency(order.tax_total) : 'All Taxes Included'
+  end
+
   def pretty_time(time)
     # [I18n.l(time.to_date, format: :long), time.strftime("%l:%M %p")].join(" ")
     time.strftime("%l:%M %p")

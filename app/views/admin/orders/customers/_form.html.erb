@@ -41,7 +41,7 @@
                 </div>
                 <div class="radio">
                   <%= label_tag :guest_checkout_false do %>
-                      <%#= radio_button_tag :guest_checkout, false, !guest, disabled: @order.cart? %>
+                      <%= radio_button_tag :guest_checkout, false, !guest, disabled: @order.cart? %>
                       <%= t(:say_no) %>
                   <% end %>
                 </div>

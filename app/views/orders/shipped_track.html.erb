@@ -2,11 +2,11 @@
 <main class="main">
   <div class="section">
     <div class="container">
-      <div class="page-title uppercase text-center with-bb hidden-xs">
-        <% content_for :breadcrumb do %>
-            <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb("shipped_track", '', '', {my_account: my_account_path,order: order_path(@order)}) %>
-        <% end %>
-      </div>
+      <!--<div class="page-title uppercase text-center with-bb hidden-xs">-->
+      <% content_for :breadcrumb do %>
+          <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb("shipped_track", '', '', {my_account: my_account_path, order: order_path(@order)}) %>
+      <% end %>
+      <!--</div>-->
       <div class="chunk track-package">
         <div class="row">
           <div class="col-sm-3">
@@ -34,12 +34,8 @@
             </aside>
           </div>
           <div class="col-sm-9 chunk-right">
-            <div class="page-title clearfix hidden-xs">
-              <%= link_to 'Back To My Orders', my_account_path, class: 'pull-right link-with-decoration gothamNarrowBold' %>
-            </div>
-            <div class="page-title clearfix visible-xs gothamNarrowBold">
-              <h3 class="uppercase gothamNarrowBold">Track Package Order #<%= @order.number %></h3>
-              <%= link_to 'Back to My Order', my_account_path %>
+            <div class="page-title clearfix visiblex-xs gothamNarrowBold pt0">
+              <h3 class="uppercase gothamNarrowBold mt0">Track Package Order #<%= @order.number %></h3>
             </div>
 
             <div class="order-items clearfix">
@@ -65,11 +61,7 @@
                           <span class="block"><b>Size:</b> <%= item.product.size %></span>
                           <span class="block">
                             <b> Color: </b>
-<<<<<<< Updated upstream
-                            <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%#= variant_color_image_option(item.product.color_image) %>"></span>
-=======
                             <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%= variant_color_image_option(item.product.color) %>"></span>
->>>>>>> Stashed changes
                           </span>
                         </div>
                       </div>
@@ -106,20 +98,13 @@
                 </div>
               </div>
             </div>
-            <div class="page-title gothamHTFBook ">
-              <h3 class="public-title mb0">Shipment Details</h3> </br></br>
-              <p>Tracking Id: <%= @order.shipment.tracking%></p>
-              <p>Shipment Number :<%= @order.shipment.number%></p>
-              <p>Shipment Cost: <%= @order.shipment.cost%></p>
-              <p>Shipted At: <%= @order.shipment.shipped_at%></p>
-              <p>Order Id: <%= @order.shipment.order_id%></p>
-              <p>Adjustment Total: <%= @order.shipment.adjustment_total%></p>
-              <p>Promo Total :<%= @order.shipment.promo_total%></p>
+            <div class="page-title gothamHTFBook uppercase" style="color: #c6000e;">
+              <h3>Shipment Tracking Details</h3>
             </div>
             <div class="shipment-details">
 
               <% @trackes.each_with_index do |(track_date, track_infos), index| %>
-                  <h3 style="margin: 15px 0 5px 0; padding: 0;"><%= index == 0 ? 'Latest update: ' + track_date : track_date %></h3>
+                  <h3 style="margin: 15px 0 5px 0; padding: 10px; background: #F7F7F7;"><%= index == 0 ? 'Latest update: ' + track_date : track_date %></h3>
                   <% track_infos.each do |track_info| %>
                       <div class="with-each-iterary">
 

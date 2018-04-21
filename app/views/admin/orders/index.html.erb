@@ -143,7 +143,7 @@
 
             <td>
               <% if order.user %>
-                  <%= link_to order.email, edit_admin_user_path(order.user) %>
+                  <%= link_to order.user.email, edit_admin_user_path(order.user) %>
               <% else %>
                   <%= mail_to order.email %>
               <% end %>

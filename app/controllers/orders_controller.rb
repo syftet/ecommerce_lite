@@ -103,7 +103,7 @@ class OrdersController < ApplicationController
   def shipped_track
     @orders = Order.all #try_spree_current_user.orders.complete.order('completed_at desc')
     @order = Order.find_by_number(params[:order_id]) || Order.find_by_id(params[:order_id])
-    @trackes = [] #@order.order_tracks.order('created_at desc').group_by { |track| track.created_at.strftime('%A, %d %b') }
+    @trackes = @order.shipment.trackings.order('created_at desc').group_by { |track| track.created_at.strftime('%A, %d %b') }
   end
 
   def empty

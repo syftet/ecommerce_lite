@@ -58,7 +58,7 @@
                 <div class="collapse navbar-collapse navbar-mega-collapse nopadding">
                   <ul id="primary-menu" class="nav navbar-nav megamenu">
                     <li class="menu-item site-logo-link">
-                      <%= link_to root_path, style: 'padding: 18px 15px 19px 0;' do %>
+                      <%= link_to root_path, style: 'padding: 8px 15px 8px 0;' do %>
                           <%= image_tag('top_logo.png') %>
                       <% end %>
                     </li>
@@ -66,7 +66,7 @@
                     <li class="menu-item">
                       <a href="<%= promotion_products_path('discount') %>">
                         <%= t(:discount) %>
-                        <span class="bubble-text-label label-hot"><%= t(:hot) %></span>
+                        <!--<span class="bubble-text-label label-hot"><%#= t(:hot) %></span>-->
                       </a>
                     </li>
                     <% Admin::Category.menu.each do |cat| %>
