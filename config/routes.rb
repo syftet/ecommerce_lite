@@ -70,6 +70,9 @@ Rails.application.routes.draw do
       member do
         get :stock
       end
+      collection do
+        get :inventory
+      end
       resources :images
       resources :variants
     end
