@@ -59,6 +59,9 @@ GEM
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    bootstrap4-kaminari-views (1.0.0)
+      kaminari (>= 0.13)
+      rails (>= 3.1)
     builder (3.2.3)
     byebug (10.0.2)
     cancan (1.6.10)
@@ -279,6 +282,7 @@ PLATFORMS
 DEPENDENCIES
   annotate
   bootstrap-sass (~> 3.3.6)
+  bootstrap4-kaminari-views
   byebug
   cancan
   capybara (~> 2.13)

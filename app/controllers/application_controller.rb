@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
       order.guest_token = get_token
       order.user_id = current_user.id if current_user.present?
       order.state = 'address'
+      order.store_id = StockLocation.active_stock_location
       order.save!
       @order = order
     end

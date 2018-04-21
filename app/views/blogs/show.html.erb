@@ -1,7 +1,7 @@
 <%= content_for :breadcrumb do %>
-    <%#= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb(@blog.title, '', '', {blogs: blogs_path}) %>
+    <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb(@blog.title, '', '', {blogs: blogs_path}) %>
 <% end %>
-<h1 style="margin-top: 0; font-weight: bold;"> <%= @blog.title %> </h1>
+<h1 class="public-title"> <%= @blog.title %> </h1>
 
 <%= @blog.created_at.strftime('%B %d, %Y') %>
 

@@ -55,4 +55,9 @@ class User < ApplicationRecord
   def available_rewards
     rewards_points.sum(:points)
   end
+
+  def purchased
+    orders.where("approved_at IS NOT NULL").sum(:total)
+  end
+
 end
