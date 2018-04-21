@@ -252,17 +252,14 @@ class Order < ApplicationRecord
     if completed?
       raise t(:cannot_empty_completed_order)
     else
+      updater = OrderUpdater.new(self)
       line_items.destroy_all
       updater.update_item_count
-      adjustments.destroy_all
-      shipments.destroy_all
-      state_changes.destroy_all
-      order_promotions.destroy_all
+      shipment.destroy
 
-      update_totals
-      persist_totals
-      restart_checkout_flow
-      self
+      updater.update_totals
+      updater.persist_totals
+      # restart_checkout_flow
     end
   end
 

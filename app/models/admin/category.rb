@@ -18,6 +18,8 @@
 class Admin::Category < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
+  validates_length_of :name,  :maximum => 255
+  validates_length_of :description,  :maximum => 255
   self.table_name = 'admin_categories'
 
   after_save :set_permalink

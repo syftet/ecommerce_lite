@@ -42,6 +42,7 @@ gem 'rmagick'
 gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'social-share-button'
 gem 'kaminari'
+gem 'bootstrap4-kaminari-views'
 gem 'select2-rails' #, '~> 3.5.9.1'
 gem 'annotate'
 

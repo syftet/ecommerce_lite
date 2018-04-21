@@ -14,6 +14,7 @@
 //= require rails-ujs
 //= require turbolinks
 //= require select2
+//= require ckeditor/init
 //= require_tree .
 
 handle_date_picker_fields = function () {

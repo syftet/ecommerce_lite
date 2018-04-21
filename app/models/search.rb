@@ -13,7 +13,7 @@ class Search
     else
       result_object = Product.master_active #.joins(:variants)
     end
-    p terms[:product_type]
+    p terms[:name]
 
     if terms[:product_type] == 'recent'
       result_object = result_object.where("products.created_at >= ?", 15.days.ago)

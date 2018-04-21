@@ -9,6 +9,9 @@ class CategoriesController < ApplicationController
     @categories = Admin::Category.where("parent_id IS NULL")
     @top_category = @category.category
     redirect_to products_path unless @category
+    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+    p params
+    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     @products = Search.new(params, @category).result
     respond_to do |format|
       format.html {}

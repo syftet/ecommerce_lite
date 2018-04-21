@@ -18,15 +18,22 @@
         <%= f.error_message_on :link %>
     <% end %>
 
-    <div id="image-preview">
-      <label for="slider_image" id="image-label">
-        Choose Image
-        <div style="font-size: 15px; line-height: 22px; margin-top: 10px; color: red;">
-          <i> Image size should 1250x500 resolution </i>
+    <% if f.object.image.present? %>
+        <div id="image-preview" style="background-image: url(<%= f.object.image_url %>)">
+          <label for="slider_image" id="image-label">Change image</label>
+          <input name="home_slider[image]" id="image-upload" type="file">
         </div>
-      </label>
-      <input type="file" name="home_slider[image]" id="image-upload" />
-    </div>
+        <% else %>
+        <div id="image-preview">
+          <label for="slider_image" id="image-label">
+            Choose Image
+            <div style="font-size: 15px; line-height: 22px; margin-top: 10px; color: red;">
+              <i> Image size should 1250x500 resolution </i>
+            </div>
+          </label>
+          <input type="file" name="home_slider[image]" id="image-upload" />
+        </div>
+    <% end %>
 
     <div class="form-actions" data-hook="buttons">
       <%= button t('actions.create'), 'ok', 'submit', {class: 'btn-success'} %>
