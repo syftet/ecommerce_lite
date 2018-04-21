@@ -89,6 +89,10 @@ class StockLocation < ApplicationRecord
     end
   end
 
+  def active_stock_location
+    StockLocation.where(default: true).first
+  end
+
   private
 
   def create_stock_items

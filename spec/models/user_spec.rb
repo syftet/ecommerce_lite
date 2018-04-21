@@ -17,6 +17,7 @@
 #  updated_at             :datetime         not null
 #  role                   :string(255)
 #  name                   :string(255)
+#  ship_address_id        :integer
 #
 # Indexes
 #

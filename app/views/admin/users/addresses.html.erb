@@ -14,10 +14,6 @@
     <%= form_for [:admin, @user], as: :user, url: addresses_admin_user_url(@user), method: :put do |f| %>
 
       <%= render partial: 'addresses_form', locals: {f: f} %>
-
-      <div class="form-actions text-center well" data-hook="admin_user_edit_form_button">
-        <%= render partial: 'admin/shared/edit_resource_links', locals: {collection_url: admin_users_url} %>
-      </div>
     <% end %>
   </div>
 </div>
