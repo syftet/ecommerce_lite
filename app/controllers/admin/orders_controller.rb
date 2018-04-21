@@ -34,7 +34,7 @@ module Admin
       # params[:q][:created_at_gt] = created_at_gt
       # params[:q][:created_at_lt] = created_at_lt
       @search = Order.new
-      @orders = Order.all
+      @orders = Order.all.page params[:page]
     end
 
     def new
