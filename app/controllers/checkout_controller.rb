@@ -165,7 +165,7 @@ class CheckoutController < ApplicationController
   end
 
   def before_address
-    @order.ship_address ||= Address.build_default
+    @order.ship_address ||= Address.build_default(current_user)
   end
 
   def before_delivery
