@@ -15,7 +15,9 @@ class ApplicationController < ActionController::Base
       order.save!
       @order = order
     end
-    @order
+    unless @order.present? && @order.completed?
+      @order
+    end
   end
 
   def get_token

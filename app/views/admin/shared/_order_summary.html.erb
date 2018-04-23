@@ -37,21 +37,18 @@
         </strong>
       </td>
       <td id='ship_total'>
-        <%= amount_with_currency(@order.shipment.cost) if @order.shipment %>
+        <%= amount_with_currency(@order.shipment_cost) %>
       </td>
     </tr>
 
-    <%# if @order.included_tax_total != 0 %>
     <tr>
       <td data-hook='admin_order_tab_included_tax_title'>
         <strong><%= t(:tax_included) %>:</strong>
       </td>
       <td id='included_tax_total'>
-        <%#= @order.display_included_tax_total.to_html %>
-        0
+        <%= included_tax_total(@order) %>
       </td>
     </tr>
-    <%# end %>
 
     <tr>
       <td data-hook='admin_order_tab_total_title'>
@@ -95,7 +92,7 @@
         </tr>
     <% end %>
 
-    <% if false #@order.approved?      %>
+    <% if false #@order.approved?        %>
         <tr>
           <td><strong><%= t(:approver) %></strong></td>
           <td><%= @order.approver.email %></td>
@@ -106,7 +103,7 @@
         </tr>
     <% end %>
 
-    <% if false #@order.canceled? && @order.canceler && @order.canceled_at      %>
+    <% if false #@order.canceled? && @order.canceler && @order.canceled_at        %>
         <tr>
           <td><strong><%= t(:canceler) %></strong></td>
           <td><%= @order.canceler.email %></td>

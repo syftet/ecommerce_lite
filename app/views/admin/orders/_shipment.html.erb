@@ -5,6 +5,7 @@
       -
       <span class="shipment-state"><%= t("shipment_states.#{shipment.state}") %></span>
       <%= t(:package_from) %>
+      <%= @order.inspect %>
       <strong class="stock-location-name" data-hook="stock-location-name">
         '<%= shipment.stock_location.name if shipment.stock_location.present? %>'
       </strong>

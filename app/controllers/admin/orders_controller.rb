@@ -6,6 +6,7 @@ module Admin
     respond_to? :html
 
     def index
+
       params[:q] ||= {}
       # params[:q][:completed_at_not_null] ||= '1' if Syftet.config.show_only_complete_orders_by_default
       # @show_only_completed = params[:q][:completed_at_not_null] == '1'
@@ -127,7 +128,10 @@ module Admin
     end
 
     def track
-      @trackes = @order.shipment.trackings.order('created_at').group_by { |track| track.created_at.strftime('%A, %d %b') }
+      @trackes = []
+      if @order.shipment
+        @trackes = @order.shipment.trackings.order('created_at').group_by { |track| track.created_at.strftime('%A, %d %b') }
+      end
     end
 
     def update_state
