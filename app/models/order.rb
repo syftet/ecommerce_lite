@@ -164,9 +164,7 @@ class Order < ApplicationRecord
 
   def update_with_params(params, permitted_params)
     if params[:state] == 'address'
-      if update_attributes(permitted_params)
-        add_ship_id_to_user
-      end
+      add_ship_id_to_user if update_attributes(permitted_params)
     elsif params[:state] == 'delivery'
       if init_shipment(permitted_params.delete(:shipping_method))
         update_attributes(permitted_params.merge(shipment_state: 'pending'))
