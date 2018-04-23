@@ -39,7 +39,6 @@
 
 # require 'order/checkout'
 class Order < ApplicationRecord
-  after_update :add_ship_id_to_user
 
   PAYMENT_STATES = %w[balance_due credit_owed failed paid void].freeze
   SHIPMENT_STATES = %w[backorder canceled partial processing pending ready shipped delivered canceled refunded].freeze
@@ -173,7 +172,8 @@ class Order < ApplicationRecord
 
   def update_with_params(params, permitted_params)
     if params[:state] == 'address'
-      add_ship_id_to_user if update_attributes(permitted_params)
+      add_ship_id_to_user if status = update_attributes(permitted_params)
+      status
     elsif params[:state] == 'delivery'
       if init_shipment(permitted_params.delete(:shipping_method))
         update_attributes(permitted_params.merge(shipment_state: 'pending'))

@@ -34,8 +34,8 @@ class CheckoutController < ApplicationController
         end
       end
     else
-      p @order.inspect
-      render @order.state
+      p @order.errors.inspect
+      render :edit#@order.state
     end
   end
 

@@ -152,7 +152,7 @@ module Admin
             shipment_state: status == 'processing' ? nil : status,
             shipment_date: format_date(order_params[:shipment_date]),
             shipment_progress: order_params[:shipment_progress].present? ? order_params[:shipment_progress] : 0,
-            # shipped_at: (!@order.shipped_at.present? && status == 'shipped') ? DateTime.now : @order.shipped_at,
+            shipped_at: (!@order.shipped_at.present? && status == 'shipped') ? DateTime.now : @order.shipped_at,
             payment_state: status == 'shipped' ? 'paid' : @order.payment_state
         }
       end

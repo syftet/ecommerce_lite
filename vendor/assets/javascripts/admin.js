@@ -18,7 +18,8 @@
 //= require_tree .
 
 handle_date_picker_fields = function () {
-    $('.datepicker').datepicker();
+    $('.datepicker').datepicker({  format: 'yyyy-mm-dd'}
+    );
 
     // Correctly display range dates
     $('.date-range-filter .datepicker-from').datepicker('option', 'onSelect', function (selectedDate) {

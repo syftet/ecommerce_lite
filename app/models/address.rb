@@ -14,7 +14,6 @@
 #  country    :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_id    :integer
 #
 
 class Address < ApplicationRecord
@@ -29,7 +28,7 @@ class Address < ApplicationRecord
   alias_attribute :last_name, :lastname
 
   def self.build_default(user)
-    if user.ship_address.present?
+    if user.present? && user.ship_address.present?
       user.ship_address.clone
     else
       new

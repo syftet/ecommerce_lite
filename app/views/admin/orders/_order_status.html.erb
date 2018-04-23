@@ -58,7 +58,8 @@
         var element = $('#order_shipment_state');
         var shipment_date = $('#order_shipment_date');
         shipment_date.datepicker({
-            minDate: '<%= Date.today.strftime('%m/%d/%Y') %>'
+            format: 'yyyy-mm-dd',
+            startDate: "<%= Date.today %>"
         });
 
         if (element.val() == 'shipped') {
