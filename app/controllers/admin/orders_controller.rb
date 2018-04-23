@@ -8,34 +8,14 @@ module Admin
     def index
 
       params[:q] ||= {}
-      # params[:q][:completed_at_not_null] ||= '1' if Syftet.config.show_only_complete_orders_by_default
-      # @show_only_completed = params[:q][:completed_at_not_null] == '1'
-      # created_at_gt = params[:q][:created_at_gt]
-      # created_at_lt = params[:q][:created_at_lt]
-      #
-      # params[:q].delete(:inventory_units_shipment_id_null) if params[:q][:inventory_units_shipment_id_null] == "0"
-      #
-      # if params[:q][:created_at_gt].present?
-      #   params[:q][:created_at_gt] = Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day rescue ""
-      # end
-      #
-      # if params[:q][:created_at_lt].present?
-      #   params[:q][:created_at_lt] = Time.zone.parse(params[:q][:created_at_lt]).end_of_day rescue ""
-      # end
-      #
-      # if @show_only_completed
-      #   params[:q][:completed_at_gt] = params[:q].delete(:created_at_gt)
-      #   params[:q][:completed_at_lt] = params[:q].delete(:created_at_lt)
-      # end
-
-      # @search = Order.preload(:user).accessible_by(current_ability, :index).ransack(params[:q])
-      # @orders = @search.result(distinct: true).
-      #     page(params[:page]).
-      #     per(params[:per_page] || Syftet.config.orders_per_page)
-      # params[:q][:created_at_gt] = created_at_gt
-      # params[:q][:created_at_lt] = created_at_lt
+      @orders = Order.all
+      if params[:order].present?
+        @result =  Order.result(params, @orders)
+        @orders = @result[:orders]
+        params[:q] = @result[:params_hash]
+      end
       @search = Order.new
-      @orders = Order.all.page params[:page]
+      @orders = @orders.page params[:page]
     end
 
     def new

@@ -1,0 +1,46 @@
+<article class="box-list">
+  <figure class="animated fadeInLeft" data-animation-type="fadeInLeft" data-animation-duration="1" style="animation-duration: 1s; visibility: visible;">
+    <a href="<%= product_path(wishlist.product) %>">
+      <%= product_preview_image(wishlist.product) %>
+    </a>
+  </figure>
+  <div class="details">
+    <h4 class="mt0 mb5 text-ellipsis">
+      <%= wishlist.product.name %>
+    </h4>
+
+    <div class="ratting clearfix" style="height: 22px;">
+      <div class="rating pull-left">
+        <div class="star-rating" data-rating="<%= average_rating(wishlist.product) %>">
+          ******
+        </div>
+      </div>
+        <span class="price pull-right" style="color: #A40028; font-weight: bold;">
+          <%= amount_with_currency(wishlist.product.price) %>
+        </span>
+    </div>
+
+    <div class="info clearfix" style="height: 30px;">
+      <% if wishlist.product.reward_point > 0 %>
+          <div class="rewards-point-wrapper pull-left" title="You will get <%= wishlist.product.reward_point %> rewards point, If you purchased this product.">
+            <%= image_tag('trophy.png') %> <%= wishlist.product.reward_point %>
+            <i class="fa fa-info-circle btn" data-container="body" data-toggle="popover" data-placement="top" data-content="You will get <%= wishlist.product.reward_point %> rewards point, If you purchased this product."></i>
+          </div>
+      <% end %>
+      <span class="pull-right">
+          <%= raw wishlist.product.on_stock %>
+        </span>
+    </div>
+    <p class="product-description">
+      <%= wishlist.product.description %>
+    </p>
+
+    <div class="product-add-to-cart">
+      <div class="add-cart">
+        <a title="Add to cart" rel="nofollow" href="<%= product_path(wishlist.product) %>" class="button btn btn-primary btn-sm">
+          Details
+        </a>
+      </div>
+    </div>
+  </div>
+</article>

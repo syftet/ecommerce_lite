@@ -87,19 +87,24 @@
 #wishlists a.remove {
   border: 0 none;
   border-radius: 100%;
-  color: red;
+  color: white;
   display: block;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
+  position: absolute;
+  left: 20px;
+  padding-top: 2px;
   height: 20px;
+  top: 10px;
   line-height: 1;
   text-align: center;
   text-decoration: none;
   vertical-align: middle;
   width: 20px;
+  background: red;
   &:hover {
-    background-color: #999;
-    color: #ffffff;
+    background-color: #999999;
+    color: red;
     text-decoration: none;
   }
 }
@@ -138,14 +143,13 @@
   color: #297e29;
 }
 
-#wishlists .wishlist_table td.product-add-to-cart a {
+#wishlists .product-add-to-cart a {
   background: #fcc030 none repeat scroll 0 0;
   border: medium none;
   border-radius: inherit;
   color: #fff;
-  display: block;
-  margin: 0 15px;
-  padding: 10px 0;
+  font-size: 16px;
+  float: right;
 }
 
 #wishlists .cart .button, #wishlists .cart input.button {

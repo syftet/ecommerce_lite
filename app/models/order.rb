@@ -210,6 +210,53 @@ class Order < ApplicationRecord
     update_column(:shipment_state, nil)
   end
 
+  def self.result(params,orders)
+    params_hash = {}
+    if params[:order].present?
+      if params[:order][:created_at_gt].present? && params[:order][:created_at_lt].present?
+        from_date = Time.strptime(params[:order][:created_at_gt], "%m/%d/%Y")
+        to_date = Time.strptime(params[:order][:created_at_lt], "%m/%d/%Y")
+        params_hash[:created_at_gt] = params[:order][:created_at_gt]
+        params_hash[:created_at_lt] = params[:order][:created_at_lt]
+        orders = orders.where(created_at: from_date.beginning_of_day..to_date.end_of_day)
+      elsif params[:order][:created_at_gt].present?
+        from_date = Time.strptime(params[:order][:created_at_gt], "%m/%d/%Y")
+        params_hash[:created_at_gt] = params[:order][:created_at_gt]
+        orders = @rders.where(created_at: from_date.beginning_of_day..from_date.end_of_day)
+      elsif params[:order][:created_at_lt].present?
+        to_date = Time.strptime(params[:order][:created_at_lt], "%m/%d/%Y")
+        params_hash[:created_at_lt] = params[:order][:created_at_lt]
+        orders = orders.where(created_at: to_date.beginning_of_day..to_date.end_of_day)
+      end
+      if params[:order][:number].present?
+        params_hash[:number] = params[:order][:number]
+        orders = orders.where(number: params[:order][:number])
+      end
+
+      if params[:order][:state].present?
+        params_hash[:state] = params[:order][:state]
+        orders = orders.where(shipment_state: params[:order][:state])
+      end
+
+      if params[:order][:payment_state].present?
+        params_hash[:payment_state] = params[:order][:payment_state]
+        orders = orders.where(payment_state: params[:order][:payment_state])
+      end
+
+      if params[:order][:email].present?
+        params_hash[:email] = params[:order][:email]
+        orders = orders.where(email: params[:order][:email])
+      end
+
+      if params[:order][:completed] == true
+        params_hash[:completed] = params[:order][:completed]
+        orders = orders.where(shipment_state: 'completed')
+      end
+    end
+    result = {orders: orders, params_hash:params_hash}
+    result
+  end
+
   def collect_rewards_point
     if user.present? && approved_at.present?
       reward_point = user.rewards_points.find_or_initialize_by(order_id: id, user_id: user_id, reason: 'Checkout')

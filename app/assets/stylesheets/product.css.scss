@@ -450,3 +450,59 @@
 .social-share-button {
   margin-top: 20px;
 }
+
+.box-list {
+  background: #efefef;
+  padding: 2px;
+  height: 175px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  figure {
+    float: left;
+    width: 200px;
+    overflow: hidden;
+    height: 171px;
+    img {
+      width: 100%;
+    }
+  }
+  .details {
+    padding: 10px 10px 10px 210px;
+  }
+  .text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .product-description {
+    height: 36px;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  .box-list {
+    figure {
+      width: 120px;
+      overflow: hidden;
+      height: 171px;
+      img {
+        width: auto;
+        height: 100%;
+        margin: auto;
+      }
+    }
+    .details {
+      padding: 10px 10px 10px 130px;
+    }
+    .text-ellipsis {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .product-description {
+      height: 36px;
+      overflow: hidden;
+    }
+  }
+}
