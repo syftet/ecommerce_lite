@@ -24,7 +24,7 @@
             <%= form_for NewsletterSubscription.new, url: email_subscription_path, remote: true do |f| %>
                 <div class="form-fields">
                   <div class="input-group">
-                    <%= f.email_field :email, class: 'form-control', placeholder: "#{t(:enter_your_email)}..." %>
+                    <%= f.email_field :email, class: 'form-control newsletter-email', placeholder: "#{t(:enter_your_email)}..." %>
 
                     <span class="clearfix pull-right">
                       <input type="submit" value="<%= t(:subscribe) %> +" class="btn">
