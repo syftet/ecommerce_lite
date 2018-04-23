@@ -39,7 +39,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <%= label_tag :number, 'Number' %>
-                <%= f.text_field :number, class: 'form-control js-quick-search-target' %>
+                <%= f.text_field :number, class: 'form-control js-quick-search-target', value: params[:q][:number] %>
               </div>
             </div>
 
@@ -50,21 +50,21 @@
             <div class="col-md-4">
               <div class="form-group">
                 <%= label_tag :state, "Status" %>
-                <%= f.select :state, Order::ORDER_STATES.map { |s| [t("order_state.#{s}"), s] }, {:include_blank => true}, :class => 'select2 jsx-filterable js-filter-select' %>
+                <%= f.select :state, Order::ORDER_STATES.map { |s| [t("order_state.#{s}"), s] }, {:include_blank => true,:selected => params[:q][:state]}, :class => 'select2 jsx-filterable js-filter-select' %>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <%= label_tag :q_payment_state_eq, t(:payment_state) %>
-                <%= f.select :payment_state, Order::PAYMENT_STATES.map { |s| [t("payment_states.#{s}"), s] }, {:include_blank => true}, :class => 'select2 jsx-filterable js-filter-select' %>
+                <%= f.select :payment_state, Order::PAYMENT_STATES.map { |s| [t("payment_states.#{s}"), s] }, {:include_blank => true,:selected => params[:q][:payment_state]}, :class => 'select2 jsx-filterable js-filter-select' %>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <%= label_tag :shipment_state, t(:shipment_state) %>
-                <%= f.select :shipment_state, Order::SHIPMENT_STATES.map { |s| [t("shipment_states.#{s}"), s] }, {:include_blank => true}, :class => 'select2 xjs-filterable js-filter-select' %>
+                <%= f.select :shipment_state, Order::SHIPMENT_STATES.map { |s| [t("shipment_states.#{s}"), s] }, {:include_blank => true,:selected => params[:q][:shipment_state]}, :class => 'select2 xjs-filterable js-filter-select' %>
               </div>
             </div>
 
@@ -74,7 +74,7 @@
             <div class="col-md-4">
               <div class="form-group">
                 <%= label_tag :email, 'Email' %>
-                <%= f.text_field :email, class: 'form-control js-filterable' %>
+                <%= f.text_field :email, class: 'form-control js-filterable',  value: params[:q][:state] %>
               </div>
             </div>
             <div class="col-md-4">
