@@ -162,7 +162,7 @@ module Admin
 
     # Used for extensions which need to provide their own custom event links on the order details view.
     def initialize_order_events
-      @order_events = %w{cancel resume}
+      @order_events = %w{cancel}
     end
 
     def model_class

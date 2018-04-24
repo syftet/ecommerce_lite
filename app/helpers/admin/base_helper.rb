@@ -47,7 +47,7 @@ module Admin
       html = ""
       events.each do |event|
         if order.send("can_#{event}?")
-          html += link_to admin_order_state_changes_path(order_id: order.id, status: event), class: 'btn btn-success' do
+          html += link_to  cancel_admin_order_path(order.id), class: 'btn btn-success', method: 'put' do
             raw "<i class='fa fa-#{event == 'cancel' ? 'times' : event}'></i> #{event.capitalize}"
           end
         end

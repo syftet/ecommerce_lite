@@ -292,6 +292,11 @@ class Order < ApplicationRecord
     update_attributes(approver_id: user.id, approved_at: Time.current)
   end
 
+
+  def canceled_by(user)
+    update_attributes(canceler_id: user.id,  	canceled_at: Time.current, state: 'canceled')
+  end
+
   def credit_rewards_point
     points = line_items.collect { |item| item.product.reward_point }.sum
     if points > 0
