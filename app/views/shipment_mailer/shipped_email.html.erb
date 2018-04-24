@@ -1,0 +1,49 @@
+<table class="row header">
+  <tr>
+    <td>
+      <p class="lede">
+        <%= I18n.t('shipment_mailer.shipped_email.dear_customer') %>
+      </p>
+      <p>
+        <%= I18n.t('shipment_mailer.shipped_email.instructions_for_update', number: @shipment.order.number) %>
+      </p>
+      <p>
+        <%= "order status: #{@shipment.order.shipment_state}"  %>
+      </p>
+      <p>
+        <%= "shipments comment: #{@shipment.trackings.last.comment}"  %>
+      </p>
+      <p>
+        <%= I18n.t('shipment_mailer.shipped_email.shipment_summary') %>
+      </p>
+      <table class="container">
+        <tr>
+          <td class="wrapper last">
+            <table class="twelve columns">
+              <%#= render collection: @shipment.order.line_items, partial: 'shared/mailer_line_item', as: :line_item %>
+              <% @shipment.order.line_items.each do |line_item| %>
+              <%= render 'shared/mailer_line_item', line_item: line_item %>
+              <% end %>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <p>
+        <%= " Order Total:" %>
+        <%= amount_with_currency(@shipment.order.total) %>
+
+      </p>
+      <p>
+        <%= I18n.t('shipment_mailer.shipped_email.shipping_method', shipping_method: @shipment.shipping_method.name) %>
+      </p>
+        <p>
+          <%= I18n.t('shipment_mailer.shipped_email.track_informationn')%>
+          <%= link_to 'Shipped Track now' , order_shipped_track_url(@shipment.order.number) %>
+        </p>
+      <p>
+        <%= I18n.t('shipment_mailer.shipped_email.thanks') %>
+      </p>
+    </td>
+    <td class="expander"></td>
+  </tr>
+</table>

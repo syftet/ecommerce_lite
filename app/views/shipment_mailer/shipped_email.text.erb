@@ -1,0 +1,15 @@
+<%= I18n.t('shipment_mailer.shipped_email.dear_customer') %>
+
+<%= I18n.t('shipment_mailer.shipped_email.instructions', number: @shipment.order.number) %>
+
+============================================================
+<%= I18n.t('shipment_mailer.shipped_email.shipment_summary') %>
+============================================================
+<% @shipment.order.line_items.each do |item| %>
+ <% item.product.name %>
+<% end %>
+============================================================
+
+<%= I18n.t('shipment_mailer.shipped_email.track_information', tracking: @shipment.tracking) if @shipment.tracking %>
+
+<%= I18n.t('shipment_mailer.shipped_email.thanks') %>

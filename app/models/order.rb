@@ -39,7 +39,6 @@
 
 # require 'order/checkout'
 class Order < ApplicationRecord
-
   PAYMENT_STATES = %w[balance_due credit_owed failed paid void].freeze
   SHIPMENT_STATES = %w[backorder canceled partial processing pending ready shipped delivered canceled refunded].freeze
   PREFIX = 'OR-'.freeze
@@ -97,6 +96,7 @@ class Order < ApplicationRecord
   accepts_nested_attributes_for :ship_address
   accepts_nested_attributes_for :payments
   # accepts_nested_attributes_for :shipments
+
 
   attr_accessor :shipping_method
   scope :complete, -> { where.not(completed_at: nil) }
@@ -210,21 +210,21 @@ class Order < ApplicationRecord
     update_column(:shipment_state, nil)
   end
 
-  def self.result(params,orders)
+  def self.result(params, orders)
     params_hash = {}
     if params[:order].present?
       if params[:order][:created_at_gt].present? && params[:order][:created_at_lt].present?
-        from_date = Time.strptime(params[:order][:created_at_gt], "%m/%d/%Y")
-        to_date = Time.strptime(params[:order][:created_at_lt], "%m/%d/%Y")
+        from_date = Time.strptime(params[:order][:created_at_gt], '%m/%d/%Y')
+        to_date = Time.strptime(params[:order][:created_at_lt], '%m/%d/%Y')
         params_hash[:created_at_gt] = params[:order][:created_at_gt]
         params_hash[:created_at_lt] = params[:order][:created_at_lt]
         orders = orders.where(created_at: from_date.beginning_of_day..to_date.end_of_day)
       elsif params[:order][:created_at_gt].present?
-        from_date = Time.strptime(params[:order][:created_at_gt], "%m/%d/%Y")
+        from_date = Time.strptime(params[:order][:created_at_gt], '%m/%d/%Y')
         params_hash[:created_at_gt] = params[:order][:created_at_gt]
         orders = @rders.where(created_at: from_date.beginning_of_day..from_date.end_of_day)
       elsif params[:order][:created_at_lt].present?
-        to_date = Time.strptime(params[:order][:created_at_lt], "%m/%d/%Y")
+        to_date = Time.strptime(params[:order][:created_at_lt], '%m/%d/%Y')
         params_hash[:created_at_lt] = params[:order][:created_at_lt]
         orders = orders.where(created_at: to_date.beginning_of_day..to_date.end_of_day)
       end
@@ -253,7 +253,7 @@ class Order < ApplicationRecord
         orders = orders.where(shipment_state: 'completed')
       end
     end
-    result = {orders: orders, params_hash:params_hash}
+    result = { orders: orders, params_hash: params_hash }
     result
   end
 
@@ -321,10 +321,13 @@ class Order < ApplicationRecord
   end
 
   def add_ship_id_to_user
-
     if !user.nil? && !ship_address.nil?
       user.ship_address_id = ship_address.id
       user.save
     end
+  end
+
+  def check_shipment_status_for_send_mail
+    ShipmentMailer.shipped_email(shipment).deliver_now if self.shipment_state == 'shipped'
   end
 end
