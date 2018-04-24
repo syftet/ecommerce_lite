@@ -1,0 +1,15 @@
+<tr>
+  <td>
+    <%= mini_image(line_item.product) %>
+  </td>
+  <td class="six sub-columns">
+    <strong>
+      <%= link_to raw(line_item.product.name), product_url(line_item.product) %>
+    </strong>
+    (<%= line_item.product.code %>)
+  </td>
+  <td class="six sub-columns last right">
+    <%= line_item.quantity %> x <%= amount_with_currency(line_item.price) %> = <%= amount_with_currency(line_item.price * line_item.quantity) %>
+  </td>
+
+</tr>

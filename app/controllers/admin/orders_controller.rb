@@ -43,6 +43,7 @@ module Admin
     def update
       if @order.update_attributes(params[:orders]) && @order.line_items.present?
         @order.update_with_updater!
+
         unless @order.completed?
           # Jump to next step if order is not completed.
           redirect_to admin_order_customer_path(@order) and return
@@ -142,6 +143,7 @@ module Admin
         flash[:success] = 'Order status has been updated'
         if @order.shipment_state == 'shipped'
           #OrderMailer.update_order(@order).deliver_now
+          @order.check_shipment_status_for_send_mail
         end
         redirect_back fallback_location: admin_order_path(@order)
       else

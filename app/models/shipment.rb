@@ -78,6 +78,7 @@ class Shipment < ApplicationRecord
     order ? order.currency : Config[:currency]
   end
 
+
   private
 
   def recalculate_adjustments
