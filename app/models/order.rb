@@ -86,10 +86,11 @@ class Order < ApplicationRecord
 
   friendly_id :number, slug_column: :number, use: :slugged
 
-  has_many :line_items
-  belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Address'
-  has_one :shipment
   belongs_to :user
+  belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Address'
+  belongs_to :store, class_name: 'StockLocation'
+  has_many :line_items
+  has_one :shipment
   has_many :payments
 
   accepts_nested_attributes_for :line_items
@@ -273,6 +274,7 @@ class Order < ApplicationRecord
     u_shipment.tracking = shipping.code
     u_shipment.shipping_method_id = shipping.id
     u_shipment.state = 'pending'
+    u_shipment.stock_location = StockLocation.active_stock_location
     u_shipment.save!
   end
 

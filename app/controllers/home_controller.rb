@@ -5,5 +5,7 @@ class HomeController < ApplicationController
     @feedbacks = Feedback.order(id: :desc).limit(5)
     @blogs = Blog.all.order(:created_at).limit(3)
     @sliders = HomeSlider.all
+
+    p StockLocation.active_stock_location
   end
 end

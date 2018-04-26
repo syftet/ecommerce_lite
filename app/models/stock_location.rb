@@ -90,7 +90,7 @@ class StockLocation < ApplicationRecord
   end
 
   def self.active_stock_location
-    StockLocation.where(default: true).first
+    active.where(default: true).first
   end
 
   private
