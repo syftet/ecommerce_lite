@@ -43,13 +43,13 @@
       <%# end %>
       <%# end %>
 
-      <%# if can? :index, CustomerReturn %>
+      <% if can? :index, CustomerReturn %>
       <% if @order.completed? %>
           <li<%== ' class="active"' if current == :customer_returns %>>
             <%= link_to_with_icon 'exchange', 'Customer Return', admin_order_customer_returns_url(@order) %>
           </li>
       <% end %>
-      <%# end %>
+      <% end %>
 
       <% if can?(:index, @order) %>
           <li<%== ' class="active"' if current == :track %> data-hook='admin_order_tabs_payments'>

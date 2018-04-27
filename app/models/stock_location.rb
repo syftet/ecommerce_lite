@@ -29,6 +29,7 @@ class StockLocation < ApplicationRecord
 
   after_create :create_stock_items, if: :propagate_all_variants?
   after_save :ensure_one_default
+  scope :order_default, -> { order(default: :desc, name: :asc) }
 
   def propagate_product(product)
     stock_items.create!(product: product, backorderable: backorderable_default)

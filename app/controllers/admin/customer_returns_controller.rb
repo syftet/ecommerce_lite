@@ -12,6 +12,20 @@ module Admin
 
       end
 
+      def new
+        @customer_return = @order.customer_returns.new
+        @order.line_items.each do |line_item|
+          line_item_times =  line_item.quantity - line_item.return_items.count
+          line_item_times.times {
+            @customer_return.return_items.build(line_item: line_item)
+          }
+        end
+      end
+
+      def create
+        @customer_return = CustomerReturn.create(customer_return_params)
+      end
+
       def edit
         returned_items = @customer_return.return_items
         @pending_return_items = returned_items.select(&:pending?)
@@ -47,11 +61,8 @@ module Admin
       end
 
       def load_form_data
-        p "<<<<<<<<<<<<<<<<<<<<<<<<,,"
-        p @order
-        p "<<<<<<<<<<<<<<<<<<<<<<<<,,"
-        # return_items = @order.inventory_units.map(&:current_or_new_return_item).reject(&:customer_return_id)
-        # @rma_return_items = return_items.select(&:return_authorization_id)
+
+        # @rma_return_items = @order.line_items
       end
 
       def permitted_resource_params
@@ -74,5 +85,9 @@ module Admin
         authorize! action, @order
       end
 
+
+      def customer_return_params
+        params.require(:customer_return).permit!
+      end
     end
   end

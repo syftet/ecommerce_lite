@@ -92,6 +92,7 @@ class Order < ApplicationRecord
   has_many :line_items
   has_one :shipment
   has_many :payments
+  has_many :customer_returns
 
   accepts_nested_attributes_for :line_items
   accepts_nested_attributes_for :ship_address

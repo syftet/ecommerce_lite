@@ -19,6 +19,7 @@
 class LineItem < ApplicationRecord
   belongs_to :order
   belongs_to :product, foreign_key: 'variant_id'
+  has_many :return_items
 
   def total
     quantity * price
