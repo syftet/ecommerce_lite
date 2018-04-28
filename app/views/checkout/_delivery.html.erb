@@ -44,7 +44,7 @@
             <div>
               <% ShippingMethod.all.each_with_index do |ship, index| %>
                   <label style="display: block">
-                    <%= form.radio_button :shipping_method, ship.id %> <%= ship.name %>(<%= ship.rate %>)
+                    <%= form.radio_button :shipping_method, ship.id, checked: check_selected_shipment(form.object, ship.id) %> <%= ship.name %>(<%= ship.rate %>)
                   </label>
               <% end %>
             </div>
