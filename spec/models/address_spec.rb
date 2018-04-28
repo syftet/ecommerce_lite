@@ -39,7 +39,8 @@ RSpec.describe Address, type: :model do
   end
 
   it 'should get address object' do
-    address = Address.build_default
+    user = create(:user)
+    address = Address.build_default(user)
     expect(address.class).to eq Address
   end
 

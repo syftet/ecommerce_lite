@@ -43,7 +43,7 @@ FactoryBot.define do
   factory :product do
     name 'Joeee'
     description 'This is description'
-    code Product.generate_code
+    code Faker::Code.rand(5000)
     slug 'sluggg'
   end
 

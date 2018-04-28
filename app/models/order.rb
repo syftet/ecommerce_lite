@@ -188,8 +188,18 @@ class Order < ApplicationRecord
         self.shipment_state = Order::ORDER_SHIPMENT_STATE[:pending]
         self.payment_state = payment.state == 'completed' ? 'completed' : 'balance_due'
         if save
+          remove_stock_from_inverntory
           deliver_order_confirmation_email unless confirmation_delivered?
         end
+      end
+    end
+  end
+
+  def remove_stock_from_inverntory
+    if shipment.stock_location.present?
+      stock_location = shipment.stock_location
+      line_items.each do |line_item|
+        stock_location.unstock(line_item.product,line_item.quantity, shipment)
       end
     end
   end
