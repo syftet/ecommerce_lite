@@ -37,7 +37,7 @@
 FactoryBot.define do
   factory :stock_location do
     name "stockLocation"
-    address Faker::Address.state
+    address1 Faker::Address.state
     city Faker::Address.city
     state Faker::Address.state
     zipcode Faker::Address.zip_code

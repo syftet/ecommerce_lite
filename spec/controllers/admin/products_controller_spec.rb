@@ -15,8 +15,8 @@ RSpec.describe Admin::ProductsController, type: :controller do
         expect(assigns(:products)).to eq([@product])
       end
       it "return all product" do
-        get :index,format: :json,xhr: true
-        expect(Product.count).to eq(1)
+        get :index,format: :html,xhr: true
+        expect(Product.all.count).to eq(1)
       end
     end
 

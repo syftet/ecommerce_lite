@@ -6,7 +6,7 @@ RSpec.describe Admin::VariantsController, type: :controller do
     before(:each) do
       @user = create(:user)
       @product = create(:product)
-      @variant = @product.variants.create(name: Faker::Name.name,description:"this is",is_active:true,sale_price:100.0,cost_price:20.0,code:"lo")
+      @variant = @product.variants.create(name: "name",description:"this is",is_active:true,sale_price:100.0,cost_price:20.0,code:"lo")
       sign_in(@user)
     end
     describe "GET #index" do
@@ -70,7 +70,7 @@ RSpec.describe Admin::VariantsController, type: :controller do
   context "if user is not admin" do
     before(:each) do
       @product = create(:product)
-      @variant = @product.variants.create(name: Faker:: Name.name,description:"this is",is_active:true,sale_price:100.0,cost_price:20.0,code:"lo")
+      @variant = @product.variants.create(name: "pro",description:"this is",is_active:true,sale_price:100.0,cost_price:20.0,code:"lo")
 
     end
     it "should redirect to base url" do
