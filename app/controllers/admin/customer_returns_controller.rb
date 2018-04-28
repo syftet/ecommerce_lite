@@ -9,7 +9,7 @@ module Admin
       create.fails :load_form_data
 
       def index
-
+        @customer_returns = @order.customer_returns
       end
 
       def new
@@ -23,7 +23,18 @@ module Admin
       end
 
       def create
-        @customer_return = CustomerReturn.create(customer_return_params)
+        @customer_return = @order.customer_returns.new(customer_return_params)
+        respond_to do |format|
+          format.html do
+            if @customer_return.save
+              flash[:success] = "Order Item Successfully returned"
+              redirect_to edit_admin_order_path(@order)
+            else
+              flash[:error] = "Something worng please try again"
+              redirect_to edit_admin_order_path(@order)
+            end
+            end
+          end
       end
 
       def edit
@@ -33,7 +44,6 @@ module Admin
         @rejected_return_items = returned_items.select(&:rejected?)
         @manual_intervention_return_items = returned_items.select(&:manual_intervention_required?)
         @pending_reimbursements = @customer_return.reimbursements.select(&:pending?)
-
         super
       end
 

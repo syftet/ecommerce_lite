@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180606054024) do
+ActiveRecord::Schema.define(version: 20180606054025) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "firstname"
@@ -259,6 +259,14 @@ ActiveRecord::Schema.define(version: 20180606054024) do
     t.datetime "updated_at", null: false
     t.boolean "track_inventory", default: true
     t.index ["brand_id"], name: "index_products_on_brand_id"
+  end
+
+  create_table "refunds", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "payment_id"
+    t.decimal "amount", precision: 10
+    t.string "reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "related_products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

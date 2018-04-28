@@ -23,6 +23,7 @@ class Payment < ApplicationRecord
   belongs_to :order
   belongs_to :payment_method
   validates :payment_method, presence: true
+  has_many :refunds
 
   # after_save :update_order
 

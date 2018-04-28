@@ -13,36 +13,36 @@
 <% if @order.shipment.present? %>
 
     <% if @customer_returns.present? %>
-        <table class="table">
-          <thead data-hook="customer_return_header">
-          <tr>
-            <th><%= t(:return_number) %></th>
-            <th><%= t(:pre_tax_total) %></th>
-            <th><%= "#{t('date')}/#{t('time')}" %></th>
-            <th><%= t(:reimbursement_status) %></th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @customer_returns.each do |customer_return| %>
-              <tr id="<%= spree_dom_id(customer_return) %>" data-hook="customer_return_row">
-                <td><%= link_to customer_return.number, edit_admin_order_customer_return_path(@order, customer_return) %></td>
-                <td><%= customer_return.display_pre_tax_total.to_html %></td>
-                <td><%= pretty_time(customer_return.created_at) %></td>
-                <td>
-                  <% if customer_return.fully_reimbursed? %>
-                      <span class="label label-success"><%= t(:reimbursed) %></span>
-                  <% else %>
-                      <span class="label label-info"><%= t(:incomplete) %></span>
-                  <% end %>
-                </td>
-                <td class='actions actions-1' data-hook="admin_orders_customer_returns_index_row_actions">
-                  <%= link_to_edit_url(edit_admin_order_customer_return_path(@order, customer_return), title: "admin_edit_#{dom_id(customer_return)}", no_text: true) if can?(:edit, customer_return) %>
-                </td>
-              </tr>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <% @customer_returns.each do |ret| %>
+              <div class="panel panel-default">
+                  <div class="panel-body">
+                    <table class="table">
+                      <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Date</th>
+                        <th>Resellable</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                      <% ret.return_items.each do |item| %>
+                          <tr>
+                            <td><%= link_to item.line_item.product.name, edit_admin_product_path(item.line_item.product) %></td>
+                            <td><%= item.line_item.product.code %></td>
+                            <td><%= ret.created_at.strftime("%b %d, %Y" ) %></td>
+                            <td><%= item.resellable ? 'Yes' : 'No' %></td>
+                          </tr>
+                      <% end %>
+                      </tbody>
+                    </table>
+                </div>
+              </div>
           <% end %>
-          </tbody>
-        </table>
+
+        </div><!-- panel-group -->
     <% else %>
         <div class="alert alert-info no-objects-found">
           <%= t(:no_resource_found, resource: plural_resource_name(CustomerReturn)) %>,
@@ -54,3 +54,14 @@
       <%= t(:cannot_create_customer_returns) %>
     </div>
 <% end %>
+
+<script type="text/javascript">
+  function toggleIcon(e) {
+    $(e.target)
+        .prev('.panel-heading')
+        .find(".more-less")
+        .toggleClass('glyphicon-plus glyphicon-minus');
+  }
+  $('.panel-group').on('hidden.bs.collapse', toggleIcon);
+  $('.panel-group').on('shown.bs.collapse', toggleIcon);
+</script>

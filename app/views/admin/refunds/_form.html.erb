@@ -1,0 +1,27 @@
+<%= render partial: 'admin/shared/error_messages', locals: { target: @refund  } %>
+
+<%= form_for [:admin, @refund.payment.order, @refund.payment, @refund] do |f| %>
+    <fieldset>
+      <div data-hook="admin_refund_form_fields">
+        <div class="form-group">
+          <%= f.label :payment_amount, t(:payment_amount) %><br/>
+          <%= @refund.payment.amount %>
+        </div>
+        <div class="form-group">
+          <%= f.label :amount, t(:amount) %>
+          <%= f.text_field :amount, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :reason, t(:reason) %>
+          <%= f.text_field :reason, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class="form-actions" data-hook="buttons">
+        <%= button t(:refund), 'save' %>
+        <span class="or"><%= t(:or) %></span>
+        <%= button_link_to t('actions.cancel'), admin_order_payments_url(@refund.payment.order), icon: "delete" %>
+      </div>
+    </fieldset>
+<% end %>

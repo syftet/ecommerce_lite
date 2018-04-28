@@ -13,6 +13,11 @@
 class ReturnItem < ApplicationRecord
   belongs_to :customer_return
   belongs_to :line_item
+  after_create :reverse_stock
 
   attr_accessor :returned
+
+  def reverse_stock
+    customer_return.stock_location.restock(line_item.product, 1, customer_return)
+  end
 end

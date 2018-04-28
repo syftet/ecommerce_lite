@@ -22,6 +22,7 @@
 class StockLocation < ApplicationRecord
   has_many :stock_items, dependent: :destroy
   has_many :stock_movements, through: :stock_items
+  has_many :customer_returns
 
   validates :name, presence: true
 

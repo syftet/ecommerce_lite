@@ -8,7 +8,7 @@ module Admin
 
     def index
       @payments = @order.payments #.includes(refunds: :reason)
-      @refunds = [] #@payments.flat_map(&:refunds)
+      @refunds = @payments.flat_map(&:refunds)
       redirect_to new_admin_order_payment_url(@order) if @payments.empty?
     end
 
