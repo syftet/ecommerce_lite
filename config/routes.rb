@@ -157,4 +157,45 @@ Rails.application.routes.draw do
   get '/cart', to: 'public#cart'
   get '/p_checkout', to: 'public#checkout'
   post '/email_subscription', to: 'public#subscribe'
+
+  ##################### API ROUTES ######################
+
+  namespace :api, defaults: {format: :json} do
+    namespace :v1 do
+      # mount_devise_token_auth_for 'User', at: 'users'
+      devise_for :users
+      get 'home', to: 'home#index'
+      get 'my_account', to: 'users#my_account'
+      resources :products, only: [:index, :show] do
+        get 'filters', on: :collection
+        get 'get_names', on: :collection
+      end
+      resources :wishlists, only: [:index, :create] do
+        get :remove
+      end
+      resources :contacts, only: [:create]
+      resources :orders, only: [:index, :update, :show] do
+        post :populate, on: :collection
+        post :current_cart, on: :collection
+        post :detail, on: :collection
+        post :current_state, on: :collection
+        post :update_address, on: :collection
+        post :update_order, on: :collection
+        post :get_ship_address, on: :collection
+        post :get_shipments, on: :collection
+        post :get_payment_info, on: :collection
+      end
+      resources :reviews, only: [:index, :create, :update, :destroy]
+      resources :shipments, only: [:create, :update] do
+        member do
+          put :ship
+        end
+      end
+      resources :line_items do
+        post :remove_item, on: :collection
+      end
+
+      post '/checkout/update_order/:state', to: 'checkout#update_order', as: :update_checkout
+    end
+  end
 end

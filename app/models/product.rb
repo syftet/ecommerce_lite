@@ -116,6 +116,10 @@ class Product < ApplicationRecord
     discountable ? discount_price : sale_price
   end
 
+  def self.featured_products
+    where(is_featured: true)
+  end
+
   def discount_price
     is_amount ? flat_discount : percentage_discount
   end
