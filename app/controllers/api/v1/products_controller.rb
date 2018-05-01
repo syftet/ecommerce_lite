@@ -1,7 +1,9 @@
 class Api::V1::ProductsController < Api::ApiBase
+  include ActionController::Helpers
+  helper ProductHelper
   def index
     p params[:taxon_id]
-    taxon = Taxon.find_by_id(params[:taxon_id])
+    taxon = Admin::Category.find_by_permalink(params[:id])
     p taxon
     products = Search.new(params, taxon).result
 
@@ -13,17 +15,17 @@ class Api::V1::ProductsController < Api::ApiBase
     products.each do |product|
       response[:products] << {
           id: product.id,
-          master_id: product.master.id,
+          master_id: product.id,
           name: product.name,
-          avg_rating: product.avg_rating,
-          preview_image: product.preview_image_url,
+          avg_rating: product.average_rating,
+          preview_image: helpers.product_preview_image(product),
           price: product.price,
-          point: product.credit_point,
-          promotion: product.promotionable,
+          point: product.reward_point,
+          # promotion: product.promotionable,
           discount_price: product.discount_price,
           is_favourited: product.is_favourite?(params[:user_id]),
           total_on_hand: product.total_on_hand,
-          categories: product.taxons.as_json(only: [:id, :name])
+          categories: product.categories.as_json(only: [:id, :name])
       }
     end
 
@@ -36,17 +38,17 @@ class Api::V1::ProductsController < Api::ApiBase
   end
 
   def show
-    product = Product.includes(:reviews, :taxons, :wishlists).find_by_id(params[:id])
+    product = Product.includes(:reviews, :categories, :wishlists).find_by_id(params[:id])
     reviews = product.reviews
 
     response = {
         id: product.id,
-        master_id: product.master.id,
+        master_id: product.id,
         name: product.name,
         description: product.description,
-        avg_rating: product.avg_rating,
+        avg_rating: product.average_rating,
         price: product.price,
-        point: product.credit_point,
+        point: product.reward_point,
         discount_price: product.discount_price,
         is_favourited: product.is_favourite?(params[:user_id]),
         total_on_hand: product.total_on_hand,
@@ -54,14 +56,14 @@ class Api::V1::ProductsController < Api::ApiBase
         user_reviews: reviews,
         images: [],
         rating_detail: rating_per(reviews),
-        categories: product.taxons.as_json(only: [:id, :name]),
+        categories: product.categories.as_json(only: [:id, :name]),
         varients: []
     }
 
-    product.master_images.each do |image|
+    product.images.each do |image|
       response[:images] << {
           id: image.id,
-          photo: image.attachment.url(:product)
+          photo: image.file.url(:product)
       }
     end
 
@@ -73,7 +75,7 @@ class Api::V1::ProductsController < Api::ApiBase
       varient.images.order(:id).each do |image|
         response[:varients].last[:images] << {
             id: image.id,
-            photo: image.attachment.url(:product)
+            photo: image.file.url(:product)
         }
       end
     end
@@ -98,7 +100,7 @@ class Api::V1::ProductsController < Api::ApiBase
   def filters
     #variants = Variant.all
     render json: {
-        categories: Taxon.where('parent_id IS NULL').as_json(only: [:id, :name]),
+        categories: Admin::Category.where('parent_id IS NULL').as_json(only: [:id, :name]),
         colors: [],#variants.where.not(color_image: nil).pluck(:color_image).uniq.as_json,
         sizes: []#variants.where.not(size: '').pluck(:size).uniq.as_json
     }

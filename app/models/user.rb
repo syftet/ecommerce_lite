@@ -60,4 +60,11 @@ class User < ApplicationRecord
     orders.where("approved_at IS NOT NULL").sum(:total)
   end
 
+  def last_incomplete_spree_order
+    orders.incomplete.
+        includes(:ship_address, line_items: [product: [:images] ]).
+        order('created_at DESC').
+        first
+  end
+
 end

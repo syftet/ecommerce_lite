@@ -103,6 +103,12 @@ class Order < ApplicationRecord
   attr_accessor :shipping_method
   scope :complete, -> { where.not(completed_at: nil) }
 
+  def self.incomplete
+    where(completed_at: nil)
+  end
+
+
+
   def prefix
     Order::PREFIX
   end

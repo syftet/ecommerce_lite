@@ -1,5 +1,5 @@
 class Api::V1::OrdersController < Api::ApiBase
-  include Core::TokenGenerator
+  # include Core::TokenGenerator
 
   before_action :load_user, only: [:index]
 
@@ -10,7 +10,7 @@ class Api::V1::OrdersController < Api::ApiBase
       item_count = order.line_items.count
       if item_count > 0
         product = order.line_items.first.product
-        image = product.preview_image_url
+        image = helpers.product_preview_image(product),
         name = product.name
       else
         image = ''
@@ -38,35 +38,35 @@ class Api::V1::OrdersController < Api::ApiBase
   end
 
   def show
-    @order = Order.includes(:bill_address, :ship_address, line_items: [variant: [:option_values, :images, :product]]).find_by_number!(params[:id])
+    @order = Order.includes(:ship_address, line_items: [product: [:images] ]).find_by_number!(params[:id])
     shipment_address = @order.ship_address
-    bill_address = @order.bill_address
+    # bill_address = @order.bill_address
     line_items = []
     @order.line_items.each do |line_item|
       product = line_item.product
-      variant = line_item.variant
+      # variant = line_item.variant
       line_items << {
           id: line_item.id,
           quantity: line_item.quantity,
           product_id: product.id,
-          variant_id: variant.id,
+          variant_id: product.id,
           name: product.name,
           price: product.price,
-          preview_image: product.preview_image_url,
-          color_image: variant.color_image,
-          size: variant.size,
+          preview_image: helpers.product_preview_image(product),
+          color_image: product.color,
+          size: product.size,
           total: line_item.total
       }
     end
     render json: {
         just_completed: false,
-        bill_address: address_hash(bill_address),
+        # bill_address: address_hash(bill_address),
         ship_address: address_hash(shipment_address),
         line_items: line_items,
-        amount: @order.amount,
-        is_promotional: @order.promotions.present?,
+        amount: @order.total,
+        # is_promotional: @order.promotions.present?,
         adjustment_total: @order.adjustment_total,
-        shipment: @order.shipments.present? ? shipping_method(@order.shipments) : '',
+        shipment: @order.shipment.present? ? shipping_method(@order.shipment) : '',
         total: @order.total,
         id: @order.id,
         number: @order.number,
@@ -80,7 +80,6 @@ class Api::V1::OrdersController < Api::ApiBase
   def detail
     cart = find_cart_by_token_or_user
 
-    p cart.shipments.inspect
 
     result = {}
 
@@ -97,15 +96,14 @@ class Api::V1::OrdersController < Api::ApiBase
 
       cart.line_items.each do |line_item|
         product = line_item.product
-        variant = line_item.variant
         result[:line_items] << {
             id: line_item.id,
             quantity: line_item.quantity,
             product_id: product.id,
             name: product.name,
             price: product.price,
-            preview_image: product.preview_image_url,
-            color_image: variant.color_image,
+            preview_image:  helpers.product_preview_image(product),
+            color_image: product.color,
             total: line_item.total
         }
       end
@@ -439,8 +437,8 @@ class Api::V1::OrdersController < Api::ApiBase
 
   def address_hash(address)
     {
-        name: address.full_name,
-        address: address.address1,
+        name: address.firstname,
+        address: address.address,
         city: address.city,
         state: address.state,
         zipcode: address.zipcode,
@@ -491,7 +489,7 @@ class Api::V1::OrdersController < Api::ApiBase
     if params[:guest_token].present?
       @token = params[:guest_token]
       guest_token_order_params = current_order_params.except(:user_id)
-      incomplete_orders = Order.incomplete.includes(line_items: [variant: [:images, :option_values, :product]])
+      incomplete_orders = Order.incomplete.includes(:ship_address, line_items: [product: [:images] ])
       cart = incomplete_orders.find_by(guest_token_order_params)
     elsif params[:user_id].present?
       user = User.find_by_id(params[:user_id])
@@ -523,12 +521,10 @@ class Api::V1::OrdersController < Api::ApiBase
     request.remote_ip
   end
 
-  def shipping_method(shipments)
-    shipment = shipments.last
-    shipping_rate = shipment.shipping_rates.where(selected: true).last
+  def shipping_method(shipment)
+    shipping_rate = shipment.shipping_method
     return '' unless shipping_rate.present?
-    shipping_method = shipping_rate.shipping_method
-    shipping_method.name + "(৳#{shipping_rate.cost})"
+    shipping_rate.name + "(৳#{shipping_rate.rate})"
   end
 
   def payment_method(type)

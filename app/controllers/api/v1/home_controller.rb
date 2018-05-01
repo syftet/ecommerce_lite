@@ -1,5 +1,6 @@
 class Api::V1::HomeController < Api::ApiBase
-
+  include ActionController::Helpers
+  helper ProductHelper
   def index
     featured_products = Product.featured_products.order(id: :desc).limit(5)
     new_arrivals = Product.new_arrivals.order(id: :desc).limit(5)
@@ -23,14 +24,14 @@ class Api::V1::HomeController < Api::ApiBase
     product_objects.each do |product|
       result << {
           id: product.id,
-          master_id: product.master.id,
+          master_id: product.id,
           name: product.name,
           price: product.price,
           discount_price: product.discount_price,
-          avg_rating: product.avg_rating,
-          preview_image: product.preview_image_url,
-          promotion: product.promotionable,
-          point: product.credit_point,
+          avg_rating: product.average_rating,
+          preview_image: helpers.product_preview_image(product),
+          promotion: [], #product.promotionable,
+          point: product.reward_point,
           is_favourited: product.is_favourite?(params[:user_id]),
       }
     end

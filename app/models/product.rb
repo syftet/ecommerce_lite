@@ -54,6 +54,7 @@ class Product < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :related_products, inverse_of: :product
   has_many :stock_items
+  has_many :wishlists
 
   accepts_nested_attributes_for :images,
                                 allow_destroy: true,
@@ -155,6 +156,20 @@ class Product < ApplicationRecord
       sum =  sum + va.total_on_hand
     end
     sum
+  end
+
+  def average_rating
+    total_review = reviews.count
+    ratings = reviews.sum(:rating)
+    if total_review > 0
+      (ratings / total_review)
+    else
+      0
+    end
+  end
+
+  def is_favourite?(user_id)
+    user_id.present? && wishlists.where(user_id: user_id).present?
   end
 
   private

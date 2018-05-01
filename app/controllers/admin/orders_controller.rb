@@ -8,7 +8,7 @@ module Admin
     def index
 
       params[:q] ||= {}
-      @orders = Order.all
+      @orders = Order.all.complete.order(completed_at: :desc)
       if params[:order].present?
         @result =  Order.result(params, @orders)
         @orders = @result[:orders]

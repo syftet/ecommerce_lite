@@ -2,7 +2,7 @@ class Api::V1::WishlistsController < Api::ApiBase
   before_action :load_user
 
   def index
-    wishlists = @user.wishlists.page(params[:page]).per(Syftet.config.product_per_page_mobile_api)
+    wishlists = @user.wishlists.page(params[:page])
 
     response = {
         total_item: wishlists.total_count,
@@ -17,14 +17,14 @@ class Api::V1::WishlistsController < Api::ApiBase
             id: product.id,
             wish_id: wishlist.id,
             name: product.name,
-            avg_rating: product.avg_rating,
-            preview_image: product.preview_image_url,
+            avg_rating: product.average_rating,
+            preview_image: helpers.product_preview_image(product),
             price: product.price,
             discount_price: product.discount_price,
             is_favourited: true,
-            promotion: product.promotionable,
+            # promotion: product.promotionable,
             total_on_hand: product.total_on_hand,
-            categories: product.taxons.as_json(only: [:id, :name])
+            categories: product.categories.as_json(only: [:id, :name])
         }
       end
     end
