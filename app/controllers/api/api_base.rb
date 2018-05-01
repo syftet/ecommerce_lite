@@ -22,18 +22,18 @@ class Api::ApiBase < ActionController::Base
   end
 
   def load_user
-    @user = User.first
-    @current_user = @user
-    p "<<<<<<<<<<<<<<<<<<<<<<<<<,,"
-    p @user
-    p "<<<<<<<<<<<<<<<<<<<<<<<<<,,"
-    # @user = User.find_by_tokens(params[:token])
-    # if @user.present?
-    #   bypass_sign_in(@user)
-    #   warden.set_user @user
-    #   @current_user = @user
-    # else
-    #   render json: {success: false, error: 'Invalid user'}
-    # end
+    # @user = User.first
+    # @current_user = @user
+    # p "<<<<<<<<<<<<<<<<<<<<<<<<<,,"
+    # p @user
+    # p "<<<<<<<<<<<<<<<<<<<<<<<<<,,"
+    @user = User.find_by_tokens(params[:token])
+    if @user.present?
+      bypass_sign_in(@user)
+      warden.set_user @user
+      @current_user = @user
+    else
+      render json: {success: false, error: 'Invalid user'}
+    end
   end
 end
