@@ -22,11 +22,7 @@ class Api::ApiBase < ActionController::Base
   end
 
   def load_user
-    # @user = User.first
-    # @current_user = @user
-    # p "<<<<<<<<<<<<<<<<<<<<<<<<<,,"
-    # p @user
-    # p "<<<<<<<<<<<<<<<<<<<<<<<<<,,"
+
     @user = User.find_by_tokens(params[:token])
     if @user.present?
       bypass_sign_in(@user)
@@ -34,6 +30,21 @@ class Api::ApiBase < ActionController::Base
       @current_user = @user
     else
       render json: {success: false, error: 'Invalid user'}
+    end
+  end
+
+  def current_order(create_order = false)
+    if create_order && @order.blank?
+      order = Order.new
+      order.guest_token = get_token
+      order.user_id = current_user.id if current_user.present?
+      order.state = 'address'
+      order.store = StockLocation.active_stock_location
+      order.save!
+      @order = order
+    end
+    unless @order.present? && @order.completed?
+      @order
     end
   end
 end

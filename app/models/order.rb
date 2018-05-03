@@ -153,6 +153,10 @@ class Order < ApplicationRecord
     0
   end
 
+  def checkout_allowed?
+    line_items.count > 0
+  end
+
   def shipment_cost
     shipment.present? ? shipment.cost : 0
   end
@@ -172,6 +176,10 @@ class Order < ApplicationRecord
       self.state = 'delivery'
     end
     save
+
+    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,"
+    p self.inspect
+    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,"
   end
 
   def contents
@@ -284,6 +292,9 @@ class Order < ApplicationRecord
   end
 
   def init_shipment(shipping_method)
+    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,"
+    p shipping_method
+    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,"
     shipping = ShippingMethod.find_by_id(shipping_method)
     u_shipment = shipment || build_shipment
     u_shipment.cost = shipping.rate

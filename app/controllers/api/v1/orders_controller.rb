@@ -1,5 +1,5 @@
 class Api::V1::OrdersController < Api::ApiBase
-  # include Core::TokenGenerator
+   include Core::TokenGenerator
 
   before_action :load_user, only: [:index]
 
@@ -126,9 +126,9 @@ class Api::V1::OrdersController < Api::ApiBase
         add_or_remove_quantity = params[:quantity].to_i - line_item.quantity.to_i
         existing_quantity = line_item.quantity + add_or_remove_quantity
         if add_or_remove_quantity > 0
-          line_item = order.contents.add(line_item.variant, add_or_remove_quantity, {})
+          line_item = order.contents.add(line_item.product, add_or_remove_quantity, {})
         elsif add_or_remove_quantity < 0 && existing_quantity > 0
-          line_item = order.contents.remove(line_item.variant, add_or_remove_quantity.abs, {})
+          line_item = order.contents.remove(line_item.product, add_or_remove_quantity.abs, {})
         else
           error = "Line item quantity can't be 0"
         end
@@ -159,7 +159,7 @@ class Api::V1::OrdersController < Api::ApiBase
 
     @error = nil
     order = current_order(create_order_if_necessary: true)
-    variant = Variant.find(params[:variant_id])
+    variant = Product.find(params[:variant_id])
     quantity = params[:quantity].to_i
     size = params[:size]
     options = params[:options] || {}
@@ -246,13 +246,12 @@ class Api::V1::OrdersController < Api::ApiBase
 
     render json: {
         state: order.state,
-        ship_address: address,
+        ship_address: ship_address,
         email: order.email,
         order_summary: {
-            amount: order.amount,
-            is_promotional: order.promotions.present?,
+            amount: order.item_total,
             adjustment_total: order.adjustment_total,
-            shipment: order.shipments.present? ? shipping_method(order.shipments) : '',
+            shipment: order.shipment.present? ? shipping_method(order.shipment) : '',
             total: order.total
         }
     }
@@ -260,18 +259,15 @@ class Api::V1::OrdersController < Api::ApiBase
 
   def update_address
     error = ''
-    order = find_cart_by_token_or_user
-
+    order =  find_cart_by_token_or_user
     if order.present? && !order.completed?
       if order.ship_address.present?
         if order.ship_address.update_attributes(ship_address_params)
-          order.bill_address.update_attributes(ship_address_params)
-
-          p order.errors.inspect
         else
           error = 'Shipping address update failed. Try again later.'
         end
       else
+        p "heres"
         address = Address.new(ship_address_params)
         if address.save
           bill_address = Address.new(ship_address_params)
@@ -296,7 +292,7 @@ class Api::V1::OrdersController < Api::ApiBase
 
   def get_shipments
     error = ''
-    order = find_cart_by_token_or_user
+    order =  find_cart_by_token_or_user
 
     shipments = []
     differentiators = []
@@ -327,7 +323,8 @@ class Api::V1::OrdersController < Api::ApiBase
       # p order.shipments.first.shipping_rates
 
       special_instructions = order.special_instructions
-      order.shipments.each do |shipment|
+      shipment = order.shipment
+      # order.shipment.each do |shipment|
         shipment_data = {
             id: shipment.id,
             stock_location: shipment.stock_location.name,
@@ -336,44 +333,41 @@ class Api::V1::OrdersController < Api::ApiBase
             shipping_rates: []
         }
 
-        shipment.manifest.each do |item|
-          product = item.variant.product
-          shipment_data[:manifests] << {
-              image: product.present? ? product.images.order(:id).first.attachment.url(:small) : '',
-              name: item.variant.name,
-              quantity: item.quantity,
-              price: item.variant.price,
-              line_item_id: item.line_item.id,
-              variant_id: item.variant.id
-          }
-        end
+        # shipment.manifest.each do |item|
+        #   product = item.variant.product
+        #   shipment_data[:manifests] << {
+        #       image: product.present? ? product.images.order(:id).first.attachment.url(:small) : '',
+        #       name: item.variant.name,
+        #       quantity: item.quantity,
+        #       price: item.variant.price,
+        #       line_item_id: item.line_item.id,
+        #       variant_id: item.variant.id
+        #   }
+        # end
 
-        shipment.shipping_rates.each do |shipping_rate|
+
           shipment_data[:shipping_rates] << {
-              id: shipping_rate.id,
-              shipping_method_id: shipping_rate.shipping_method_id,
-              name: shipping_rate.name,
-              cost: shipping_rate.cost,
-              selected: shipping_rate.selected == true
+              id: shipment.shipping_method.id,
+              name: shipment.shipping_method.name,
+              cost: shipment.shipping_method.rate
           }
-        end
 
         shipments << shipment_data
-      end
+      # end
 
-      packages = order.shipments.map(&:to_package)
-      stock_diff = Stock::Differentiator.new(order, packages)
-
-      p stock_diff
-
-      stock_diff.missing.each do |variant, quantity|
-        differentiators << {
-            image: variant.product.present? ? variant.product.images.order(:id).first.attachment.url(:small) : '',
-            name: variant.name,
-            quantity: quantity,
-            price: variant.price
-        }
-      end
+      # packages = order.shipment.to_package
+      # stock_diff = Stock::Differentiator.new(order, packages)
+      #
+      # p stock_diff
+      #
+      # stock_diff.missing.each do |variant, quantity|
+      #   differentiators << {
+      #       image: variant.product.present? ? variant.product.images.order(:id).first.attachment.url(:small) : '',
+      #       name: variant.name,
+      #       quantity: quantity,
+      #       price: variant.price
+      #   }
+      # end
 
       shipment_address = order.ship_address
 
@@ -392,10 +386,10 @@ class Api::V1::OrdersController < Api::ApiBase
         special_instructions: special_instructions,
         collection_point: collection_point,
         order_summary: {
-            amount: order.amount,
-            is_promotional: order.promotions.present?,
+            amount: order.item_total,
+            # is_promotional: order.promotions.present?,
             adjustment_total: order.adjustment_total,
-            shipment: order.shipments.present? ? shipping_method(order.shipments) : '',
+            shipment: order.shipment.present? ? shipping_method(order.shipment) : '',
             total: order.total
         },
         ship_address: ship_address
@@ -403,18 +397,17 @@ class Api::V1::OrdersController < Api::ApiBase
   end
 
   def get_payment_info
-    @order = find_cart_by_token_or_user
+    @order =  Order.find_by_id(37) #find_cart_by_token_or_user
     user = User.find_by_id(params[:user_id])
     shipment_address = @order.ship_address
-    bill_address = @order.bill_address
+    # bill_address = @order.bill_address
 
     render json: {
-        bill_address: address_hash(bill_address),
         ship_address: address_hash(shipment_address),
-        amount: @order.amount,
-        is_promotional: @order.promotions.present?,
+        amount: @order.item_total,
+        # is_promotional: @order.promotions.present?,
         adjustment_total: @order.adjustment_total,
-        shipment: @order.shipments.present? ? shipping_method(@order.shipments) : '',
+        shipment: @order.shipment.present? ? shipping_method(@order.shipment) : '',
         total: @order.total,
         id: @order.id,
         number: @order.number,
@@ -422,7 +415,7 @@ class Api::V1::OrdersController < Api::ApiBase
         collection_point: @order.collection_point,
         special_instructions: @order.special_instructions,
         state: @order.state,
-        paypal_amount: @order.display_total.exchange_to(Syftet.config.paypal_currency).cents,
+        paypal_amount: @order.total * 100,
         available_rewards: user.present? ? user.available_rewards : 0,
         payment_methods: {
             credit_point: payment_method('PaymentMethod::CreditPoint'),
@@ -448,7 +441,7 @@ class Api::V1::OrdersController < Api::ApiBase
   end
 
   def ship_address_params
-    { firstname: params[:ship_address][:firstname], last_name: params[:ship_address][:lastname], address1: params[:ship_address][:address1], city: params[:ship_address][:city], zipcode: params[:ship_address][:zipcode], phone: params[:ship_address][:phone], state: params[:ship_address][:state], country: params[:ship_address][:country] }
+    { firstname: params[:ship_address][:firstname], last_name: params[:ship_address][:lastname], address: params[:ship_address][:address1], city: params[:ship_address][:city], zipcode: params[:ship_address][:zipcode], phone: params[:ship_address][:phone], state: params[:ship_address][:state], country: params[:ship_address][:country] }
   end
 
   def last_incomplete_order
@@ -466,13 +459,13 @@ class Api::V1::OrdersController < Api::ApiBase
       @current_order = Order.new(current_order_params)
       @current_order.user ||= current_user
       # See issue #3346 for reasons why this line is here
-      @current_order.created_by ||= current_user
+      @current_order.created_by_id ||=  current_user.id
       @current_order.state ||= 'cart'
       @current_order.save!
     end
 
     if @current_order
-      @current_order.last_ip_address = ip_address
+      # @current_order.last_ip_address = ip_address
       return @current_order
     end
   end

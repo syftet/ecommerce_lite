@@ -18,6 +18,7 @@
 #  role                   :string(255)
 #  name                   :string(255)
 #  ship_address_id        :integer
+#  tokens                 :text(65535)
 #
 # Indexes
 #
@@ -65,6 +66,13 @@ class User < ApplicationRecord
         includes(:ship_address, line_items: [product: [:images] ]).
         order('created_at DESC').
         first
+  end
+
+  def authentication_token
+    token = SecureRandom.hex(32)
+    self.tokens = token
+    self.save
+    token
   end
 
 end

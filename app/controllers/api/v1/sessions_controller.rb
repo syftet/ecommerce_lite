@@ -9,7 +9,7 @@ class Api::V1::SessionsController < Api::ApiBase
 
     if resource.valid_password?(params[:user_login][:password])
       sign_in('user', resource)
-      render :json => {:success => true, :auth_token => resource.authentication_token, id: resource.id, :type => resource.user_type, :email => resource.email}
+      render :json => {:success => true, :auth_token => resource.authentication_token, id: resource.id, :email => resource.email}
       return
     end
     invalid_login_attempt
