@@ -129,7 +129,7 @@ class Api::V1::CheckoutController < Api::ApiBase
       params[:order][:ship_address_attributes] = {
           firstname: params[:first_name],
           last_name: params[:last_name],
-          address1: params[:address1],
+          address: params[:address],
           city: params[:city],
           zipcode: params[:zipcode],
           phone: params[:phone],

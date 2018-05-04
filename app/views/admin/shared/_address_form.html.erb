@@ -21,10 +21,10 @@
   <% end %>
   <%# end %>
 
-  <%= field_container f.object, :address1, class: ["form-group", "#{type}-row"] do %>
+  <%= field_container f.object, :address, class: ["form-group", "#{type}-row"] do %>
       <%= f.label :address, t(:street_address) %>
       <%= f.text_field :address, class: 'form-control' %>
-      <%= error_message_on f.object, :address1 %>
+      <%= error_message_on f.object, :address %>
   <% end %>
 
   <%= field_container f.object, :city, class: ["form-group", "#{type}-row"] do %>

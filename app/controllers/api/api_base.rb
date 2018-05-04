@@ -2,6 +2,7 @@ class Api::ApiBase < ActionController::Base
   # include DeviseTokenAuth::Concerns::SetUserByToken
   before_action :cors_preflight_check
   after_action :cors_set_access_control_headers
+  before_action :load_order
 
   def cors_set_access_control_headers
     headers['Access-Control-Allow-Origin'] = '*'
@@ -22,7 +23,6 @@ class Api::ApiBase < ActionController::Base
   end
 
   def load_user
-
     @user = User.find_by_tokens(params[:token])
     if @user.present?
       bypass_sign_in(@user)
@@ -34,6 +34,10 @@ class Api::ApiBase < ActionController::Base
   end
 
   def current_order(create_order = false)
+    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+    p params
+    p @order
+    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     if create_order && @order.blank?
       order = Order.new
       order.guest_token = get_token
@@ -46,5 +50,21 @@ class Api::ApiBase < ActionController::Base
     unless @order.present? && @order.completed?
       @order
     end
+  end
+
+  def get_token
+    token = params[:guest_token]
+    unless token.present?
+      token = SecureRandom.urlsafe_base64(nil, false)
+      cookies[:guest_token] = {
+          :value => token,
+          :expires => 1.year.from_now
+      }
+    end
+    token
+  end
+
+  def load_order
+    @order ||= Order.get_incomplete_order(get_token, current_user)
   end
 end

@@ -31,7 +31,7 @@ RSpec.describe Admin::StockLocationsController, type: :controller do
     end
     describe "POST #create" do
       it "should create a stock_location" do
-        post :create,params:{stock_location: { name:Faker::Name.name,address1: Faker::Address.state ,city: Faker::Address.city,state: Faker::Address.state,zipcode: Faker::Address.zip_code,country: Faker::Address.country,phone: Faker::PhoneNumber.phone_number,active: true}}
+        post :create,params:{stock_location: { name:Faker::Name.name,address: Faker::Address.state ,city: Faker::Address.city,state: Faker::Address.state,zipcode: Faker::Address.zip_code,country: Faker::Address.country,phone: Faker::PhoneNumber.phone_number,active: true}}
         expect(response).to redirect_to(admin_stock_locations_path)
         expect(flash[:notice]).to match "Stock Location created successfully."
       end
@@ -49,7 +49,7 @@ RSpec.describe Admin::StockLocationsController, type: :controller do
     end
     describe "PUT #update" do
       it "should update a stock_location" do
-        put :update,params:{id: @stock_location.id,stock_location: { name:Faker::Name.name,address1: Faker::Address.state ,city: Faker::Address.city,state: Faker::Address.state,zipcode: Faker::Address.zip_code,country: Faker::Address.country,phone: Faker::PhoneNumber.phone_number,active: true}}
+        put :update,params:{id: @stock_location.id,stock_location: { name:Faker::Name.name,address: Faker::Address.state ,city: Faker::Address.city,state: Faker::Address.state,zipcode: Faker::Address.zip_code,country: Faker::Address.country,phone: Faker::PhoneNumber.phone_number,active: true}}
         expect(response).to redirect_to(admin_stock_locations_path)
         expect(flash[:notice]).to match "Stock Location updated successfully."
       end

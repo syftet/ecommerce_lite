@@ -167,7 +167,7 @@
   <p style="color: #444444;">
     <% if @order.ship_address.present? %>
         <b> <%= @order.ship_address.name %> </b> <br/>
-        <b> <%= @order.ship_address.address1 %> </b> <br/>
+        <b> <%= @order.ship_address.address %> </b> <br/>
         <b> <%= @order.ship_address.city %>, <%= @order.ship_address.state.name %>,
           <%= @order.ship_address.zipcode %> </b>
         <br/>

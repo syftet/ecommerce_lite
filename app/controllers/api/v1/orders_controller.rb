@@ -155,10 +155,8 @@ class Api::V1::OrdersController < Api::ApiBase
   end
 
   def populate
-    @token = params[:guest_token].present? ? params[:guest_token] : generate_guest_token(model_class = Order)
-
     @error = nil
-    order = current_order(create_order_if_necessary: true)
+    order = current_order(true)
     variant = Product.find(params[:variant_id])
     quantity = params[:quantity].to_i
     size = params[:size]
@@ -171,7 +169,7 @@ class Api::V1::OrdersController < Api::ApiBase
         line_item.size = size
         line_item.save
       rescue ActiveRecord::RecordInvalid => e
-        @error = e.record.errors.full_messages.join(', ')
+        @error = e.record.errors.full_messages.join(", ")
       end
     else
       @error = t(:please_enter_reasonable_quantity)
@@ -180,7 +178,7 @@ class Api::V1::OrdersController < Api::ApiBase
     render json: {
         status: !@error.present?,
         error: @error,
-        token: @token,
+        token: order.guest_token,
         total_item: order.present? ? order.item_count : 0
     }
   end
@@ -223,7 +221,7 @@ class Api::V1::OrdersController < Api::ApiBase
     address = {
         firstname: '',
         lastname: '',
-        address1: '',
+        address: '',
         country: '',
         city: '',
         state: '',
@@ -231,11 +229,15 @@ class Api::V1::OrdersController < Api::ApiBase
         phone: ''
     }
     if order.state == 'cart' || order.state == 'address'
+      p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,"
+      p order.inspect
+      p order.ship_address
+      p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,"
       ship_address = order.ship_address
       if ship_address.present?
         address[:firstname] = ship_address[:firstname]
         address[:lastname] = ship_address[:lastname]
-        address[:address1] = ship_address[:address1]
+        address[:address] = ship_address[:address]
         address[:country] = ship_address[:country]
         address[:city] = ship_address[:city]
         address[:state] = ship_address[:state]
@@ -246,7 +248,7 @@ class Api::V1::OrdersController < Api::ApiBase
 
     render json: {
         state: order.state,
-        ship_address: ship_address,
+        ship_address: address,
         email: order.email,
         order_summary: {
             amount: order.item_total,
@@ -347,52 +349,18 @@ class Api::V1::OrdersController < Api::ApiBase
 
 
           shipment_data[:shipping_rates] << {
-              id: shipment.shipping_method.id,
-              name: shipment.shipping_method.name,
-              cost: shipment.shipping_method.rate
+              id: shipping_method.id,
+              name: shipping_method.name,
+              cost: shipping_method.rate
           }
 
         shipments << shipment_data
-      # end
-
-      # packages = order.shipment.to_package
-      # stock_diff = Stock::Differentiator.new(order, packages)
-      #
-      # p stock_diff
-      #
-      # stock_diff.missing.each do |variant, quantity|
-      #   differentiators << {
-      #       image: variant.product.present? ? variant.product.images.order(:id).first.attachment.url(:small) : '',
-      #       name: variant.name,
-      #       quantity: quantity,
-      #       price: variant.price
-      #   }
-      # end
-
-      shipment_address = order.ship_address
-
-      ship_address = address_hash(shipment_address)
-
-      collection_point = order.collection_point
-    else
-      error = 'Order not found'
     end
 
     render json: {
         status: !error.present?,
         error: error,
         shipments: shipments,
-        differentiators: differentiators,
-        special_instructions: special_instructions,
-        collection_point: collection_point,
-        order_summary: {
-            amount: order.item_total,
-            # is_promotional: order.promotions.present?,
-            adjustment_total: order.adjustment_total,
-            shipment: order.shipment.present? ? shipping_method(order.shipment) : '',
-            total: order.total
-        },
-        ship_address: ship_address
     }
   end
 
@@ -441,34 +409,34 @@ class Api::V1::OrdersController < Api::ApiBase
   end
 
   def ship_address_params
-    { firstname: params[:ship_address][:firstname], last_name: params[:ship_address][:lastname], address: params[:ship_address][:address1], city: params[:ship_address][:city], zipcode: params[:ship_address][:zipcode], phone: params[:ship_address][:phone], state: params[:ship_address][:state], country: params[:ship_address][:country] }
+    { firstname: params[:ship_address][:firstname], last_name: params[:ship_address][:lastname], address: params[:ship_address][:address], city: params[:ship_address][:city], zipcode: params[:ship_address][:zipcode], phone: params[:ship_address][:phone], state: params[:ship_address][:state], country: params[:ship_address][:country] }
   end
 
   def last_incomplete_order
     @last_incomplete_order ||= current_user.last_incomplete_spree_order
   end
 
-  def current_order(options = {})
-    options[:create_order_if_necessary] ||= false
-
-    return @current_order if @current_order
-
-    @current_order = find_order_by_token_or_user(options, true)
-
-    if options[:create_order_if_necessary] && (@current_order.nil? || @current_order.completed?)
-      @current_order = Order.new(current_order_params)
-      @current_order.user ||= current_user
-      # See issue #3346 for reasons why this line is here
-      @current_order.created_by_id ||=  current_user.id
-      @current_order.state ||= 'cart'
-      @current_order.save!
-    end
-
-    if @current_order
-      # @current_order.last_ip_address = ip_address
-      return @current_order
-    end
-  end
+  # def current_order(options = {})
+  #   options[:create_order_if_necessary] ||= false
+  #
+  #   return @current_order if @current_order
+  #
+  #   @current_order = find_order_by_token_or_user(options, true)
+  #
+  #   if options[:create_order_if_necessary] && (@current_order.nil? || @current_order.completed?)
+  #     @current_order = Order.new(current_order_params)
+  #     @current_order.user ||= current_user
+  #     # See issue #3346 for reasons why this line is here
+  #     @current_order.created_by_id ||=  current_user.id
+  #     @current_order.state ||= 'cart'
+  #     @current_order.save!
+  #   end
+  #
+  #   if @current_order
+  #     # @current_order.last_ip_address = ip_address
+  #     return @current_order
+  #   end
+  # end
 
   def current_order_params
     { currency: current_currency, guest_token: @token, store_id: nil, user_id: params[:user_id] }
@@ -481,9 +449,8 @@ class Api::V1::OrdersController < Api::ApiBase
   def find_cart_by_token_or_user
     if params[:guest_token].present?
       @token = params[:guest_token]
-      guest_token_order_params = current_order_params.except(:user_id)
       incomplete_orders = Order.incomplete.includes(:ship_address, line_items: [product: [:images] ])
-      cart = incomplete_orders.find_by(guest_token_order_params)
+      cart = incomplete_orders.where(guest_token: @token).last
     elsif params[:user_id].present?
       user = User.find_by_id(params[:user_id])
       cart = user.last_incomplete_spree_order
