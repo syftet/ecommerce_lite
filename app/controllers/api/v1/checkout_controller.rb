@@ -13,10 +13,10 @@ class Api::V1::CheckoutController < Api::ApiBase
   # before_action :add_store_credit_payments, only: [:update_order]
 
   def update_order
-    if @order.update_with_params(params, permitted_checkout_attributes)
+   if @order.update_with_params(params, permitted_checkout_attributes)
       if @order.next
         if @order.completed?
-          cur_order = nil if @order.completed? && !@order.payment_failed?
+          cur_order = nil
         else
           @error = @order.errors.full_messages.join("\n")
         end

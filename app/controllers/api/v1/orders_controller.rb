@@ -40,11 +40,10 @@ class Api::V1::OrdersController < Api::ApiBase
   def show
     @order = Order.includes(:ship_address, line_items: [product: [:images] ]).find_by_number!(params[:id])
     shipment_address = @order.ship_address
-    # bill_address = @order.bill_address
     line_items = []
     @order.line_items.each do |line_item|
       product = line_item.product
-      # variant = line_item.variant
+      variant = line_item.product
       line_items << {
           id: line_item.id,
           quantity: line_item.quantity,
@@ -60,11 +59,9 @@ class Api::V1::OrdersController < Api::ApiBase
     end
     render json: {
         just_completed: false,
-        # bill_address: address_hash(bill_address),
         ship_address: address_hash(shipment_address),
         line_items: line_items,
         amount: @order.total,
-        # is_promotional: @order.promotions.present?,
         adjustment_total: @order.adjustment_total,
         shipment: @order.shipment.present? ? shipping_method(@order.shipment) : '',
         total: @order.total,
@@ -229,10 +226,6 @@ class Api::V1::OrdersController < Api::ApiBase
         phone: ''
     }
     if order.state == 'cart' || order.state == 'address'
-      p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,"
-      p order.inspect
-      p order.ship_address
-      p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,"
       ship_address = order.ship_address
       if ship_address.present?
         address[:firstname] = ship_address[:firstname]
@@ -294,7 +287,7 @@ class Api::V1::OrdersController < Api::ApiBase
 
   def get_shipments
     error = ''
-    order =  find_cart_by_token_or_user
+    order = find_cart_by_token_or_user
 
     shipments = []
     differentiators = []
@@ -325,47 +318,68 @@ class Api::V1::OrdersController < Api::ApiBase
       # p order.shipments.first.shipping_rates
 
       special_instructions = order.special_instructions
-      shipment = order.shipment
-      # order.shipment.each do |shipment|
         shipment_data = {
-            id: shipment.id,
-            stock_location: shipment.stock_location.name,
-            stock_location_id: shipment.stock_location_id,
+            id: '',
+            stock_location: '',
+            stock_location_id: '',
             manifests: [],
             shipping_rates: []
         }
 
-        # shipment.manifest.each do |item|
-        #   product = item.variant.product
-        #   shipment_data[:manifests] << {
-        #       image: product.present? ? product.images.order(:id).first.attachment.url(:small) : '',
-        #       name: item.variant.name,
-        #       quantity: item.quantity,
-        #       price: item.variant.price,
-        #       line_item_id: item.line_item.id,
-        #       variant_id: item.variant.id
-        #   }
-        # end
-
-
-          shipment_data[:shipping_rates] << {
-              id: shipping_method.id,
-              name: shipping_method.name,
-              cost: shipping_method.rate
+        order.line_items.each do |item|
+          product = item.product
+          shipment_data[:manifests] << {
+              image: product.present? ? helpers.mini_image(product) : '',
+              name: product.name,
+              quantity: item.quantity,
+              price: item.product.price,
+              line_item_id: item.id,
+              variant_id: item.product.id
           }
+        end
 
-        shipments << shipment_data
+        ShippingMethod.all.each do |shipping_rate|
+          shipment_data[:shipping_rates] << {
+              id: shipping_rate.id,
+              shipping_method_id: shipping_rate.id,
+              name: shipping_rate.name,
+              cost: shipping_rate.rate,
+              selected: ''
+          }
+        end
+
+      shipments << shipment_data
+
+
+      shipment_address = order.ship_address
+
+      ship_address = address_hash(shipment_address)
+
+      collection_point = order.collection_point
+    else
+      error = 'Order not found'
     end
 
     render json: {
         status: !error.present?,
         error: error,
         shipments: shipments,
+        differentiators: differentiators,
+        special_instructions: special_instructions,
+        collection_point: collection_point,
+        order_summary: {
+            amount: order.item_total,
+            is_promotional: '',
+            adjustment_total: order.adjustment_total,
+            shipment: order.shipment.present? ? shipping_method(order.shipment) : '',
+            total: order.total
+        },
+        ship_address: ship_address
     }
   end
 
   def get_payment_info
-    @order =  Order.find_by_id(37) #find_cart_by_token_or_user
+    @order =  find_cart_by_token_or_user
     user = User.find_by_id(params[:user_id])
     shipment_address = @order.ship_address
     # bill_address = @order.bill_address
@@ -374,9 +388,9 @@ class Api::V1::OrdersController < Api::ApiBase
         ship_address: address_hash(shipment_address),
         amount: @order.item_total,
         # is_promotional: @order.promotions.present?,
-        adjustment_total: @order.adjustment_total,
+        adjustment_total: @order.adjustment_total + @order.shipment_cost,
         shipment: @order.shipment.present? ? shipping_method(@order.shipment) : '',
-        total: @order.total,
+        total: @order.total + @order.shipment_cost,
         id: @order.id,
         number: @order.number,
         email: @order.email,
