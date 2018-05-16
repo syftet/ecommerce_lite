@@ -188,7 +188,7 @@ class Order < ApplicationRecord
       status
     elsif params[:state] == 'delivery'
       if init_shipment(permitted_params.delete(:shipping_method))
-        update_attributes(permitted_params.merge(shipment_state: 'pending'))
+        update_attributes(permitted_params.merge(shipment_state: 'pending', total: net_total))
       end
     elsif params[:state] == 'payment'
       payment = build_payment(permitted_params)
@@ -302,11 +302,6 @@ class Order < ApplicationRecord
   def build_payment(payments_attributes)
     payment_method_id = payments_attributes[:payments_attributes][:payment_method_id]
     payment_method = PaymentMethod.find_by_id(payment_method_id)
-    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,,,,"
-    p payment_method
-    p payment_method_id
-    p payments_attributes
-    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,,,,"
     return false unless payment_method.present?
     payment_params = payment_method.process
     payment_params[:amount] = net_total
