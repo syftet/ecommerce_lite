@@ -8,7 +8,7 @@
       <div class="thanks-order-container">
         <%# if order_just_completed?(@order) %>
             <h3> THANKS FOR YOUR ORDER, <%= @order.ship_address.full_name %>! </h3>
-            <h4> Your Order ID is <%= @order.number %> </h4>
+            <h4> Your Order ID is <%= @order.number %>, Date: <%= @order.created_at.strftime("%b %d, %Y") %> </h4>
         <%# end %>
       </div>
     </div>
@@ -81,11 +81,9 @@
         <div class="col-sm-6">
           <div class="shipping-method-wrap mb0">
             <h3 class="public-title text-left mb10"> Shipping Methods: </h3>
-            Standard <strong> Free </strong>
-
-            <p>
-              Transit time: 3-6 business days
-            </p>
+             <% if @order.shipment.present? %>
+                <%=  @order.shipment.shipping_method.name  %>
+             <% end %>
           </div>
         </div>
         <div class="col-sm-6">
