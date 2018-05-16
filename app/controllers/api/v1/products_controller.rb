@@ -18,7 +18,7 @@ class Api::V1::ProductsController < Api::ApiBase
           master_id: product.id,
           name: product.name,
           avg_rating: product.average_rating,
-          preview_image: helpers.product_preview_image(product),
+          preview_image: helpers.product_preview_image(product, true),
           price: product.price,
           point: product.reward_point,
           # promotion: product.promotionable,
