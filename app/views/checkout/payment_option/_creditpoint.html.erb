@@ -1,4 +1,4 @@
-<div id="creditpoint" class="tab-pane fade">
+<div id="creditpoint" class="tab-pane fade <%= 'active' if index == 0 %>">
   <%= form_for @order, url: update_checkout_path(@order.state) do |f| %>
       <h3>Your available credit points
         <b> # <%= current_user.present? ? current_user.available_rewards : 0 %> </b></h3>
