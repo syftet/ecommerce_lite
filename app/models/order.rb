@@ -188,7 +188,7 @@ class Order < ApplicationRecord
       status
     elsif params[:state] == 'delivery'
       if init_shipment(permitted_params.delete(:shipping_method))
-        update_attributes(permitted_params.merge(shipment_state: 'pending', total: net_total))
+        update_attributes(permitted_params.merge(shipment_state: 'pending'))
       end
     elsif params[:state] == 'payment'
       payment = build_payment(permitted_params)
