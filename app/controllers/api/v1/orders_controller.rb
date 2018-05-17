@@ -329,7 +329,7 @@ class Api::V1::OrdersController < Api::ApiBase
         order.line_items.each do |item|
           product = item.product
           shipment_data[:manifests] << {
-              image: product.present? ? helpers.mini_image(product) : '',
+              image: product.present? ? helpers.product_preview_image(product, true) : '',
               name: product.name,
               quantity: item.quantity,
               price: item.product.price,
@@ -344,7 +344,7 @@ class Api::V1::OrdersController < Api::ApiBase
               shipping_method_id: shipping_rate.id,
               name: shipping_rate.name,
               cost: shipping_rate.rate,
-              selected: ''
+              selected: false
           }
         end
 
@@ -397,7 +397,7 @@ class Api::V1::OrdersController < Api::ApiBase
         collection_point: @order.collection_point,
         special_instructions: @order.special_instructions,
         state: @order.state,
-        paypal_amount: @order.net_total * 100,
+        paypal_amount: @order.net_total / 80.0,
         available_rewards: user.present? ? user.available_rewards : 0,
         payment_methods: {
             credit_point: payment_method('PaymentMethod::CreditPoint'),

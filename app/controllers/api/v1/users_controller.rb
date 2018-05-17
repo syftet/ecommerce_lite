@@ -11,7 +11,7 @@ class Api::V1::UsersController < Api::ApiBase
     data = {
         user: {email: @user.email, total_rewards: @user.total_rewards, available_rewards: @user.available_rewards},
         rewards_points: @user.rewards_points,
-        orders: @user.orders.collect { |order| {number: order.number, id: order.id, status: order.state, amount: order.amount, date: order.created_at} }
+        orders: @user.orders.collect { |order| {number: order.number, id: order.id, status: order.state, amount: order.net_total, date: order.created_at} }
     }
   end
 end
