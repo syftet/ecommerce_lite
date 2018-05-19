@@ -18,7 +18,7 @@ class Api::V1::WishlistsController < Api::ApiBase
             wish_id: wishlist.id,
             name: product.name,
             avg_rating: product.average_rating,
-            preview_image: helpers.product_preview_image(product),
+            preview_image: helpers.product_preview_image(product, true),
             price: product.price,
             discount_price: product.discount_price,
             is_favourited: true,

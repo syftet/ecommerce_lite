@@ -10,7 +10,7 @@ class Api::V1::OrdersController < Api::ApiBase
       item_count = order.line_items.count
       if item_count > 0
         product = order.line_items.first.product
-        image = helpers.product_preview_image(product),
+        image = helpers.product_preview_image(product, true),
         name = product.name
       else
         image = ''
@@ -51,7 +51,7 @@ class Api::V1::OrdersController < Api::ApiBase
           variant_id: product.id,
           name: product.name,
           price: product.price,
-          preview_image: helpers.product_preview_image(product),
+          preview_image: helpers.product_preview_image(product, true),
           color_image: product.color,
           size: product.size,
           total: line_item.total
@@ -64,7 +64,7 @@ class Api::V1::OrdersController < Api::ApiBase
         amount: @order.total,
         adjustment_total: @order.adjustment_total,
         shipment: @order.shipment.present? ? shipping_method(@order.shipment) : '',
-        total: @order.total,
+        total: @order.net_total,
         id: @order.id,
         number: @order.number,
         email: @order.email,
@@ -86,7 +86,7 @@ class Api::V1::OrdersController < Api::ApiBase
           number: cart.number,
           state: cart.state,
           guest_token: cart.guest_token,
-          total: cart.total,
+          total: cart.net_total,
           total_item: cart.item_count,
           line_items: []
       }
@@ -99,7 +99,7 @@ class Api::V1::OrdersController < Api::ApiBase
             product_id: product.id,
             name: product.name,
             price: product.price,
-            preview_image:  helpers.product_preview_image(product),
+            preview_image:  helpers.product_preview_image(product, true),
             color_image: product.color,
             total: line_item.total
         }
@@ -135,7 +135,7 @@ class Api::V1::OrdersController < Api::ApiBase
       else
         error = 'Line item not found'
       end
-      total = order.total
+      total = order.net_total
       item_count = order.item_count
     else
       error = 'Order not found'
@@ -247,7 +247,7 @@ class Api::V1::OrdersController < Api::ApiBase
             amount: order.item_total,
             adjustment_total: order.adjustment_total,
             shipment: order.shipment.present? ? shipping_method(order.shipment) : '',
-            total: order.total
+            total: order.net_total
         }
     }
   end
@@ -329,7 +329,7 @@ class Api::V1::OrdersController < Api::ApiBase
         order.line_items.each do |item|
           product = item.product
           shipment_data[:manifests] << {
-              image: product.present? ? helpers.mini_image(product) : '',
+              image: product.present? ? helpers.product_preview_image(product, true) : '',
               name: product.name,
               quantity: item.quantity,
               price: item.product.price,
@@ -344,7 +344,7 @@ class Api::V1::OrdersController < Api::ApiBase
               shipping_method_id: shipping_rate.id,
               name: shipping_rate.name,
               cost: shipping_rate.rate,
-              selected: ''
+              selected: false
           }
         end
 
@@ -390,14 +390,14 @@ class Api::V1::OrdersController < Api::ApiBase
         # is_promotional: @order.promotions.present?,
         adjustment_total: @order.adjustment_total + @order.shipment_cost,
         shipment: @order.shipment.present? ? shipping_method(@order.shipment) : '',
-        total: @order.total + @order.shipment_cost,
+        total: @order.net_total,
         id: @order.id,
         number: @order.number,
         email: @order.email,
         collection_point: @order.collection_point,
         special_instructions: @order.special_instructions,
         state: @order.state,
-        paypal_amount: @order.total * 100,
+        paypal_amount: @order.net_total / 80.0,
         available_rewards: user.present? ? user.available_rewards : 0,
         payment_methods: {
             credit_point: payment_method('PaymentMethod::CreditPoint'),

@@ -9,7 +9,7 @@ class Api::V1::LineItemsController < Api::ApiBase
       begin
         order = line_item.order
         order.contents.remove_line_item(line_item, {})
-        total = order.total
+        total = order.net_total
         total_item = order.item_count
       rescue => e
         error = e.message.to_s
