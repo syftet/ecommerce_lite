@@ -20,6 +20,7 @@
             <strong>Size:</strong> <%= item.product.size %>
             <br/>
         <% end %>
+
       </td>
 
       <td class="item-price text-center">
@@ -27,7 +28,10 @@
       </td>
 
       <td class="item-qty-show text-center">
-        <%= item.quantity %> x <%= shipment.state.downcase if shipment.state %>
+        <%= item.quantity %> </br>
+        <% if item.return_items.present? %>
+         <%= item.return_items.count %> x Returned
+        <% end %>
       </td>
 
       <%# unless shipment.shipped? %>
