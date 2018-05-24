@@ -302,11 +302,6 @@ class Order < ApplicationRecord
   def build_payment(payments_attributes)
     payment_method_id = payments_attributes[:payments_attributes][:payment_method_id]
     payment_method = PaymentMethod.find_by_id(payment_method_id)
-    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,,,,"
-    p payment_method
-    p payment_method_id
-    p payments_attributes
-    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,,,,"
     return false unless payment_method.present?
     payment_params = payment_method.process
     payment_params[:amount] = net_total

@@ -23,6 +23,7 @@ class StockLocation < ApplicationRecord
   has_many :stock_items, dependent: :destroy
   has_many :stock_movements, through: :stock_items
   has_many :customer_returns
+  has_many :orders
 
   validates :name, presence: true
 
@@ -92,7 +93,7 @@ class StockLocation < ApplicationRecord
   end
 
   def self.active_stock_location
-    active.where(default: true).first
+    active.where(default: true).first || self.first
   end
 
   private

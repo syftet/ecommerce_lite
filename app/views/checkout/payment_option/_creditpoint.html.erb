@@ -1,17 +1,17 @@
-<div id="creditpoint" class="tab-pane fade">
+<div id="creditpoint" class="tab-pane fade <%= 'active' if index == 0 %>">
   <%= form_for @order, url: update_checkout_path(@order.state) do |f| %>
       <h3>Your available credit points
         <b> # <%= current_user.present? ? current_user.available_rewards : 0 %> </b></h3>
 
       <p>
-        Required credit points <b> # <%= @order.total %> </b>
+        Required credit points <b> # <%= @order.net_total %> </b>
       </p>
 
       <p>
         Remaining points
-        <b> # <%= current_user.present? ? (current_user.available_rewards - @order.total) : 0 %> </b>
+        <b> # <%= current_user.present? ? (current_user.available_rewards - @order.net_total) : 0 %> </b>
       </p>
-      <% if current_user.present? && (current_user.available_rewards - @order.total) > 0 %>
+      <% if current_user.present? && (current_user.available_rewards - @order.net_total) > 0 %>
           <%= radio_button_tag "[order][payments_attributes][payment_method_id]", payment_method('PaymentMethod::CreditPoint'), true, id: 'rewards-points', class: 'hidden' %>
           <div class="continue-btn clearfix">
             <input type="submit" class="place-order-btn pull-right" value="Confirm & Place Order">

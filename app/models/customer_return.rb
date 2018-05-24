@@ -20,6 +20,7 @@ class CustomerReturn < ApplicationRecord
 
   after_create :create_refund
 
+
   def prefix
     CustomerReturn::PREFIX
   end

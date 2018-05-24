@@ -24,8 +24,8 @@
           </ul>
 
           <div class="tab-content">
-            <% PaymentMethod.all_active.each do |method| %>
-                <%= render "checkout/payment_option/#{method.type_name.downcase}" %>
+            <% PaymentMethod.all_active.each_with_index do |method, index| %>
+                <%= render "checkout/payment_option/#{method.type_name.downcase}", index: index %>
             <% end %>
           </div>
         </div>

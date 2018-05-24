@@ -45,7 +45,7 @@ class Api::V1::CheckoutController < Api::ApiBase
     @order.payments.create!({
                                 source: PaypalExpressCheckout.create({payer_id: params[:payer_id]}),
                                 state: 'completed',
-                                amount: @order.total,
+                                amount: @order.net_total,
                                 payment_method: payment_method('PaymentMethod::PayPalExpress')
                             })
   end
@@ -77,7 +77,7 @@ class Api::V1::CheckoutController < Api::ApiBase
   def insufficient_payment?
     params[:state] == "confirm" &&
         @order.payment_required? &&
-        @order.payments.valid.sum(:amount) != @order.total
+        @order.payments.valid.sum(:amount) != @order.net_total
   end
 
   def correct_state
@@ -212,7 +212,7 @@ class Api::V1::CheckoutController < Api::ApiBase
       params.delete(:payment_source)
 
       # Return to the Payments page if additional payment is needed.
-      if @order.payments.valid.sum(:amount) < @order.total
+      if @order.payments.valid.sum(:amount) < @order.net_total
         @error = 'Need additional payment to complete the order'
         #redirect_to checkout_state_path(@order.state) and return
       end

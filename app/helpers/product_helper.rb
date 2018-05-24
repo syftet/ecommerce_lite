@@ -82,7 +82,7 @@ module ProductHelper
   end
 
   def no_image
-    asset_url('empty_product.svg')
+    asset_path('empty_product.svg')
   end
 
 end

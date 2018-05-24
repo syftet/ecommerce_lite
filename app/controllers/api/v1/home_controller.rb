@@ -29,7 +29,7 @@ class Api::V1::HomeController < Api::ApiBase
           price: product.price,
           discount_price: product.discount_price,
           avg_rating: product.average_rating,
-          preview_image: helpers.product_preview_image(product),
+          preview_image: helpers.product_preview_image(product, true),
           promotion: [], #product.promotionable,
           point: product.reward_point,
           is_favourited: product.is_favourite?(params[:user_id]),
