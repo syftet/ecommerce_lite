@@ -227,7 +227,7 @@ class Order < ApplicationRecord
   end
 
   def deliver_order_confirmation_email
-    OrderMailer.confirm_email(id).deliver_now # TODO: will send email after getting smtp credential
+    # OrderMailer.confirm_email(id).deliver_now # TODO: will send email after getting smtp credential
     update_column(:confirmation_delivered, true)
     update_column(:shipment_state, nil)
   end

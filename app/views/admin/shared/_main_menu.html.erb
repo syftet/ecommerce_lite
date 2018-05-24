@@ -1,5 +1,13 @@
 <% if can? :admin, Order %>
     <ul class="nav nav-sidebar">
+      <%= main_menu_item('DashBoard', admin_path, 'dashboard') %>
+    </ul>
+<% end %>
+
+
+
+<% if can? :admin, Order %>
+    <ul class="nav nav-sidebar">
       <%= main_menu_item('Orders', admin_orders_path, 'list') %>
     </ul>
 <% end %>
