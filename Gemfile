@@ -61,6 +61,10 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rails-controller-testing'
+
+  gem 'capistrano', '~> 3.6'
+  gem 'capistrano-rails', '~> 1.3'
+  gem 'capistrano-rvm'
 end
 
 group :test do
