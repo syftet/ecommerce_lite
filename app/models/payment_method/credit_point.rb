@@ -27,10 +27,15 @@ class PaymentMethod::CreditPoint < PaymentMethod
     payment.state != 'void'
   end
 
-  def capture(*)
-    response = simulated_successful_billing_response
-    if response.success?
-      update_rewards_points(-1 * amount.to_f, 'Purchased', options)
+  def process
+    {state: 'pending', response_code: 200, response_message: 'Payment success'}
+  end
+
+  def capture(payment)
+    payment.state = 'captured'
+    if payment.save
+      payment.order.update_attribute(:payment_state, 'paid')
+      update_rewards_points(-1 * payment.amount.to_f, 'Purchased', payment.order)
     end
   end
 
@@ -70,22 +75,11 @@ class PaymentMethod::CreditPoint < PaymentMethod
 
   def update_rewards_points(amount, reason, order)
     p '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-    p order
-    p order[:order_id]
-    p order[:order_id].slice(0..(order[:order_id].rindex('-')))
-
-    order_id = 0
-    user_id = 0
-
-    reward_order = Order.find_by_number(order[:order_id].slice(0..(order[:order_id].rindex('-') - 1)))
-
-    p reward_order.inspect
-    if reward_order.present?
-      order_id = reward_order.id
-      user_id = reward_order.user_id
+    if order.present?
+      order_id = order.id
+      user_id = order.user_id
+      RewardsPoint.create(order_id: order_id, points: amount, reason: reason, user_id: user_id)
     end
-
-    RewardsPoint.create(order_id: order_id, points: amount, reason: reason, user_id: user_id)
   end
 
 end

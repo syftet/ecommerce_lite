@@ -12,6 +12,8 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  number            :string(255)
+#  source_id         :integer
+#  source_type       :string(255)
 #
 
 class Payment < ApplicationRecord

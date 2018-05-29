@@ -46,6 +46,9 @@ gem 'kaminari'
 gem 'bootstrap4-kaminari-views'
 gem 'select2-rails' #, '~> 3.5.9.1'
 gem 'annotate'
+gem 'money'
+gem 'monetize'
+gem 'paypal-sdk-merchant'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

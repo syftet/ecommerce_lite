@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180606054026) do
+ActiveRecord::Schema.define(version: 20180606054028) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "firstname"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20180606054026) do
     t.string "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
   end
 
   create_table "admin_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -215,6 +216,20 @@ ActiveRecord::Schema.define(version: 20180606054026) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "number"
+    t.integer "source_id"
+    t.string "source_type"
+  end
+
+  create_table "paypal_express_checkouts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "token"
+    t.string "payer_id"
+    t.integer "order_id"
+    t.string "state", default: "completed"
+    t.integer "refund_id"
+    t.datetime "refunded_at"
+    t.string "refund_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "product_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -345,7 +360,7 @@ ActiveRecord::Schema.define(version: 20180606054026) do
   create_table "stock_locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.boolean "default", default: false
-    t.string "address"
+    t.string "address1"
     t.string "city"
     t.string "state"
     t.string "zipcode"

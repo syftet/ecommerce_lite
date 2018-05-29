@@ -42,8 +42,10 @@ class Api::V1::CheckoutController < Api::ApiBase
   private
 
   def express_payment
+    source = PaypalExpressCheckout.create({payer_id: params[:payer_id]}),
     @order.payments.create!({
-                                source: PaypalExpressCheckout.create({payer_id: params[:payer_id]}),
+                                source_id: source.id,
+                                source_type: source.class.to_s,
                                 state: 'completed',
                                 amount: @order.net_total,
                                 payment_method: payment_method('PaymentMethod::PayPalExpress')
