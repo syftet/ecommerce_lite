@@ -47,13 +47,25 @@ class PaypalController < ApplicationController
                                              token: params[:token],
                                              payer_id: params[:PayerID]
                                          })
-    order.payments.create!({
+    payment = order.payments.create!({
                                source_id: source.id,
                                source_type: source.class.to_s,
                                state: 'completed',
                                amount: order.total,
                                payment_method: payment_method
                            })
+
+    unless payment.errors.any?
+      order.completed_at = Time.now
+      order.state = 'completed'
+      order.shipment_state = Order::ORDER_SHIPMENT_STATE[:pending]
+      order.payment_state = payment.state == 'completed' ? 'completed' : 'balance_due'
+      if order.save
+        order.remove_stock_from_inverntory
+        order.deliver_order_confirmation_email unless order.confirmation_delivered?
+      end
+    end
+
 
     if order.completed?
       flash.notice = I18n.t(:order_processed_successfully)
@@ -118,6 +130,9 @@ class PaypalController < ApplicationController
     # or tax.  This is the easiest way to determine what the items should cost, as that
     # functionality doesn't currently exist in Spree core
     item_sum = current_order.net_total
+    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,"
+    p (current_order.net_total / payment_method.preferences["preferred_conversion_rate"].to_f).round(2)
+    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,"
     if item_sum.zero?
       # Paypal does not support no items or a zero dollar ItemTotal
       # This results in the order summary being simply "Current purchase"
@@ -131,15 +146,15 @@ class PaypalController < ApplicationController
       {
           OrderTotal: {
               currencyID: 'USD',
-              value: Money.new(current_order.net_total, 'BDT').exchange_to('USD').cents
+              value: (current_order.net_total / payment_method.preferences["preferred_conversion_rate"].to_f).round(2)
           },
           ItemTotal: {
               currencyID: 'USD',
-              value: Money.new(item_sum, 'BDT').exchange_to('USD').cents
+              value: (item_sum / payment_method.preferences["preferred_conversion_rate"].to_f).round(2)
           },
           ShippingTotal: {
               currencyID: 'USD',
-              value: Money.new(shipment_sum, 'BDT').exchange_to('USD').cents
+              value: (shipment_sum / payment_method.preferences["preferred_conversion_rate"].to_f).round(2)
           },
           ShipToAddress: address_options,
           # PaymentDetailsItem: items,

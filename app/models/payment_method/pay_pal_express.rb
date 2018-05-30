@@ -22,7 +22,8 @@ class PaymentMethod::PayPalExpress < PaymentMethod
       {field: :server, type: :string, default: 'sandbox'},
       {field: :solution, type: :string, default: 'Mark'},
       {field: :landing_page, type: :string, default: 'Billing'},
-      {field: :logourl, type: :string, default: ''}
+      {field: :logourl, type: :string, default: ''},
+      {field: :conversion_rate, type: :float, default: 83.00}
   ]
   include Preferable
 

@@ -46,7 +46,12 @@ class StockLocation < ApplicationRecord
   end
 
   def stock_item_or_create(product)
-    stock_item(product) || stock_items.create(product_id: product)
+    product_stock = stock_item(product)
+    if product_stock
+      product_stock
+    else
+      stock_items.create!(product_id: product.id)
+    end
   end
 
   def count_on_hand(product)
@@ -71,7 +76,8 @@ class StockLocation < ApplicationRecord
   end
 
   def move(product, quantity, originator = nil)
-    stock_item_or_create(product).stock_movements.create!(quantity: quantity, originator: originator)
+    product_stock_item = stock_item_or_create(product)
+    product_stock_item.stock_movements.create!(quantity: quantity, originator: originator)
   end
 
   def fill_status(product, quantity)
