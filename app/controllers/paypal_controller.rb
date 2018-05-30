@@ -92,7 +92,7 @@ class PaypalController < ApplicationController
         Quantity: item.quantity,
         Amount: {
             currencyID: 'USD',
-            value: item.price.to_money.exchange_to('USD').cents
+            value:(item.price / payment_method.preferences["preferred_conversion_rate"].to_f).round(2)
         },
         ItemCategory: "Physical"
     }
@@ -130,9 +130,7 @@ class PaypalController < ApplicationController
     # or tax.  This is the easiest way to determine what the items should cost, as that
     # functionality doesn't currently exist in Spree core
     item_sum = current_order.net_total
-    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,"
-    p (current_order.net_total / payment_method.preferences["preferred_conversion_rate"].to_f).round(2)
-    p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,"
+
     if item_sum.zero?
       # Paypal does not support no items or a zero dollar ItemTotal
       # This results in the order summary being simply "Current purchase"

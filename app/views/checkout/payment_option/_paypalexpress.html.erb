@@ -1,7 +1,7 @@
 <div id="paypalexpress" class="tab-pane fade in <%= 'active' if index == 0 %>">
   <h3>Checkout With Paypal</h3>
 
-  <%= link_to(image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), paypal_express_url(:payment_method_id => 1), :method => :post, :id => "paypal_button") %>
+  <%= link_to(image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), paypal_express_url(:payment_method_id => payment_method('PaymentMethod::PayPalExpress')), :method => :post) %>
 
   <script>
       SpreePaypalExpress.paymentMethodID = "<%= payment_method('PaymentMethod::PayPalExpress') %>"

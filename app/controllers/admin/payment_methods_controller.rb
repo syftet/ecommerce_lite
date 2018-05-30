@@ -54,14 +54,14 @@ module Admin
 
     def load_data
       @providers = [PaymentMethod::Cash,
-                    PaymentMethod::StoreCredit,
+                    PaymentMethod::SslCommerz,
                     PaymentMethod::CreditPoint,
                     PaymentMethod::PayPalExpress] #Gateway.providers.sort { |p1, p2| p1.name <=> p2.name }
     end
 
     def validate_payment_method_provider
       valid_payment_methods = ['PaymentMethod::Cash',
-                               'PaymentMethod::StoreCredit',
+                               'PaymentMethod::SslCommerz',
                                'PaymentMethod::CreditPoint',
                                'PaymentMethod::PayPalExpress']
       if !valid_payment_methods.include?(params[:payment_method][:type])

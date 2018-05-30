@@ -1,0 +1,5 @@
+<div id="sslcommerz" class="tab-pane fade in <%= 'active' if index == 0 %>">
+  <h3>Checkout With Ssl Commerz</h3>
+
+  <%= link_to(image_tag('sslcommerz.png'), ssl_express_path(:payment_method_id => payment_method('PaymentMethod::SslCommerz')), :method => :post, :id => "paypal_button") %>
+</div>

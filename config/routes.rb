@@ -47,6 +47,11 @@ Rails.application.routes.draw do
   get '/paypal/cancel', :to => "paypal#cancel", :as => :cancel_paypal
   get '/paypal/notify', :to => "paypal#notify", :as => :notify_paypal
 
+  post '/ssl_commerz', :to => "ssl_commerz#ssl_express", :as => :ssl_express
+  post '/ssl_commerz/confirm', :to => "ssl_commerz#confirm", :as => :confirm_ssl
+  post '/ssl_commerz/cancel', :to => "ssl_commerz#cancel", :as => :cancel_ssl
+  post '/ssl_commerz/failed', :to => "ssl_commerz#failed", :as => :failed_ssl
+
   # END PAYMENT #
 
   # Admin routes and resources
