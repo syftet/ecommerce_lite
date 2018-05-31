@@ -156,6 +156,7 @@ module Admin
       url = options[:url] || object_url(resource)
       name = options[:name] || t(:delete)
       options[:class] = "btn btn-danger btn-sm delete-resource"
+      options[:method] = 'delete'
       options[:data] = {confirm: t(:are_you_sure), action: 'remove'}
       link_to_with_icon 'trash', name, url, options
     end

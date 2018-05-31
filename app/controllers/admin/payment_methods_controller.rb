@@ -27,6 +27,18 @@ module Admin
       @payment_methods = PaymentMethod.all
     end
 
+    def destroy
+      payment_method = PaymentMethod.find_by_id(params[:id])
+      if payment_method.destroy
+        flash[:success] = t(:successfully_removed, resource: t(:payment_method))
+        redirect_to admin_payment_methods_path
+      else
+        flash[:error] = "Something Worng please try latter"
+        redirect_to admin_payment_methods_path
+      end
+
+    end
+
     def update
       @payment_method = PaymentMethod.find_by_id(params[:id])
       payment_method_type = params[:payment_method].delete(:type)
