@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   end
 
   get '/c/*id', to: 'categories#show', as: :categories
+  get '/b/*id', to: 'products#brand_show'
 
   resources :carts
   get '/checkout', to: 'checkout#edit', as: :cart_checkout

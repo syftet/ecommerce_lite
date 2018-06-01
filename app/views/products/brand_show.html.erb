@@ -1,0 +1,17 @@
+<% content_for :breadcrumb do %>
+    <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb('Products') %>
+<% end %>
+
+<%= render 'products/shared/display_filter' %>
+<% content_for :sidebar do %>
+    <div class="col-md-3">
+      <%= render :partial => 'products/shared/categories' %>
+      <%= render :partial => 'products/shared/catalog' %>
+    </div>
+<% end %>
+
+<div class="col-md-9">
+  <div data-hook="homepage_products" class="product-lists clearfix product-search-result">
+    <%= render 'products/shared/products', products: @products %>
+  </div>
+</div>
