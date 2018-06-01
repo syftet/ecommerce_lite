@@ -13,6 +13,7 @@
 //= require jquery
 //= require rails-ujs
 //= require turbolinks
+//= require lightgallery.min
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {
