@@ -66,6 +66,22 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
+  default_url_options[:host] = 'http://tangailenterprise.com'
+  config.action_mailer.asset_host = "http://tangailenterprise.com"
+
+  config.action_mailer.delivery_method = :smtp
+  config.mailer_sender = 'shop@lienesbeauty.com'
+  config.action_mailer.smtp_settings = {
+      address: 'smtp.zoho.com',
+      port: 465,
+      domain: 'lienesbeauty.com',
+      user_name: 'shop@lienesbeauty.com',
+      password: 'Lbeauty2017',
+      authentication: :plain,
+      ssl: true,
+      enable_starttls_auto: true
+  }
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
@@ -75,6 +91,7 @@ Rails.application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
 
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
