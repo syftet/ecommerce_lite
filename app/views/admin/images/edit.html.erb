@@ -31,7 +31,7 @@
       <div class="form-group">
         <div data-hook="thumbnail" class="col-md-3 text-center">
           <%= f.label :file, t(:thumbnail) %>
-          <%= link_to image_tag(@image.file.url(:small)), @image.file.url(:product) %>
+          <%= link_to image_tag(@image.file.url(:small)), @image.file.url(:product) if @image.file.present? %>
         </div>
         <div class="col-md-9">
           <%= render partial: 'form', locals: { f: f } %>

@@ -34,7 +34,7 @@
     <% @images.each do |image| %>
       <tr>
         <td class="image">
-          <%= link_to image_tag(image.file.url(:mini)), image.file.url(:product) %>
+          <%= link_to image_tag(image.file.url(:mini)), image.file.url(:product) if image.file.present? %>
         </td>
         <td><%= image.alt %></td>
         <td><%= link_to 'Edit', edit_admin_product_image_path(@product, image) %></td>
