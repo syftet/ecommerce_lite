@@ -62,6 +62,16 @@ module Admin
       end
     end
 
+    def destroy_session_link(text, url = nil, icon = nil)
+      content_tag :li, class: 'sidebar-menu-item' do
+        link_to url, method: 'delete' do
+          content_tag(:span, nil, class: "icon icon-#{icon}") +
+              content_tag(:i, nil, class: "fa fa-#{icon}") +
+              content_tag(:span, text, class: 'text')
+        end
+      end
+    end
+
     # Main menu tree menu
     def main_menu_tree text, icon: nil, sub_menu: nil, url: '#'
       content_tag :li, class: 'sidebar-menu-item' do
