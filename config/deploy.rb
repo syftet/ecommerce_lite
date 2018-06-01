@@ -25,7 +25,7 @@ set :rvm_ruby, '2.3.1'
 # Default value for :pty is false
 # set :pty, true
 server '128.199.207.10',
-       :user => 'root',
+       :user => 'deployer',
        :roles => %w{web app db}
 
 set :rvm_ruby_version, '2.3.1'
