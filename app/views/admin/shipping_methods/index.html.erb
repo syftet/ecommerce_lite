@@ -28,7 +28,7 @@
       <tbody>
       <% @shipping_methods.each do |shipping_method| %>
           <tr>
-            <td><%= shipping_method.admin_name + ' / ' if shipping_method.admin_name.present? %><%= shipping_method.name %></td>
+            <td><%= shipping_method.name %></td>
             <td><%= shipping_method.admin_name %></td>
             <td><%= shipping_method.code %></td>
             <td><%= shipping_method.rate %></td>

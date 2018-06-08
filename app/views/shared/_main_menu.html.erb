@@ -71,7 +71,7 @@
                     </li>
                     <% Admin::Category.menu.each do |cat| %>
                         <li class="menu-item">
-                          <%= link_to '#nof' do %>
+                          <%= link_to categories_path(cat.permalink) do %>
                               <%= cat.name %> <span class="caret"></span>
                           <% end %>
                           <ul class="top-sub-menu">

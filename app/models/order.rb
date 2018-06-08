@@ -307,7 +307,12 @@ class Order < ApplicationRecord
     payment_params[:amount] = net_total
     payment_params[:payment_method_id] = payment_method_id
     payment = payments.build(payment_params)
-    payment.save
+    if payment.save
+      if payment_method.type == 'PaymentMethod::CreditPoint'
+        RewardsPoint.create(order_id: id, points: net_total * -1, reason: "Purchased", user_id: user.id)
+      end
+    end
+
     payment
   end
 

@@ -35,15 +35,11 @@ class PaymentMethod::CreditPoint < PaymentMethod
     payment.state = 'captured'
     if payment.save
       payment.order.update_attribute(:payment_state, 'paid')
-      update_rewards_points(-1 * payment.amount.to_f, 'Purchased', payment.order)
     end
   end
 
   def purchase(amount, source, options = {})
     response = simulated_successful_billing_response
-    if response.success?
-      update_rewards_points(-1 * amount.to_f, 'Purchased', options)
-    end
     response
   end
 

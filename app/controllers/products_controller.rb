@@ -30,6 +30,17 @@ class ProductsController < ApplicationController
     end
   end
 
+  def brand_show
+    @brand = Admin::Brand.find_by_permalink(params[:id])
+    @categories = Admin::Category.where("parent_id IS NULL")
+    redirect_to products_path unless @brand
+    @products = @brand.products.page(params[:page])
+    respond_to do |format|
+      format.html {}
+      format.js {}
+    end
+  end
+
   def compare
     product = Product.friendly.find(params[:product_id])
     if cookies[:compare_products]
