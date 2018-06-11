@@ -28,3 +28,4 @@ config/application.yml
 .byebug_history
 
 /public/uploads
+/public/assets
