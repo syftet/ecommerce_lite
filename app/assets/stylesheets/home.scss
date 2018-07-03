@@ -36,6 +36,12 @@
   }
 }
 
+.slider-item {
+  img {
+    height: calc(100vh - 150px);
+  }
+}
+
 .modal-backdrop {
   z-index: 960 !important;
 }
