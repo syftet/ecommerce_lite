@@ -1,0 +1,134 @@
+<div class="feedback-wrap">
+  <link href='//fonts.googleapis.com/css?family=Josefin+Slab:400,100,100italic,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
+  <div class="feedback-column" id="feedback-form">
+    <%= form_for Feedback.new do |f| %>
+        <h4 class="feedback-header"> Your kind feedback </h4>
+        <%#= social_share_button_tag %>
+        <div class="main-form">
+          <div class="form-group">
+            <h5 class="mt0"> Your Name* </h5>
+            <%= f.text_field :name, class: 'custom-form-control form-control reset-border-radius', required: true %>
+          </div>
+
+          <div class="form-group">
+            <h5> Your Email* </h5>
+            <%= f.email_field :email, class: 'custom-form-control form-control reset-border-radius', required: true %>
+          </div>
+
+          <div class="form-group clearfix">
+            <h5> Product Quality </h5>
+
+            <div class="input-options">
+              <div class="check_box_one">
+                <div class="radio">
+                  <label><%= f.radio_button :product_quality, 4, checked: true %><i></i>Very Good</label>
+                </div>
+              </div>
+              <div class="check_box">
+                <div class="radio">
+                  <label><%= f.radio_button :product_quality, 3 %><i></i>Good</label>
+                </div>
+              </div>
+              <div class="check_box">
+                <div class="radio">
+                  <label><%= f.radio_button :product_quality, 2 %><i></i>Fair</label>
+                </div>
+              </div>
+              <div class="check_box">
+                <div class="radio">
+                  <label><%= f.radio_button :product_quality, 1 %><i></i>Poor</label>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+
+          <div class="form-group clearfix">
+            <h5> Our Product Pricing </h5>
+
+            <div class="input-options">
+              <div class="check_box_one">
+                <div class="radio">
+                  <label><%= f.radio_button :product_price, 4 %><i></i>Very Good</label>
+                </div>
+              </div>
+              <div class="check_box">
+                <div class="radio">
+                  <label><%= f.radio_button :product_price, 3, checked: true %><i></i>Good</label>
+                </div>
+              </div>
+              <div class="check_box">
+                <div class="radio">
+                  <label><%= f.radio_button :product_price, 2 %><i></i>Fair</label>
+                </div>
+              </div>
+              <div class="check_box">
+                <div class="radio">
+                  <label><%= f.radio_button :product_price, 1 %><i></i>Poor</label>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+
+          <div class="form-group clearfix">
+            <h5> Customer Service </h5>
+
+            <div class="input-options">
+              <div class="check_box_one">
+                <div class="radio">
+                  <label><%= f.radio_button :customer_service, 4, checked: true %><i></i>Very Good</label>
+                </div>
+              </div>
+              <div class="check_box">
+                <div class="radio">
+                  <label><%= f.radio_button :customer_service, 3 %><i></i>Good</label>
+                </div>
+              </div>
+              <div class="check_box">
+                <div class="radio">
+                  <label><%= f.radio_button :customer_service, 2 %><i></i>Fair</label>
+                </div>
+              </div>
+              <div class="check_box">
+                <div class="radio">
+                  <label><%= f.radio_button :customer_service, 1 %><i></i>Poor</label>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+          </div>
+
+          <div class="form-group clearfix">
+            <h5> How do you rate us </h5>
+
+            <div class="input-options">
+                  <span class="starRating">
+                    <input id="rating5" type="radio" name="feedback[rate]" value="5">
+                    <label for="rating5">5</label>
+                    <input id="rating4" type="radio" name="feedback[rate]" value="4">
+                    <label for="rating4">4</label>
+                    <input id="rating3" type="radio" name="feedback[rate]" value="3">
+                    <label for="rating3">3</label>
+                    <input id="rating2" type="radio" name="feedback[rate]" value="2" checked="">
+                    <label for="rating2">2</label>
+                    <input id="rating1" type="radio" name="feedback[rate]" value="1">
+                    <label for="rating1">1</label>
+			            </span>
+
+              <div class="clear"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <h5> Is there anything you would like to tell us? </h5>
+            <%= f.text_area :message, class: 'custom-form-control form-control reset-border-radius', placeholder: 'Type here...', value: 'Hey, I really love the site but I believe that you could incorporate some ..... and also get rid of the ...... on the section.' %>
+          </div>
+
+        </div>
+        <div class="">
+          <%= f.submit 'Send Feedback', class: 'btn-yellow reset-border-radius', id: 'submit-feedback' %>
+        </div>
+    <% end %>
+  </div>
+</div>

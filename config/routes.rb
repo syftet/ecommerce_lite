@@ -32,6 +32,8 @@ Rails.application.routes.draw do
     get :shipped_track
   end
 
+  resources :feedbacks, only: [:new, :create]
+
   get '/c/*id', to: 'categories#show', as: :categories
   get '/b/*id', to: 'products#brand_show'
 
