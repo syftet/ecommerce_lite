@@ -236,17 +236,17 @@ class Order < ApplicationRecord
     params_hash = {}
     if params[:order].present?
       if params[:order][:created_at_gt].present? && params[:order][:created_at_lt].present?
-        from_date = Time.strptime(params[:order][:created_at_gt], '%m/%d/%Y')
-        to_date = Time.strptime(params[:order][:created_at_lt], '%m/%d/%Y')
+        from_date = params[:order][:created_at_gt].to_date
+        to_date = params[:order][:created_at_lt].to_date
         params_hash[:created_at_gt] = params[:order][:created_at_gt]
         params_hash[:created_at_lt] = params[:order][:created_at_lt]
         orders = orders.where(created_at: from_date.beginning_of_day..to_date.end_of_day)
       elsif params[:order][:created_at_gt].present?
-        from_date = Time.strptime(params[:order][:created_at_gt], '%m/%d/%Y')
+        # from_date = Time.strptime(params[:order][:created_at_gt], '%m/%d/%Y')
         params_hash[:created_at_gt] = params[:order][:created_at_gt]
-        orders = @rders.where(created_at: from_date.beginning_of_day..from_date.end_of_day)
+        orders = orders.where(created_at: params[:order][:created_at_gt].to_date.beginning_of_day..params[:order][:created_at_gt].to_date.end_of_day)
       elsif params[:order][:created_at_lt].present?
-        to_date = Time.strptime(params[:order][:created_at_lt], '%m/%d/%Y')
+        to_date = params[:order][:created_at_lt].to_date
         params_hash[:created_at_lt] = params[:order][:created_at_lt]
         orders = orders.where(created_at: to_date.beginning_of_day..to_date.end_of_day)
       end
@@ -257,7 +257,7 @@ class Order < ApplicationRecord
 
       if params[:order][:state].present?
         params_hash[:state] = params[:order][:state]
-        orders = orders.where(shipment_state: params[:order][:state])
+        orders = orders.where(state: params[:order][:state])
       end
 
       if params[:order][:payment_state].present?
