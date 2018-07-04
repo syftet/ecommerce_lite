@@ -25,8 +25,8 @@
       <tr>
         <td><%= stock_transfer.created_at %></td>
         <td><%= stock_transfer.reference %></td>
-        <td><%= link_to stock_transfer.source_location.name, admin_stock_location_path(stock_transfer.source_location) if stock_transfer.source_location.present? %></td>
-        <td><%= link_to stock_transfer.destination_location.name, admin_stock_location_path(stock_transfer.destination_location) %></td>
+        <td><%= link_to stock_transfer.source_location.name, edit_admin_stock_location_path(stock_transfer.source_location) if stock_transfer.source_location.present? %></td>
+        <td><%= link_to stock_transfer.destination_location.name, edit_admin_stock_location_path(stock_transfer.destination_location) %></td>
         <td><%= link_to 'Show', admin_stock_transfer_path(stock_transfer) %></td>
       </tr>
     <% end %>

@@ -13,7 +13,7 @@
 #
 
 class PaymentMethod::Cash < PaymentMethod
-  PREFERENCES = [{field: :amount, type: :string, default: 3}]
+  PREFERENCES = []
   include Preferable
 
   def actions
