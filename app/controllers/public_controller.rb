@@ -6,9 +6,9 @@ class PublicController < ApplicationController
   end
 
   def about_us
-    @title = "About Us - Brandcruz.com"
-    @keywords = "brandcruz, Brand Cruz, Brandcruz.com"
-    @description = "Brandcruz.com customers always get FAST, FREE Shipping and returns with NO order minimums and FREE 60-Day Returns!"
+    # @title = "About Us - Brandcruz.com"
+    # @keywords = "brandcruz, Brand Cruz, Brandcruz.com"
+    # @description = "Brandcruz.com customers always get FAST, FREE Shipping and returns with NO order minimums and FREE 60-Day Returns!"
   end
 
   def return_policy
@@ -21,6 +21,10 @@ class PublicController < ApplicationController
     @title = "Brandcruz: Search and find the latest in fashion | Shipping Worldwide"
     @keywords = "Shoes, Dress, New to Sale, Designers,"
     @description = "FREE RETURNS & FREE 3-DAY SHIPPING WORLDWIDE -Women’s, Men’s Dresses, Handbags, Shoes, Jeans, Tops and more."
+  end
+
+  def promise
+
   end
 
   def subscribe
@@ -82,9 +86,9 @@ class PublicController < ApplicationController
   end
 
   def faq
-    @title = "Shop Brandcruz.com  for the latest trends and the best deals | BrandCruz"
-    @keywords = "Plus size, Men, Women’s sale, sale sale, sale, hello"
-    @description = "Brandcruz.com is the authority on fashion & the go-to retailer for the latest trends, must-have styles & the hottest deals. Shop dresses, tops, tees, leggings & more."
+    # @title = "Shop Brandcruz.com  for the latest trends and the best deals | BrandCruz"
+    # @keywords = "Plus size, Men, Women’s sale, sale sale, sale, hello"
+    # @description = "Brandcruz.com is the authority on fashion & the go-to retailer for the latest trends, must-have styles & the hottest deals. Shop dresses, tops, tees, leggings & more."
   end
 
   def not_found
