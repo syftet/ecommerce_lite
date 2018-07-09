@@ -155,6 +155,7 @@ Rails.application.routes.draw do
   get '/secure_shopping', to: 'public#secure_shopping', as: :secure_shopping
   get '/coupon-code', to: 'public#coupon', as: :coupon
   get '/return-policy', to: 'public#return_policy', as: :return_policy
+  get '/our-promise', to: 'public#promise', as: :our_promise
   match '/dedicated-customer-support', to: 'public#contact_us', via: [:get, :post], as: :contact_us
   get '/free-shipping-worldwide', to: 'public#international', as: :international
   get '/safe_shopping_guarantee', to: 'public#safe_shopping_guarantee', as: :safe_shopping_guarantee
