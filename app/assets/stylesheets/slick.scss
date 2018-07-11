@@ -107,7 +107,7 @@
 }
 
 .slick-prev, .slick-next {
-  color: #333333;
+  color: #00a1a6;
 }
 
 .list-of-recomanded-product {
@@ -171,7 +171,7 @@
   color: transparent;
   border: 0;
   outline: 0;
-  background: rgba(100, 100, 100, 0.5);
+  background: #00a1a64d;
   -webkit-border-radius: 5px 0 0 5px;
   -moz-border-radius: 5px 0 0 5px;
   border-radius: 5px 0 0 5px;
@@ -207,7 +207,7 @@
   font-size: 20px;
   line-height: 1;
   opacity: .75;
-  color: #333333;
+  color: #00a1a6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale
 }
@@ -253,7 +253,7 @@
 }
 
 .slick-dotted.slick-slider {
-  margin-bottom: 1px
+  //margin-bottom: 1px
 }
 
 .slick-dots {
@@ -288,7 +288,7 @@
   color: transparent;
   border: 0;
   outline: 0;
-  background: #2e4352;
+  background: #00a1a6;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -320,11 +320,11 @@
 //}
 
 .slick-dots li.slick-active button {
-  background: #979E96;
+  background: #006c6f;
 }
 
 .slick-dots li.slick-active button:before {
   opacity: .75;
   color: black;
-  background: #979E96;
+  background: #006c6f;
 }

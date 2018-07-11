@@ -13,6 +13,9 @@ footer {
   .text-copyright {
     text-transform: uppercase;
     line-height: 30px;
+    a {
+      color: #00a1a6;
+    }
   }
 
   .syftet-footer-profile {
@@ -118,9 +121,9 @@ footer {
     }
   }
   .footer-information {
-    background: #363a42;
+    background-color: #fbfbfb;
+    border-bottom: 1px solid #eeeeee;
     .about-company-social {
-      background: #31353d;
       padding: 87px 40px 82px 40px;
       .text-block {
         padding-top: 48px;
@@ -134,7 +137,6 @@ footer {
       }
       .social-block {
         a {
-          background-color: #363a42;
           width: 42px;
           height: 42px;
           padding: 10px;
@@ -146,7 +148,10 @@ footer {
             font-size: 20px;
           }
           &:hover {
-            background: #9ba6bb;
+            background: #00a1a6;
+            i {
+              color: #fff !important;
+            }
           }
         }
       }
@@ -182,9 +187,11 @@ footer {
             border: none;
             line-height: inherit;
             padding: 7px 0;
-            color: #aaaaaa;
+            color: #31353d;
             &:hover {
-              color: #a86017;
+              color: #31353d;
+              text-decoration: underline;
+              cursor: pointer;
             }
           }
         }

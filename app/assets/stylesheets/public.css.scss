@@ -213,6 +213,47 @@ a {
   }
 }
 
+.btn-primo-thin {
+  padding: 8px 20px;
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #00a1a6;
+  border: 1px solid #00a1a6;
+  cursor: pointer;
+  //border-radius: 2px;
+  &:hover {
+    background-color: #006c6f;
+    border-color: #006c6f;
+  }
+}
+
+.btn-primo-deep {
+  padding: 8px 20px;
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #006c6f;
+  border: 1px solid #006c6f;
+  cursor: pointer;
+  //border-radius: 2px;
+  &:hover {
+    background-color: #00a1a6;
+    border-color: #00a1a6;
+  }
+}
+
+.btn-primo-border {
+  padding: 8px 20px;
+  color: #00a1a6;
+  font-weight: bold;
+  background-color: transparent;
+  cursor: pointer;
+  border: 1px solid #00a1a6;
+  &:hover {
+    border: 1px solid #006c6f;
+    color: #006c6f;
+  }
+}
+
 .hover-color {
   color: #e65758;
 }
@@ -233,10 +274,14 @@ a {
 .btn-cross {
   font-size: 18px;
   font-weight: bold;
-  color: #999999 !important;
+  color: #dc462b66 !important;
   cursor: pointer;
+  display: inline-block;
+  border: 1px solid #00a1a633;
+  padding: 0px 7px;
   &:hover {
-    color: #ffcd56 !important;
+    border: 1px solid #dc462b;
+    color: #dc462b !important;
     cursor: pointer;
     text-decoration: none;
   }
@@ -248,7 +293,7 @@ a {
     text-decoration: none;
     cursor: pointer;
     &:hover {
-      color: #fcc030 !important;
+      color: #00a1a6 !important;
       text-decoration: none;
     }
   }
@@ -264,7 +309,7 @@ a {
 }
 
 .custom-form-control:focus {
-  border-color: #fcc030 !important;
+  border-color: #00a1a6 !important;
   outline: 0 !important;
 }
 
@@ -328,7 +373,7 @@ a {
   z-index: 99;
   border: none;
   outline: none;
-  background-color: #ec971f;
+  background-color: #00a1a6;
   color: white;
   cursor: pointer;
   padding: 10px 15px;
@@ -348,7 +393,7 @@ a {
   z-index: 99;
   border: none;
   outline: none;
-  background-color: #ec971f;
+  background-color: #00a1a6;
   color: white;
   cursor: pointer;
   padding: 6px 8px;
@@ -360,7 +405,7 @@ a {
     font-weight: bold;
   }
   &:hover {
-    background-color: #555;
+    background-color: #00a1a6;
   }
 }
 
