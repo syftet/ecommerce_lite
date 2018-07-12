@@ -79,6 +79,15 @@ a {
   width: 100%;
 }
 
+.fulkuri-bg {
+  background-image: url("bg_img/fulkari-multi.jpg");
+  background-attachment: fixed;
+  background-color: tomato;
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+}
+
 .effect-v3 {
   max-width: 100%;
   width: 100%;
@@ -272,18 +281,19 @@ a {
 }
 
 .btn-cross {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
-  color: #dc462b66 !important;
   cursor: pointer;
   display: inline-block;
-  border: 1px solid #00a1a633;
-  padding: 0px 7px;
+  border: 1px solid #dc462b;
+  padding: 0px 6px;
+  background-color: #dc462b;
+  color: #fff;
   &:hover {
     border: 1px solid #dc462b;
     color: #dc462b !important;
     cursor: pointer;
-    text-decoration: none;
+    background-color: transparent;
   }
 }
 

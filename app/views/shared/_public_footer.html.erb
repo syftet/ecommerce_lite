@@ -7,10 +7,10 @@
 
       <div class="copyright-link nav-menu hidden-xs"></div>
       <div class="text-copyright col-sm-6 col-md-6">
-        COPYRIGHT © <%= Date.today.year %> - Orna House. powered by <a target="_blank" href="http://syftet.com">SYFTET</a>.
+        COPYRIGHT © <%= Date.today.year %> - <a href="<%= root_path %>">Orna House</a> powered by <strong><a target="_blank" href="http://syftet.com">SYFTET</a></strong>.
       </div>
       <div class="payment col-sm-6 col-md-6">
-        <img src="http://venusdemo.com/wordpress/pi/wp-content/uploads/2017/06/payment.png" alt="Payment logo">
+        <%= image_tag 'payment.png', class: 'img-fluid' %>
       </div>
     </div>
   </div>

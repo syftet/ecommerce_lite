@@ -3,6 +3,9 @@ footer {
   font-weight: 300;
   .syftet-copyright .payment {
     text-align: right;
+    img {
+      display: inline-block;
+    }
   }
   .syftet-copyright {
     font-size: 12px;
@@ -20,7 +23,7 @@ footer {
 
   .syftet-footer-profile {
     .news-letter-wrapper {
-      background: asset-url('bg-newletter.jpg') top left/cover no-repeat scroll;
+      background: asset-url('bg_img/color-colection.jpg') top left/cover no-repeat scroll;
       display: flex;
     }
     .join-our-email-section {
@@ -124,15 +127,14 @@ footer {
     background-color: #fbfbfb;
     border-bottom: 1px solid #eeeeee;
     .about-company-social {
-      padding: 87px 40px 82px 40px;
+      padding-top: 50px;
+      padding-bottom: 20px;
       .text-block {
-        padding-top: 48px;
-        padding-bottom: 34px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         p {
-          color: #aaaaaa;
-          font-size: 14px;
-          line-height: 26px;
-          font-weight: 300;
+          color: #555;
+          font-size: 13px;
         }
       }
       .social-block {
@@ -157,17 +159,15 @@ footer {
       }
     }
     .nav-block {
-      padding: 81px 15px 0 45px;
+      padding-top: 50px;
+      padding-bottom: 20px;
+    }
       h3 {
-        color: #ffffff;
-        font-size: 14px;
-        font-weight: 500;
-        text-align: left;
-        padding-bottom: 0;
+        color: #555;
+        font-size: 16px;
+        font-weight: 600;
         margin-top: 0;
-        margin-bottom: 40px;
-        letter-spacing: 3.2px;
-        position: relative;
+        margin-bottom: 20px;
         text-transform: uppercase;
       }
 
@@ -180,27 +180,22 @@ footer {
           border: none;
           padding: 3px 0;
           a {
-            font-size: 14px;
+            font-size: 13px;
             text-transform: capitalize;
-            font-weight: 300;
             display: inline-block;
-            border: none;
-            line-height: inherit;
-            padding: 7px 0;
-            color: #31353d;
+            padding: 5px 0;
+            color: #555;
             &:hover {
               color: #31353d;
-              text-decoration: underline;
+              text-decoration: underline !important;
               cursor: pointer;
             }
           }
         }
       }
     }
-
     .map-block {
-      padding-top: 87px;
+      padding-top: 50px;
       padding-right: 0;
     }
   }
-}

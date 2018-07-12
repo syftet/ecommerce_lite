@@ -58,18 +58,21 @@
                 <div class="collapse navbar-collapse navbar-mega-collapse nopadding">
                   <ul id="primary-menu" class="nav navbar-nav megamenu">
                     <li class="menu-item site-logo-link">
-                      <%= link_to root_path, style: 'padding: 8px 15px 8px 0;' do %>
+                      <%= link_to root_path, style: 'margin: 0px 80px 0px 0; padding:0' do %>
                           <%= image_tag 'orna-house-logo.png', class: 'img-fluid' %>
                       <% end %>
                     </li>
 
                     <li class="menu-item">
-                      <%= link_to 'Home', root_path %>
+                      <%= link_to 'Home', root_path, class: 'text-link' %>
                     </li>
                     <% Admin::Category.menu.each do |cat| %>
                         <li class="menu-item">
-                          <%= link_to categories_path(cat.permalink) do %>
-                              <%= cat.name %> <span class="caret"></span>
+                          <%= link_to categories_path(cat.permalink), class: 'text-link' do %>
+                              <%= cat.name %>
+                              <% if cat.sub_categories.present? %>
+                                  <span class="caret"></span>
+                              <% end %>
                           <% end %>
                           <ul class="top-sub-menu">
                             <%= render 'shared/sub_menu', submenu: cat.sub_categories, menu: cat %>
@@ -77,6 +80,11 @@
                         </li>
                     <% end %>
                   </ul>
+
+
+
+
+
                 </div>
               </nav>
             </div>

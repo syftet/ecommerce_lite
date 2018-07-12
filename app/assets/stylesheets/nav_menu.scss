@@ -110,10 +110,19 @@
   padding: 14px 0;
 }
 
+.site-logo-link {
+  a {
+    &:hover {
+      background-color:transparent !important;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+}
 .syftet-mainmenu {
   #primary-menu {
     & > li {
-      a {
+      .text-link {
         position: relative;
         color: #006c6f;
         padding: 17px 20px 17px 0;
@@ -134,7 +143,7 @@
         &:hover,
         &:active,
         &:focus {
-          background: transparent;
+          background: transparent !important;
           color: #00a1a6;
           &:after {
             content: "";

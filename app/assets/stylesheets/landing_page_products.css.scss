@@ -27,7 +27,10 @@
   .view-more-products {
     width: 100%;
     padding: 50px 0;
-    background-image: image-url('more_product_bg.png');
+    //background-image: image-url('bg_img/bg-1.jpg');
+    background-image: image-url('bg_img/cloth-bg.jpg');
+    //background-image: image-url('bg_img/cloth-bg-2.jpg');
+    //background-image: image-url('bg_img/color-colection.jpg');
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -59,7 +62,7 @@
 .we-love-landing {
   margin-bottom: 30px;
   .wrapper {
-    background: #3A3A45;
+    background: #006c6f;
   }
   .call-to-action {
     text-align: center;
