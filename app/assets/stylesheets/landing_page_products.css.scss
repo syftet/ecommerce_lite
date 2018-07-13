@@ -81,12 +81,14 @@
           position: absolute;
           content: "";
           left: 0;
-          background-image: image_url('line-loolbook.png');
+          bottom: 0;
+          background-image: image_url('wave.png');
           width: 100%;
           height: 100%;
           text-align: center;
           background-repeat: no-repeat;
           background-position: bottom;
+
         }
       }
       .cta-text {
