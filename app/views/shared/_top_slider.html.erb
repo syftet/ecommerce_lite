@@ -2,6 +2,7 @@
   <% @sliders.each do |slider| %>
       <div class="slider-item">
         <%= image_tag(slider.image_url, class: 'img-fluid slider-image-fluid') %>
+        <h1> <%= slider.title %> </h1>
       </div>
   <% end %>
 </div>
