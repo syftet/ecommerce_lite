@@ -80,8 +80,8 @@ a {
 }
 
 .fulkuri-bg {
-  background-image: url("bg_img/fulkari-multi.jpg");
-  background-attachment: fixed;
+  background-image: image-url("bg_img/fulkari-multi.jpg");
+  //background-attachment: fixed;
   background-color: tomato;
   background-size: cover;
   background-position: center;
