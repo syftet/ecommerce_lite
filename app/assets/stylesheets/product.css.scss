@@ -9,10 +9,11 @@
     -webkit-transition: all .5s ease 0s;
     -o-transition: all .5s ease 0s;
     transition: all .5s ease 0s;
-    min-height: 410px;
-    //-webkit-box-shadow: 1px 2px 3px #cccccc;
-    //-moz-box-shadow: 1px 2px 3px #cccccc;
-    //box-shadow: 1px 2px 3px #cccccc;
+    height: 350px;
+    overflow: hidden;
+    -webkit-box-shadow: 0 0 3px #dddddd;
+    -moz-box-shadow: 0 0 3px #dddddd;
+    box-shadow: 0 0 3px #dddddd;
     a {
       color: #dfdfdf;
       &:hover {
@@ -167,10 +168,10 @@
       position: relative;
       overflow: hidden;
       text-align: center;
+      height: 205px;
       img {
         height: auto;
-        width: auto;
-        max-height: 225px;
+        width: 100%;
         margin: auto;
       }
     }
@@ -383,7 +384,7 @@
   position: relative;
   img {
     margin: 0 auto;
-    max-width: 100%;
+    width: 95%;
   }
   div {
     top: 0;

@@ -2,7 +2,7 @@
     <%= render 'shared/top_slider' %>
 <% end %>
 
-<div class="slugan-items">
+<div class="slugan-items mb20">
   <div class="row">
     <div class="col-sm-3">
       <%= image_tag 'quality.png', class: 'img-fluid' %>
@@ -13,25 +13,26 @@
     <div class="col-sm-3">
       <%= image_tag 'own-factory.png', class: 'img-fluid' %>
 
-      <p>We have own Factory</p>
+      <p>Own Factory Product</p>
     </div>
 
     <div class="col-sm-3">
       <%= image_tag 'money-refund.png', class: 'img-fluid' %>
 
-      <p>100% Money refund</p>
+      <p>100% Money Refund</p>
     </div>
 
     <div class="col-sm-3">
       <%= image_tag 'truck.png', class: 'img-fluid' %>
 
-      <p>Custom Order & Fast delivery</p>
+      <p>Custom Order & Fast Delivery</p>
     </div>
   </div>
 </div>
 
 <section class="featured-products">
   <div class="container">
+    <h3 class="public-title"> Top Sales </h3>
     <div class="product-lists clearfix">
       <% @featured_products.each do |product| %>
           <div class="product-wrapper product col-sm-6 col-md-3">
@@ -41,14 +42,16 @@
     </div>
   </div>
   <div class="view-more-products">
-    <h3> Now quality and Fashion at is your hand! </h3>
-    <h5> Make a custom design and order it. </h5>
-    <p>
-      Don't let it late. Quality, Price & time are our concern to serve you.
-    </p>
-    <%= link_to products_path, class: 'btn-more btn btn-warning' do %>
-        <%= t(:view_more) %> <i class="fa fa-plus"></i>
-    <% end %>
+    <div class="overlay-bg">
+      <h3> Now quality and fashion is on your hand! </h3>
+      <h5> Freedom to make a custom design and order. </h5>
+      <p>
+        Don't let it late. Quality, Price & Time are our concern to serve you.
+      </p>
+      <%= link_to products_path, class: 'btn-more btn btn-warning' do %>
+          <%= t(:view_more) %> <i class="fa fa-plus"></i>
+      <% end %>
+    </div>
   </div>
 </section>
 
