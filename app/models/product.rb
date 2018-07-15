@@ -54,8 +54,8 @@ class Product < ApplicationRecord
   has_many :images, as: :viewable, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :related_products, inverse_of: :product
-  has_many :stock_items
-  has_many :wishlists
+  has_many :stock_items, dependent: :destroy
+  has_many :wishlists, dependent: :destroy
 
   accepts_nested_attributes_for :images,
                                 allow_destroy: true,
