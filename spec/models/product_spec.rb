@@ -33,6 +33,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  track_inventory :boolean          default(TRUE)
+#  pos_id          :integer
 #
 # Indexes
 #

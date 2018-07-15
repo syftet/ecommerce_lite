@@ -106,6 +106,42 @@ class Api::V1::ProductsController < Api::ApiBase
     }
   end
 
+  def create
+    categories = []
+    brand = nil
+
+    if params[:categories].present?
+      params[:categories].each do |category|
+        categories << Admin::Category.find_or_create_by!(category.permit(:name, :description))
+      end
+    end
+
+    if params[:brand].present?
+      brand = Admin::Brand.find_or_create_by!(params[:brand].permit(:name, :description))
+    end
+
+    product = Product.find_by_pos_id(params[:product][:pos_id])
+    if product.present?
+      product.update!(params[:product].merge(brand_id: brand.present? ? brand.id : '').permit!)
+    else
+      product = Product.create!(params[:product].merge(brand_id: brand.present? ? brand.id : '').permit!)
+    end
+
+    if params[:images].present?
+      params[:images].each do |image|
+        p 'http://accounts.tangailenterprise.com' + image
+        product_image = product.images.build(remote_file_url: 'http://accounts.tangailenterprise.com' + image)
+        product_image.save! if product_image.file.present?
+      end
+    end
+
+    if categories.present?
+      categories.each do |category|
+        ProductCategory.find_or_create_by!(product: product, category: category)
+      end
+    end
+  end
+
   # private
   #
   # def taxonomy_view
