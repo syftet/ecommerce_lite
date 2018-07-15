@@ -107,14 +107,14 @@ class Api::V1::ProductsController < Api::ApiBase
   end
 
   def create
-    categories = []
+    # categories = []
     brand = nil
 
-    if params[:categories].present?
-      params[:categories].each do |category|
-        categories << Admin::Category.find_or_create_by!(category.permit(:name, :description))
-      end
-    end
+    # if params[:categories].present?
+    #   params[:categories].each do |category|
+    #     categories << Admin::Category.find_or_create_by!(category.permit(:name, :description))
+    #   end
+    # end
 
     if params[:brand].present?
       brand = Admin::Brand.find_or_create_by!(params[:brand].permit(:name, :description))
@@ -135,11 +135,11 @@ class Api::V1::ProductsController < Api::ApiBase
       end
     end
 
-    if categories.present?
-      categories.each do |category|
-        ProductCategory.find_or_create_by!(product: product, category: category)
-      end
-    end
+    # if categories.present?
+    #   categories.each do |category|
+    #     ProductCategory.find_or_create_by!(product: product, category: category)
+    #   end
+    # end
   end
 
   # private
