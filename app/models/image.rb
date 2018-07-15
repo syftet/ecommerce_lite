@@ -14,6 +14,7 @@
 #  alt           :string(255)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  pos_id        :integer
 #
 # Indexes
 #

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180714095144) do
+ActiveRecord::Schema.define(version: 20180715144212) do
 
   create_table "addresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "firstname"
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 20180714095144) do
     t.string "alt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "pos_id"
     t.index ["viewable_type", "viewable_id"], name: "index_images_on_viewable_type_and_viewable_id"
   end
 

@@ -129,8 +129,13 @@ class Api::V1::ProductsController < Api::ApiBase
 
     if params[:images].present?
       params[:images].each do |image|
-        p 'http://accounts.tangailenterprise.com' + image
-        product_image = product.images.build(remote_file_url: 'http://accounts.tangailenterprise.com' + image)
+        p 'http://accounts.tangailenterprise.com' + image[:image]
+        product_image = product.images.find_by_pos_id(image[:pos_id])
+        if product_image.present?
+          product_image.remote_file_url = 'http://accounts.tangailenterprise.com' + image[:image]
+        else
+          product_image = product.images.build(pos_id: image[:pos_id], remote_file_url: 'http://accounts.tangailenterprise.com' + image[:image])
+        end
         product_image.save! if product_image.file.present?
       end
     end
