@@ -62,9 +62,11 @@
                           <%= image_tag 'orna-house-logo.png', class: 'img-fluid' %>
                       <% end %>
                     </li>
-
                     <li class="menu-item">
-                      <%= link_to 'Home', root_path, class: 'text-link' %>
+                      <%= link_to promotion_products_path('discount'), class: 'text-link' do %>
+                          <%= t(:discount) %>
+                          <!--<span class="bubble-text-label label-hot"><%#= t(:hot) %></span>-->
+                      <% end %>
                     </li>
                     <% Admin::Category.menu.each do |cat| %>
                         <li class="menu-item">
