@@ -87,6 +87,19 @@ a {
   color: #006c6f;
 }
 
+/* Star rating design */
+.star-rating {
+  font-size: 10px;
+  display: inline-block;
+  float: none;
+  line-height: 1;
+  overflow: hidden;
+  position: relative;
+  letter-spacing: 2px;
+  vertical-align: middle;
+  padding: 5px 0;
+}
+
 .fulkuri-bg {
   background-image: image-url("bg_img/fulkari-multi.jpg");
   //background-attachment: fixed;
