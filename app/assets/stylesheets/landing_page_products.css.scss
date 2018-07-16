@@ -2,6 +2,12 @@
   margin-bottom: 70px;
 }
 
+.div-space-50 {
+  height: 50px;
+  clear: both;
+  width: 100%;
+}
+
 .featured-products {
   margin-bottom: 20px;
   h3.title {
@@ -281,5 +287,13 @@
   .custom-drp-content {
     padding: 10px;
     min-width: 170px;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .div-space-50 {
+    height: inherit;
+    width: inherit;
   }
 }
