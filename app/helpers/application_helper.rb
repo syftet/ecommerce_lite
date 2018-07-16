@@ -107,4 +107,10 @@ module ApplicationHelper
     # time.strftime("%l:%M %p")
   end
 
+  def site_logo(options = {})
+    p '@#$%^&*(*&^%$#@@#$%^&*^%$#$%^&*&^%$#$%^&*&^%$#$%^&*($%^&*('
+    p request.host
+    image_tag((request.host.include? 'lienexbeautylondon') ? 'lienes_logo_london.png' : 'lienes_logo.png', options)
+  end
+
 end

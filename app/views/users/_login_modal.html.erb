@@ -10,7 +10,8 @@
 
           <div class="text-center">
             <%= link_to root_path, style: 'display: inline-block;' do %>
-                <%= image_tag('logo.png', class: 'img-responsive center-image') %>
+                <%#= image_tag('logo.png', class: 'img-responsive center-image') %>
+                <%= site_logo(class: 'img-responsive center-image', style: 'height: 80px;') %>
             <% end %>
           </div>
 

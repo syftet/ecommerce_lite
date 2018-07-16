@@ -122,6 +122,11 @@ footer {
     .about-company-social {
       background: #31353d;
       padding: 87px 40px 82px 40px;
+      .site-logo-wrapper {
+        img {
+          width: 100%;
+        }
+      }
       .text-block {
         padding-top: 48px;
         padding-bottom: 34px;
