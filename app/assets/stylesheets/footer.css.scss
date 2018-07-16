@@ -24,7 +24,8 @@ footer {
   .syftet-footer-profile {
     .news-letter-wrapper {
       background: asset-url('bg_img/color-colection.jpg') top left/cover no-repeat scroll;
-      display: flex;
+      background-position: center;
+      background-attachment: fixed;
     }
     .join-our-email-section {
       padding: 76px 85px 56px 70px;
@@ -57,8 +58,8 @@ footer {
         clear: both;
         width: 100%;
         p {
-          color: #d4d4d4;
-          font-size: 12px;
+          color: #fff;
+          font-size: 14px;
         }
       }
     }
@@ -72,19 +73,22 @@ footer {
           padding-left: 50px;
           margin-left: 2px;
           height: 46px;
-          background-color: hsla(0, 0%, 100%, .4);
+          background-color: #fffc;
           font-weight: 300;
           max-width: 100%;
-          color: #fff;
+          color: #00a1a6;
           position: relative;
+          border-radius: inherit;
+          border-bottom: 1px solid #00a1a6;
         }
         &:before {
           position: absolute;
           content: "\f003";
           left: 15px;
           top: 15px;
-          color: #fff;
+          color: #00a1a6;
           font-family: FontAwesome;
+          z-index: 10;
         }
         input[type=submit] {
           padding: 0;
@@ -98,10 +102,10 @@ footer {
           text-transform: uppercase;
           font-weight: 500;
           letter-spacing: 5px;
-          border-bottom: 1px solid #fff;
+          border-bottom: 1px solid #00a1a6;
           padding-bottom: 1px;
           position: relative;
-          color: #ffffff;
+          color: #00a1a6;
           margin-top: 10px;
           -webkit-border-radius: 0;
           -moz-border-radius: 0;
@@ -110,16 +114,16 @@ footer {
       }
 
       ::-webkit-input-placeholder {
-        color: #eeeeee;
+        color: #00a1a6;
       }
       ::-moz-placeholder {
-        color: #eeeeee;
+        color: #00a1a6;
       }
       :-ms-input-placeholder {
-        color: #eeeeee;
+        color: #00a1a6;
       }
       :-moz-placeholder {
-        color: #eeeeee;
+        color: #00a1a6;
       }
     }
   }
