@@ -140,20 +140,6 @@
       color: #777777;
     }
 
-    .add-cart {
-      a.button {
-        background: transparent !important;
-        width: auto;
-        display: inline-block;
-        padding: 0;
-        border: none;
-        color: #fff;
-        font-size: 12px;
-        font-weight: 500;
-        text-transform: capitalize;
-      }
-    }
-
     .wrap-acction-group {
       .quick-view,
       .yith-compare {
@@ -453,27 +439,37 @@
 }
 
 .box-list {
-  background: #efefef;
-  padding: 2px;
-  height: 175px;
+  background: transparent;
   margin-bottom: 20px;
   overflow: hidden;
+  border: 1px solid #00a1a6;
   figure {
     float: left;
     width: 200px;
     overflow: hidden;
-    height: 171px;
+    height: 170px;
+    padding: 10px;
+    margin-bottom: 10px;
     img {
       width: 100%;
     }
   }
   .details {
     padding: 10px 10px 10px 210px;
+    div {
+      a {
+        color: #00a1a6;
+      }
+    }
   }
   .text-ellipsis {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 16px;
+    color: #00a1a6;
+    text-shadow: inherit;
+    font-weight: 700;
   }
   .product-description {
     height: 36px;
@@ -484,26 +480,18 @@
 @media (max-width: 480px) {
   .box-list {
     figure {
-      width: 120px;
-      overflow: hidden;
-      height: 171px;
+      float: inherit;
+      width: inherit;
+      overflow: inherit;
+      height: inherit;
+      padding: 10px;
+      margin-bottom: 10px;
       img {
-        width: auto;
-        height: 100%;
-        margin: auto;
+        width: 100%;
       }
     }
     .details {
-      padding: 10px 10px 10px 130px;
-    }
-    .text-ellipsis {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .product-description {
-      height: 36px;
-      overflow: hidden;
+      padding: 10px;
     }
   }
 }

@@ -20,14 +20,14 @@
         </span>
     </div>
 
-    <div class="info clearfix" style="height: 30px;">
+    <div class="info text-right" style="height: 30px;">
       <% if wishlist.product.reward_point > 0 %>
           <div class="rewards-point-wrapper pull-left" title="You will get <%= wishlist.product.reward_point %> rewards point, If you purchased this product.">
             <%= image_tag('trophy.png') %> <%= wishlist.product.reward_point %>
             <i class="fa fa-info-circle btn" data-container="body" data-toggle="popover" data-placement="top" data-content="You will get <%= wishlist.product.reward_point %> rewards point, If you purchased this product."></i>
           </div>
       <% end %>
-      <span class="pull-right">
+      <span>
           <%= raw wishlist.product.on_stock %>
         </span>
     </div>
@@ -35,12 +35,10 @@
       <%= wishlist.product.description %>
     </p>
 
-    <div class="product-add-to-cart">
-      <div class="add-cart">
-        <a title="Add to cart" rel="nofollow" href="<%= product_path(wishlist.product) %>" class="button btn btn-primary btn-sm">
-          Details
-        </a>
-      </div>
+    <div class="form-group">
+      <a title="Add to cart" rel="nofollow" href="<%= product_path(wishlist.product) %>" >
+        Details
+      </a>
     </div>
   </div>
 </article>
