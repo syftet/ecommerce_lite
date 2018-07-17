@@ -66,17 +66,17 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  default_url_options[:host] = 'http://tangailenterprise.com'
-  config.action_mailer.asset_host = "http://tangailenterprise.com"
+  default_url_options[:host] = 'http://ornahousebd.com'
+  config.action_mailer.asset_host = "http://ornahousebd.com"
 
   config.action_mailer.delivery_method = :smtp
-  config.mailer_sender = 'shop@lienesbeauty.com'
+  config.mailer_sender = 'syftetltd@gmail.com'
   config.action_mailer.smtp_settings = {
-      address: 'smtp.zoho.com',
+      address: 'ornahousebd.com',
       port: 465,
-      domain: 'lienesbeauty.com',
-      user_name: 'shop@lienesbeauty.com',
-      password: 'Lbeauty2017',
+      domain: 'ornahousebd.com',
+      user_name: 'syftetltd@gmail.com',
+      password: 'nazrulziko',
       authentication: :plain,
       ssl: true,
       enable_starttls_auto: true

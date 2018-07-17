@@ -31,15 +31,15 @@ Rails.application.configure do
 
   #for mailer root url
   config.action_mailer.default_url_options = {host: 'localhost', port: 3000}
-  config.action_mailer.asset_host = 'https://www.bequent.com'
+  config.action_mailer.asset_host = 'https://www.ornahousebd.com'
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      address: '162.221.186.242',
+      address: '188.166.241.241',
       port: 587,
-      domain: 'bequent.com',
-      user_name: 'info@bequent.com',
-      password: 'cLQGdN6rIJG7',
+      domain: 'ornahousebd.com',
+      user_name: 'syftetltd@gmail.com',
+      password: 'nazrulziko',
       :authentication => :login,
       :enable_starttls_auto => true,
       :openssl_verify_mode => 'none'
