@@ -40,6 +40,8 @@
 #  index_products_on_brand_id  (brand_id)
 #
 
+require 'net/http'
+
 class Product < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
