@@ -108,9 +108,9 @@ class Product < ApplicationRecord
     req = Net::HTTP::Get.new(uri.path, 'Content-Type' => 'application/json')
     res = http.request(req)
     if res.body.to_i > 0
-      "<span class='product-in-stock'> In Stock </span>"
+      true
     else
-      "<span class='product-out-stock'> Out Of Stock </span>"
+      false
     end
   rescue => e
     puts "failed #{e}"
