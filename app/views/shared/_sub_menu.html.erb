@@ -1,7 +1,7 @@
 <ul>
   <% submenu.each do |sub| %>
       <li>
-        <%= link_to sub.name, categories_path(sub.permalink), class: ('' == sub.id ? 'active' : '') %>
+        <%= link_to sub.name, categories_path(sub.permalink), class: "#{('' == sub.id ? 'active' : '')}, text-link" %>
         <% if sub.sub_categories.any? %>
             <span data-ref='top-<%= sub.id %>' class='pull-right tri-label-collapse'> <i class='fa fa-angle-right'></i> </span>
         <% end %>
