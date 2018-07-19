@@ -66,20 +66,20 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  default_url_options[:host] = 'http://ornahousebd.com'
-  config.action_mailer.asset_host = "http://ornahousebd.com"
+  default_url_options[:host] = 'https://www.ornahousebd.com'
+  config.action_mailer.asset_host = "https://www.ornahousebd.com"
 
   config.action_mailer.delivery_method = :smtp
   config.mailer_sender = 'syftetltd@gmail.com'
   config.action_mailer.smtp_settings = {
-      address: 'ornahousebd.com',
-      port: 465,
-      domain: 'ornahousebd.com',
+      address: 'smtp.gmail.com',
+      port: 587,
+      domain: 'gmail.com',
       user_name: 'syftetltd@gmail.com',
       password: 'nazrulziko',
-      authentication: :plain,
-      ssl: true,
-      enable_starttls_auto: true
+      :authentication => :login,
+      :enable_starttls_auto => true,
+      :openssl_verify_mode => 'none'
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

@@ -64,14 +64,14 @@ class Order < ApplicationRecord
   }.freeze
 
   ORDER_SMTP = {
-    address: 'smtp.zoho.com',
-    port: 465,
-    domain: 'lienesbeauty.com',
-    user_name: 'sales@lienesbeauty.com',
-    password: 'Shop2017',
-    authentication: :plain,
-    ssl: true,
-    enable_starttls_auto: true
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'gmail.com',
+    user_name: 'syftetltd@gmail.com',
+    password: 'nazrulziko',
+    authentication: :login,
+    enable_starttls_auto: true,
+    openssl_verify_mode: 'none'
   }.freeze
 
   CHECKOUT_STEPS = {
@@ -290,7 +290,7 @@ class Order < ApplicationRecord
   def init_shipment(shipping_method)
     shipping = ShippingMethod.find_by_id(shipping_method)
     u_shipment = shipment || build_shipment
-    u_shipment.cost = shipping.rate
+    u_shipment.cost = shipping.rate.nil?
     u_shipment.address_id = ship_address.id
     u_shipment.tracking = shipping.code
     u_shipment.shipping_method_id = shipping.id
