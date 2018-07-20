@@ -71,7 +71,7 @@
     padding: 15px 10px;
     background: #fff;
     &.active-content {
-      min-width: 300px !important;
+      min-width: 300px;
       left: inherit !important;
       right: -85px !important;
       p {

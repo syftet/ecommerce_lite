@@ -454,3 +454,21 @@ a {
     padding: 15px 0;
   }
 }
+
+/* Mobile search placeholder design */
+.mobile-search-design::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-size: 12px;
+  font-weight: normal;
+}
+.mobile-search-design::-moz-placeholder { /* Firefox 19+ */
+  font-size: 12px;
+  font-weight: normal;
+}
+.mobile-search-design:-ms-input-placeholder { /* IE 10+ */
+  font-size: 12px;
+  font-weight: normal;
+}
+.mobile-search-design:-moz-placeholder { /* Firefox 18- */
+  font-size: 12px;
+  font-weight: normal;
+}
