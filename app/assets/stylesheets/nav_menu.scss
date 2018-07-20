@@ -351,12 +351,16 @@
 }
 
 .custom-cart {
-  a {
-    color: #006c6f;
-    &:hover {
-      color: #00a1a6;
-      cursor: pointer;
-      text-decoration: none;
+  .mini-cart {
+    .icon-basket {
+      i {
+        color: #006c6f;
+        &:hover {
+          color: #00a1a6;
+          cursor: pointer;
+          text-decoration: none;
+        }
+      }
     }
   }
 }

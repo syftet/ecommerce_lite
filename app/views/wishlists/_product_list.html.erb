@@ -20,25 +20,36 @@
         </span>
     </div>
 
-    <div class="info text-right" style="height: 30px;">
+    <div class="info text-right" style="height: 25px;">
       <% if wishlist.product.reward_point > 0 %>
           <div class="rewards-point-wrapper pull-left" title="You will get <%= wishlist.product.reward_point %> rewards point, If you purchased this product.">
             <%= image_tag('trophy.png') %> <%= wishlist.product.reward_point %>
             <i class="fa fa-info-circle btn" data-container="body" data-toggle="popover" data-placement="top" data-content="You will get <%= wishlist.product.reward_point %> rewards point, If you purchased this product."></i>
           </div>
       <% end %>
-      <span>
-          <%= raw wishlist.product.on_stock %>
-        </span>
+      <%= raw wishlist.product.on_stock %>
     </div>
     <p class="product-description">
       <%= wishlist.product.description %>
     </p>
 
     <div class="form-group">
-      <a title="Add to cart" rel="nofollow" href="<%= product_path(wishlist.product) %>" >
+      <a rel="nofollow" href="<%= product_path(wishlist.product) %>" >
         Details
       </a>
+    </div>
+
+    <div class="add-cart">
+      <% if wishlist.product.total_on_hand > 0 %>
+          <%= form_for :order, url: populate_orders_path, remote: true do |f| %>
+              <%= hidden_field_tag :variant_id, wishlist.product.id %>
+              <%= hidden_field_tag :quantity, 1 %>
+              <%= button_tag class: 'add-to-cart-btn', type: :submit, title: 'Add To Cart' do %>
+                  <i class="fa fa-cart-plus color-gray"></i>
+                  Add to cart
+              <% end %>
+          <% end %>
+      <% end %>
     </div>
   </div>
 </article>

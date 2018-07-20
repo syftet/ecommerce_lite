@@ -43,7 +43,7 @@ class Product < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
 
-  attr_readonly :price
+  attr_accessor :price
 
   belongs_to :brand, class_name: 'Admin::Brand'
   belongs_to :product, foreign_key: :product_id

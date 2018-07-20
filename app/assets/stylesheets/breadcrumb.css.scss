@@ -12,5 +12,12 @@
     color: #333e48;
     text-transform: capitalize;
     background: transparent;
+    li {
+      a {
+        color: #006c6f;
+        cursor: pointer;
+        text-decoration: none;
+      }
+    }
   }
 }

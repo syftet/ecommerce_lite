@@ -392,7 +392,33 @@
 }
 
 .product-in-stock {
-  color: #297e29;
+  color: #fff;
+  display: inline-block;
+  padding: 2px 15px;
+  background-color: #297e29;
+  font-size: 10px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.add-to-cart-btn {
+  display: inline-block;
+  padding: 4px 20px;
+  background-color: #00a1a6;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    background-color: #006c6f;
+  }
+  i {
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 5px;
+  }
 }
 
 .product-out-stock {
@@ -436,7 +462,7 @@
     float: left;
     width: 200px;
     overflow: hidden;
-    height: 170px;
+    height: 185px;
     padding: 10px;
     margin-bottom: 10px;
     img {
