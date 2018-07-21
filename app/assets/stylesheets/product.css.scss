@@ -434,9 +434,21 @@
 
 .remove-compare-btn {
   position: absolute;
-  top: -9px;
-  left: 25%;
+  top: -80%;
+  right: 0;
   padding: 0 5px;
+}
+
+#compare_content {
+  table {
+    thead {
+      tr {
+        th {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
 }
 
 .rewards-point-wrapper {
@@ -471,9 +483,13 @@
   }
   .details {
     padding: 10px 10px 10px 210px;
-    div {
+    .right-side {
       a {
         color: #00a1a6;
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline !important;
+        }
       }
     }
   }
@@ -487,8 +503,26 @@
     font-weight: 700;
   }
   .product-description {
-    height: 36px;
-    overflow: hidden;
+    margin-bottom: 5px;
+  }
+}
+
+.product-price {
+  color: #A40028;
+  font-weight: bold;
+}
+
+.rewards-point-wrapper {
+  display: inline-block;
+}
+
+/* Pagination design */
+.page, .prev, .next, .first, .last {
+  a {
+    color: #00a1a6;
+    &:hover {
+      color: #006c6f;
+    }
   }
 }
 
