@@ -8,17 +8,17 @@
         <div class="popupnewsletter-widget">
           <div>
             <div class="pnew-head">
-              <h3>
-                <span>10% Off Your First Order</span>
+              <h3 class="primary-color-deep">
+                <span class="offer-highlight"> 10% Off </span>For Your First Order
               </h3>
 
               <p class="description">
-                Sign up to our newsletter and get a welcome gift from us </p>
+                Sign up to our newsletter & get a welcome gift from us </p>
             </div>
             <%= form_for NewsletterSubscription.new, url: email_subscription_path, remote: true, html: {class: 'subscription-popup-form'} do |f| %>
                 <div class="form-fields">
                   <div class="input-group">
-                    <%= f.email_field :email, class: 'form-control', placeholder: "#{t(:enter_your_email)}..." %>
+                    <%= f.email_field :email, class: 'form-control custom-form-control', placeholder: "#{t(:enter_your_email)}..." %>
 
                     <span class="clearfix pull-right">
                       <input type="submit" value="<%= t(:subscribe) %> +" class="btn">
@@ -30,7 +30,7 @@
           <aside id="popup-socials-widget">
             <ul class="social list-unstyled list-inline bo-sicolor">
               <li>
-                <a href="https://www.facebook.com/lienesbeautyshop/" class="facebook">
+                <a href="https://www.facebook.com/aboronMart" class="facebook">
                   <i class="fa fa-facebook bo-social-facebook">&nbsp;</i>
                 </a>
               </li>

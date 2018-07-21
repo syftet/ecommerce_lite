@@ -1,6 +1,5 @@
 #subsciption-offer {
   .modal-dialog {
-    width: 100%;
     max-width: 730px;
   }
   .modal-content {
@@ -18,7 +17,7 @@
     }
     .popupnewsletter-widget {
       .pnew-head {
-        width: 45%;
+        width: 65%;
         h3 {
           font-size: 22px;
           padding-bottom: 20px;
@@ -40,16 +39,52 @@
           border-right: none;
         }
         input[type='submit'] {
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-          background: #c34322;
+          background-color: #00a1a6;
           color: #ffffff;
+          border-radius: 0;
+          &:hover {
+            background-color: #006c6f;
+            cursor: pointer;
+          }
         }
       }
       #popup-socials-widget {
-        padding: 30px;
+        padding: 20px 0;
         background: transparent;
         margin: 0;
+      }
+    }
+  }
+}
+
+.offer-highlight {
+  background-color: tomato;
+  color: #fff;
+  border-radius: 0px;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  #subsciption-offer .modal-content .popupnewsletter-widget .pnew-head {
+    width: 100%;
+    h3 {
+      font-size: 20px;
+      text-align: center;
+      line-height: 25px;
+      padding-bottom: 0;
+    }
+  }
+  #subsciption-offer .modal-content .popupnewsletter-widget .subscription-popup-form .input-group {
+    width: 100%;
+  }
+
+  /* Galary responsive code */
+  .client-testimonial ul li.loaded {
+    width: 100%;
+    a {
+      img {
+        width: 100%;
+        display: block;
       }
     }
   }
