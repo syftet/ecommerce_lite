@@ -6,11 +6,10 @@ class OrderMailer < ApplicationMailer
 
   def confirm_email(order, resend = false)
     @order = order.respond_to?(:id) ? order : Order.find(order)
-    subject = "Your Orna House Order Confirmation"
-    mail(to: @order.email, subject: subject, delivery_method_options: Order::ORDER_SMTP)
-    unless resend
-      mail(to: 'nazrulku07@gmail.com', subject: "New order received from www.ornahousebd.com", delivery_method_options: Order::ORDER_SMTP)
-    end
+    mail(to: 'nazrulku07@gmail.com', subject: 'Your Orna House Order Confirmation')
+    #unless resend
+      #mail(to: 'nazrulku07@gmail.com', subject: 'New order received from www.ornahousebd.com') #, delivery_method_options: Order::ORDER_SMTP)
+    #end
   end
 
   def update_order(order)
