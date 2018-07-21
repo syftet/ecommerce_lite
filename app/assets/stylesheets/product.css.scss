@@ -434,9 +434,21 @@
 
 .remove-compare-btn {
   position: absolute;
-  top: -9px;
-  left: 25%;
+  top: -80%;
+  right: 0;
   padding: 0 5px;
+}
+
+#compare_content {
+  table {
+    thead {
+      tr {
+        th {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
 }
 
 .rewards-point-wrapper {
