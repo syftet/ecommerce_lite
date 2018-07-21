@@ -1,18 +1,18 @@
-<div class="col-sm-4 post-item">
+<div class="col-sm-4 post-item mb15">
   <div class="item">
     <article>
       <div class="content-blog">
         <div class="image-thumnail">
 
           <div class="post-thumbnail">
-            <%= image_tag(blog.cover_photo_url(:thumb), class: 'single-image-fluid') %>
+            <%= image_tag(blog.cover_photo_url(:thumb), class: 'img-fluid center-block') %>
           </div>
 
         </div>
 
         <div class="bottom-blog">
           <h3 class="title-post">
-            <%= link_to blog.title, blog_path(blog) %>
+            <%= link_to truncate( blog.title, length: 35 ), blog_path(blog) %>
           </h3>
 
           <div class="blog-meta">
@@ -26,7 +26,7 @@
             </div>
           </div>
           <div class="entry-content">
-            <%= raw truncate(raw(blog.body), length: 200).html_safe %>
+            <%= truncate(strip_tags(blog.body), length: 150).html_safe %>
           </div>
           <!-- .entry-content -->
         </div>
