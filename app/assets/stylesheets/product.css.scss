@@ -516,6 +516,16 @@
   display: inline-block;
 }
 
+/* Pagination design */
+.page, .prev, .next, .first, .last {
+  a {
+    color: #00a1a6;
+    &:hover {
+      color: #006c6f;
+    }
+  }
+}
+
 @media (max-width: 480px) {
   .box-list {
     figure {
