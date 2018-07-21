@@ -63,16 +63,16 @@ class Order < ApplicationRecord
     refunded: 'Refunded'
   }.freeze
 
-  ORDER_SMTP = {
-    address: 'smtp.gmail.com',
-    port: 587,
-    domain: 'gmail.com',
-    user_name: 'syftetltd@gmail.com',
-    password: 'nazrulziko',
-    authentication: :login,
-    enable_starttls_auto: true,
-    openssl_verify_mode: 'none'
-  }.freeze
+  # ORDER_SMTP = {
+  #   address: 'smtp.gmail.com',
+  #   port: 587,
+  #   domain: 'gmail.com',
+  #   user_name: 'syftetltd@gmail.com',
+  #   password: 'nazrulziko',
+  #   authentication: :login,
+  #   enable_starttls_auto: true,
+  #   openssl_verify_mode: 'none'
+  # }.freeze
 
   CHECKOUT_STEPS = {
     address: 'Address',
