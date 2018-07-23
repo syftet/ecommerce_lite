@@ -2,21 +2,21 @@
     <%= render 'shared/breadscrumb', breadscrumb: generate_breadscrumb("##{@order.number}", '', '', {orders: my_account_path}) %>
 <% end %>
 
-<div id="content" class="col-sm-12" style="padding: 0" data-hook="">
-  <div class="container">
-    <div class="thanks-order-wrap">
+<div id="content" style="padding: 0" data-hook="">
+  <div class="container mb40">
+    <div class="thanks-order-wrap mt20">
       <div class="thanks-order-container alert alert-success">
         <%# if order_just_completed?(@order) %>
-            <h4> THANKS FOR YOUR ORDER, <%= @order.ship_address.full_name %>! </h4>
-            <p> Your Order ID is <%= @order.number %>, Date: <%= @order.created_at.strftime("%b %d, %Y") %> </p>
+        <h4> THANKS FOR YOUR ORDER, <%= @order.ship_address.full_name %>! </h4>
+        <p> Your Order ID is <%= @order.number %>, Date: <%= @order.created_at.strftime("%b %d, %Y") %> </p>
         <%# end %>
       </div>
     </div>
     <% ship_address = @order.ship_address %>
     <% bill_address = @order.ship_address %>
-    <div class="bill-wrap col-lg-12">
-      <div class="bill-container clearfix border-bottom row">
-        <div class="col-sm-6">
+    <div class="bill-wrap row mb20">
+      <div class="bill-container clearfix border-bottom">
+        <div class="col-sm-6 mb15">
           <h4 class="public-title text-left mb10"> Bill To </h4>
 
           <div class="bill-to-details">
@@ -45,7 +45,7 @@
           </div>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-6 mb15">
           <h4 class="public-title text-left mb10"> Ship To </h4>
 
           <div class="bill-to-details">
@@ -76,84 +76,79 @@
       </div>
     </div>
 
-    <div class="col-lg-12 mb10">
-      <div class="row shipping-contact-info">
-        <div class="col-sm-6">
-          <div class="shipping-method-wrap mb0">
-            <h3 class="public-title text-left mb10"> Shipping Methods: </h3>
-             <% if @order.shipment.present? %>
-                <%=  @order.shipment.shipping_method.name  %>
-             <% end %>
-          </div>
+    <div class="row shipping-contact-info mb20">
+      <div class="col-sm-6 mb15">
+        <div class="shipping-method-wrap mb0">
+          <h3 class="public-title text-left mb10"> Shipping Methods: </h3>
+          <% if @order.shipment.present? %>
+              <%=  @order.shipment.shipping_method.name  %>
+          <% end %>
         </div>
-        <div class="col-sm-6">
-          <div class="contact-info mb0">
-            <h3 class="public-title text-left mb10"> Contact Information: </h3>
+      </div>
+      <div class="col-sm-6 mb15">
+        <div class="contact-info mb0">
+          <h3 class="public-title text-left mb10"> Contact Information: </h3>
 
-            <p>
-              Email: <%= @order.email %> <br>
-              Phone: <%= ship_address.phone %>
-            </p>
-          </div>
+          <p>
+            Email: <%= @order.email %> <br>
+            Phone: <%= ship_address.phone %>
+          </p>
         </div>
       </div>
     </div>
 
     <div class="product-list-item order-show-product-list">
       <div class="product-list-container">
-        <div class="col-lg-12">
-          <div class="row">
-            <div class="col-sm-6">
-              <table class="table product-item-table">
-                <thead>
-                <tr>
-                  <th colspan="2"> Items(<%= @order.line_items.count %>)</th>
-                  <th> Quality</th>
-                  <th> Price</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% @order.line_items.each do |item| %>
-                    <tr>
-                      <td>
-                        <%#= get_variant_image(item.variant) %>
-                        <%= mini_image(item.product) %>
-                      </td>
-                      <td>
-                        <%# if item.product.brand.present? %>
-                        <!--<strong> <%#= skip_html_tag(item.product.brand.name) %> </strong> <br>-->
-                        <%# end %>
-                        <label>
-                          <%= link_to product_path(item.product), target: '_blank' do %>
-                              <%= item.product.name %>
-                          <% end %>
-                        </label>
-                        <br>
-                        Web ID: <%= item.product.id %> <br>
-                        Size: <%= item.product.size %> <br>
-                        color:
-                        <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%= variant_color_image_option(item.product.color) %>"></span>
-                        <!--<br/>-->
+        <div class="row mb20">
+          <div class="col-sm-6 mb15">
+            <table class="table product-item-table">
+              <thead>
+              <tr>
+                <th colspan="2"> Items(<%= @order.line_items.count %>)</th>
+                <th> Quality</th>
+                <th> Price</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @order.line_items.each do |item| %>
+                  <tr>
+                    <td>
+                      <%#= get_variant_image(item.variant) %>
+                      <%= mini_image(item.product) %>
+                    </td>
+                    <td>
+                      <%# if item.product.brand.present? %>
+                      <!--<strong> <%#= skip_html_tag(item.product.brand.name) %> </strong> <br>-->
+                      <%# end %>
+                      <label>
+                        <%= link_to product_path(item.product), target: '_blank' do %>
+                            <%= item.product.name %>
+                        <% end %>
+                      </label>
+                      <br>
+                      Web ID: <%= item.product.id %> <br>
+                      Size: <%= item.product.size %> <br>
+                      color:
+                      <span style="display: inline-block; width: 20px; height: 20px; vertical-align: middle; <%= variant_color_image_option(item.product.color) %>"></span>
+                      <!--<br/>-->
 
-                      </td>
-                      <td>
-                        <%= item.quantity %>
-                      </td>
-                      <td>
-                        <%= amount_with_currency(item.product.price) %>
-                      </td>
-                    </tr>
-                <% end %>
-                </tbody>
-              </table>
-            </div>
+                    </td>
+                    <td>
+                      <%= item.quantity %>
+                    </td>
+                    <td>
+                      <%= amount_with_currency(item.product.price) %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
 
-            <div class="col-sm-6">
-              <%= render 'orders/summary' %>
-            </div>
+          <div class="col-sm-6 mb15">
+            <%= render 'orders/summary' %>
           </div>
         </div>
-
       </div>
     </div>
   </div>
