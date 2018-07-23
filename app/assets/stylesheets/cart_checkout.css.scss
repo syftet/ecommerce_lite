@@ -96,7 +96,7 @@
 }
 
 .order-summary-wrap {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   .order-table {
     box-shadow: 0 -2px 5px 1px rgba(204, 204, 204, 0.75);
     border: 1px solid #ccc;
@@ -130,6 +130,19 @@
       th {
         //background: #dddddd;
         //border-bottom: 1px solid #999999;
+      }
+    }
+  }
+}
+
+.table.stock-contents {
+  thead {
+
+  }
+  tbody {
+    tr {
+      td {
+        vertical-align: middle;
       }
     }
   }

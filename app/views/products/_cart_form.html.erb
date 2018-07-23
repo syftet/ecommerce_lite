@@ -36,7 +36,7 @@
 
       <div data-hook="product_price">
         <% if @product.total_on_hand > 0 %>
-            <%= button_tag class: 'btn btn-warning btn-large', id: 'add-to-cart-button', type: :submit do %>
+            <%= button_tag class: 'btn btn-warning btn-large reset-border-radius', id: 'add-to-cart-button', type: :submit do %>
                 ADD TO CART
             <% end %>
             <span class="ml10 wishlist-product-<%= @product.id %>">

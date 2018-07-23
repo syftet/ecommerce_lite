@@ -3,6 +3,7 @@
   .nav-tabs {
     li {
       a {
+        color: #00a1a6;
         &:hover {
           background: transparent;
           border-color: transparent;
@@ -12,13 +13,13 @@
         border: none;
         a {
           border-color: transparent;
-          border-bottom-color: #fcc030;
+          border-bottom-color: #00a1a6;
           border-bottom-width: 3px;
           &:hover,
           &:active,
           &:focus {
             border-color: transparent;
-            border-bottom-color: #fcc030;
+            border-bottom-color: #006c6f;
             border-bottom-width: 3px;
           }
         }
@@ -201,6 +202,15 @@
       &.pending {
         color: #c6000e;
       }
+    }
+  }
+}
+
+#description-rating-tabs {
+  li {
+    a.active {
+    }
+    a {
     }
   }
 }

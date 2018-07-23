@@ -38,8 +38,8 @@
 <%= form.fields_for :ship_address do |ship_form| %>
     <div class="container">
       <div class="clear"></div>
-      <div class="row">
-        <div class="col-md-6 clearfix">
+      <div class="row mb40">
+        <div class="col-md-6 clearfix pb20">
           <h1 class="public-title text-left mb15"> Your shipping address</h1>
 
           <div class="checkout-form">
@@ -50,9 +50,9 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 clearfix">
+        <div class="col-md-6 clearfix pb20">
           <%= render 'orders/summary' %>
-          <%= submit_tag 'Save and Continue', :class => 'place-order-btn' %>
+          <%= submit_tag 'Save and Continue', :class => 'btn-primo-thin' %>
         </div>
       </div>
     </div>

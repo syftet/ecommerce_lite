@@ -4,8 +4,8 @@
 
 <div class="clearfix" id='shipping-method'>
   <div class="col-lg-12">
-    <div class="row">
-      <div class="col-md-7">
+    <div class="row mb40">
+      <div class="col-md-7 pb20">
         <div id="methods">
           <div class="shipment unshippable">
             <table class="table stock-contents">
@@ -56,11 +56,11 @@
           <%= form.text_area :special_instructions, :cols => 40, :rows => 4, :class => "form-control reset-border-radius" %>
         </div>
       </div>
-      <div class="col-md-5 mb10">
+      <div class="col-md-5 pb20">
         <%= render 'orders/summary' %>
         <h4 class="public-title text-left mb10"> Shipping address </h4>
         <%= render 'checkout/shipping_address' %>
-        <%= submit_tag "save and continue", :class => 'place-order-btn' %>
+        <%= submit_tag "Save & Continue", :class => 'btn-primo-thin' %>
       </div>
     </div>
   </div>
