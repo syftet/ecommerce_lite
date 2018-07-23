@@ -1,14 +1,14 @@
-<div id="cash" class="tab-pane fade in <%= 'active' if index == 0 %>">
+<div id="cash" class="text-left tab-pane fade in <%= 'active' if index == 0 %>">
   <%= form_for @order, url: update_checkout_path(@order.state) do |f| %>
       <%= radio_button_tag "[order][payments_attributes][payment_method_id]", payment_method('PaymentMethod::Cash'), true, id: 'payment-cash', class: 'hidden' %>
       <h3>Cash On Delivery</h3>
 
-      <p>
+      <p class="alert alert-warning">
         Please pay <b> <%= @order.net_total %> </b> when received delivery.
       </p>
 
       <p>
-        <input type="submit" class="place-order-btn pull-right" value="Confirm & Place Order">
+        <input type="submit" class="btn-primo-thin" value="Confirm & Place Order">
       </p>
   <% end %>
 </div>

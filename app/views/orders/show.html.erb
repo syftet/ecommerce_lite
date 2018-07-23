@@ -5,10 +5,10 @@
 <div id="content" class="col-sm-12" style="padding: 0" data-hook="">
   <div class="container">
     <div class="thanks-order-wrap">
-      <div class="thanks-order-container">
+      <div class="thanks-order-container alert alert-success">
         <%# if order_just_completed?(@order) %>
-            <h3> THANKS FOR YOUR ORDER, <%= @order.ship_address.full_name %>! </h3>
-            <h4> Your Order ID is <%= @order.number %>, Date: <%= @order.created_at.strftime("%b %d, %Y") %> </h4>
+            <h4> THANKS FOR YOUR ORDER, <%= @order.ship_address.full_name %>! </h4>
+            <p> Your Order ID is <%= @order.number %>, Date: <%= @order.created_at.strftime("%b %d, %Y") %> </p>
         <%# end %>
       </div>
     </div>
