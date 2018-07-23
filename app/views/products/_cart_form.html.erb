@@ -35,7 +35,7 @@
       </div>
 
       <div data-hook="product_price">
-        <% if @product.total_on_hand > 0 %>
+        <% if @in_stock  %>
             <%= button_tag class: 'btn btn-warning btn-large', id: 'add-to-cart-button', type: :submit do %>
                 ADD TO CART
             <% end %>
@@ -141,4 +141,6 @@
         }, 500);
 
     }
+
+
 </script>

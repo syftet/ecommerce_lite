@@ -22,7 +22,11 @@
     <% end %>
 
     <p class="stock in-stock">
-      <%= raw @product.on_stock %>
+     <% if @in_stock %>
+          <span class='product-in-stock'> In Stock </span>
+      <% else %>
+          <span class='product-out-stock'> Out Of Stock </span>
+      <% end %>
     </p>
 
     <p class="price">

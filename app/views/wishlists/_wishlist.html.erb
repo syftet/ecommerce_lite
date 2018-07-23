@@ -18,7 +18,11 @@
       </span>
   </td>
   <td class="product-stock-status">
-    <%= raw wishlist.product.on_stock %>
+    <% if wishlist.product.on_stock %>
+        <span class='product-in-stock'> In Stock </span>
+    <% else %>
+        <span class='product-out-stock'> Out Of Stock </span>
+    <% end %>
   </td>
   <td class="product-add-to-cart">
     <div class="add-cart">

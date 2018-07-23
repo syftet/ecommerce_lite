@@ -21,6 +21,7 @@ class ProductsController < ApplicationController
     @product = Product.friendly.find(params[:id])
     @rating_analysis = @product.reviews.group(:rating).count
     @review = @product.reviews.build
+    @in_stock =  @product.on_stock
   end
 
   def quickview

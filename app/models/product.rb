@@ -33,11 +33,14 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  track_inventory :boolean          default(TRUE)
+#  pos_id          :integer
 #
 # Indexes
 #
 #  index_products_on_brand_id  (brand_id)
 #
+
+require 'net/http'
 
 class Product < ApplicationRecord
   extend FriendlyId
@@ -53,8 +56,8 @@ class Product < ApplicationRecord
   has_many :images, as: :viewable, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :related_products, inverse_of: :product
-  has_many :stock_items
-  has_many :wishlists
+  has_many :stock_items, dependent: :destroy
+  has_many :wishlists, dependent: :destroy
 
   accepts_nested_attributes_for :images,
                                 allow_destroy: true,
@@ -102,11 +105,17 @@ class Product < ApplicationRecord
   end
 
   def on_stock
-    if total_on_hand > 0
-      "<span class='product-in-stock'> In Stock </span>"
+    uri = URI("http://accounts.tangailenterprise.com/api/products/#{pos_id}/stock_on_hand")
+    http = Net::HTTP.new(uri.host, uri.port)
+    req = Net::HTTP::Get.new(uri.path, 'Content-Type' => 'application/json')
+    res = http.request(req)
+    if res.body.to_i > 0
+      true
     else
-      "<span class='product-out-stock'> Out Of Stock </span>"
+      false
     end
+  rescue => e
+    puts "failed #{e}"
   end
 
   def self.search_by_name_or_code(query_param)

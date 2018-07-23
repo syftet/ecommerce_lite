@@ -175,7 +175,7 @@ Rails.application.routes.draw do
       devise_for :users
       get 'home', to: 'home#index'
       get 'my_account', to: 'users#my_account'
-      resources :products, only: [:index, :show] do
+      resources :products, only: [:index, :show, :create] do
         get 'filters', on: :collection
         get 'get_names', on: :collection
       end
