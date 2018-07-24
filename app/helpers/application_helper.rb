@@ -108,9 +108,7 @@ module ApplicationHelper
   end
 
   def site_logo(options = {})
-    p '@#$%^&*(*&^%$#@@#$%^&*^%$#$%^&*&^%$#$%^&*&^%$#$%^&*($%^&*('
-    p request.host
-    image_tag((request.host.include? 'lienexbeautylondon') ? 'lienes_logo_london.png' : 'lienes_logo.png', options)
+    image_tag((request.host.include? 'lienexbeautylondon') ? 'lienes_logo_london.png' : 'lienes_logo.png', options) if request
   end
 
 end
