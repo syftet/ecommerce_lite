@@ -91,16 +91,18 @@ module Admin
 
     def collection
       @search = User.new
+      users = []
       if params[:quick_search].present?
-        User.where("name like '%#{params[:quick_search]}%' or email like '%#{params[:quick_search]}%'")
+        users = User.where("name like '%#{params[:quick_search]}%' or email like '%#{params[:quick_search]}%'")
       elsif params[:user].present?
         @search = User.new(user_params)
         users = User.all
         users = users.where(name: params[:user][:name]) unless params[:user][:name].blank?
-        users.where(email: params[:user][:email]) unless params[:user][:email].blank?
+        users = users.where(email: params[:user][:email]) unless params[:user][:email].blank?
       else
-        User.all
+        users = User.all
       end
+      users
     end
 
   end
