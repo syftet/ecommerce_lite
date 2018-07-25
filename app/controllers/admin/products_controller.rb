@@ -3,8 +3,21 @@ module Admin
     before_action :set_product, only: [:edit, :update, :destroy, :stock]
 
     def index
+      params[:q] ||= {}
+      @products = Product.all
+      if params[:product].present?
+        @query_result =  Product.advance_search(params, @products)
+        @products = @query_result[:products]
+        params[:q] = @query_result[:params_hash]
+        p params[:q]
+      elsif params[:quick_search].present?
+        @products = @products.search_by_name_or_code(params[:quick_search])
+      end
+      @search = Product.new
+      @products = @products.page params[:page]
+
       respond_to do |format|
-        format.html { @products = Product.master_active }
+        format.html { }
         format.json { @products = Product.master_active.search_by_name_or_code(params[:q][:term]) }
       end
     end

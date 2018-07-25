@@ -48,7 +48,7 @@
 
       <div class="checkbox">
         <%= label_tag :is_active, for: :product_is_active do %>
-          <%= form.check_box :is_active, id: :product_is_active %>
+          <%= form.check_box :is_active, {id: :product_is_active}, 1, 0 %>
           <%= t(:active) %>
         <% end %>
       </div>

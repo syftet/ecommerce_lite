@@ -66,7 +66,7 @@ class Product < ApplicationRecord
                                 }
 
 
-  validates_presence_of :name, :code, :cost_price, :sale_price, :is_active, :slug
+  validates_presence_of :name, :code, :cost_price, :sale_price, :slug
   validates_uniqueness_of :code
 
   after_create :create_stock_items
@@ -120,6 +120,38 @@ class Product < ApplicationRecord
 
   def self.search_by_name_or_code(query_param)
     where('products.name LIKE :q OR products.code LIKE :q', q: "%#{query_param}%")
+  end
+
+  def self.advance_search(params, products)
+    params_hash = {}
+    if params[:product].present?
+      if params[:product][:created_at_gt].present? && params[:product][:created_at_lt].present?
+        from_date = params[:product][:created_at_gt].to_date
+        to_date = params[:product][:created_at_lt].to_date
+        params_hash[:created_at_gt] = params[:product][:created_at_gt]
+        params_hash[:created_at_lt] = params[:product][:created_at_lt]
+        products = products.where(created_at: from_date.beginning_of_day..to_date.end_of_day)
+      elsif params[:product][:created_at_gt].present?
+        # from_date = Time.strptime(params[:order][:created_at_gt], '%m/%d/%Y')
+        params_hash[:created_at_gt] = params[:product][:created_at_gt]
+        products = products.where(created_at: params[:product][:created_at_gt].to_date.beginning_of_day..params[:product][:created_at_gt].to_date)
+      elsif params[:product][:created_at_lt].present?
+        to_date = params[:product][:created_at_lt].to_date
+        params_hash[:created_at_lt] = params[:product][:created_at_lt]
+        products = products.where(created_at: to_date.beginning_of_day..to_date.beginning_of_day)
+      end
+
+      if params[:product][:pos_id].present?
+        params_hash[:pos_id] = params[:product][:pos_id]
+        products = products.where(pos_id: params[:product][:pos_id])
+      end
+
+      if params[:product][:is_active].present?
+        params_hash[:is_active] = params[:product][:is_active]
+        products = products.where(is_active: params[:product][:is_active])
+      end
+    end
+    { products: products, params_hash: params_hash }
   end
 
   def price(user = nil)

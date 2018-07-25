@@ -8,6 +8,56 @@
   <% end %>
 <% end if can?(:create, Product) %>
 
+<% content_for :table_filter do %>
+    <div data-hook="admin_orders_index_search">
+
+      <%= form_for @search, url: admin_products_path, method: :get do |f| %>
+          <h4>Advance Search Of Product</h4>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <%= f.text_field :created_at_gt, :class => 'datepicker datepicker-from form-control', :value => params[:q][:created_at_gt], :placeholder => 'Start' %>
+                  <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <%= f.text_field :created_at_lt, :class => 'datepicker datepicker-to form-control', :value => params[:q][:created_at_lt], :placeholder => 'Stop' %>
+                  <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <%= label_tag :pos_id, 'POS ID' %>
+                <%= f.text_field :pos_id, class: 'form-control js-quick-search-target', placeholder: 'POS ID', value: params[:q][:pos_id] %>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <%= label_tag :is_active, "Status" %>
+                <%= f.select :is_active, [['Active', 1], ['Inactive', 0]], {:include_blank => true,:selected => params[:q][:is_active], prompt: 'Select status'}, :class => 'select2 jsx-filterable js-filter-select' %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <%= button 'Filter Results', ' fa fa-search' %>
+          </div>
+      <% end %>
+    </div>
+<% end %>
+
+<h4>Products List</h4>
 <% if @products.any? %>
   <table class="table">
     <thead>
@@ -37,3 +87,11 @@
     <%= link_to t(:add_one), new_admin_product_path %>!
   </div>
 <% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function () {
+      <% if params[:q].present? && !params[:q].empty? %>
+      $('.js-show-index-filters').trigger('click');
+      <% end %>
+  })
+</script>

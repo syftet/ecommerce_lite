@@ -41,7 +41,7 @@ class StockItem < ApplicationRecord
   # end
 
   def self.search_by_name_or_code(query_param)
-    joins(:product).where('products.name LIKE :q OR products.code LIKE :q', q: "%#{query_param}%")
+    joins(:product).where('products.name LIKE :q OR products.code LIKE :q OR products.id LIKE :q', q: "%#{query_param}%")
   end
 
   def adjust_count_on_hand(value)

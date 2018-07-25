@@ -6,7 +6,6 @@ module Admin
     respond_to? :html
 
     def index
-
       params[:q] ||= {}
       @orders = Order.all.complete.order(completed_at: :desc)
       if params[:order].present?
