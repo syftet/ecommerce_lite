@@ -332,6 +332,22 @@ a {
   }
 }
 
+.display-table {
+  display: table;
+  width: 100%;
+  .display-table-cell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+.text-shadow-title {
+  color: #fff;
+  font-size: 30px;
+  font-weight: 600;
+  text-shadow: 5px 5px 20px rgba(0,0,0,0.5);
+}
+
 /* Form design */
 .custom-form-control {
   background-color: #ffffff !important;
