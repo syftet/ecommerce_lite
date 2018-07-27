@@ -290,10 +290,12 @@ class Order < ApplicationRecord
   def init_shipment(shipping_method)
     shipping = ShippingMethod.find_by_id(shipping_method)
     u_shipment = shipment || build_shipment
-    u_shipment.cost = shipping.rate
+    if shipping.present?
+      u_shipment.cost = shipping.rate
+      u_shipment.tracking = shipping.code
+      u_shipment.shipping_method_id = shipping.id
+    end
     u_shipment.address_id = ship_address.id
-    u_shipment.tracking = shipping.code
-    u_shipment.shipping_method_id = shipping.id
     u_shipment.state = 'pending'
     u_shipment.stock_location = StockLocation.active_stock_location
     u_shipment.save!

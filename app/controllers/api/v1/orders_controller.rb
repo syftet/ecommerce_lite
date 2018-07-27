@@ -326,6 +326,12 @@ class Api::V1::OrdersController < Api::ApiBase
             shipping_rates: []
         }
 
+      if order.shipment.present?
+        shipment_data[:id] = order.shipment.id
+        shipment_data[:stock_location] = order.shipment.stock_location.name if order.shipment.stock_location.present?
+        shipment_data[:stock_location_id] = order.shipment.stock_location_id
+      end
+
         order.line_items.each do |item|
           product = item.product
           shipment_data[:manifests] << {
@@ -386,6 +392,7 @@ class Api::V1::OrdersController < Api::ApiBase
 
     render json: {
         ship_address: address_hash(shipment_address),
+        bill_address: address_hash(shipment_address),
         amount: @order.item_total,
         # is_promotional: @order.promotions.present?,
         adjustment_total: @order.adjustment_total + @order.shipment_cost,
