@@ -10,8 +10,8 @@ class Api::V1::OrdersController < Api::ApiBase
       item_count = order.line_items.count
       if item_count > 0
         product = order.line_items.first.product
-        image = helpers.product_preview_image(product, true),
-            name = product.name
+        image = helpers.product_preview_image(product, true)
+        name = product.name
       else
         image = ''
         name = ''
