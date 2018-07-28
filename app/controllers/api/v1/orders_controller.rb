@@ -1,5 +1,5 @@
 class Api::V1::OrdersController < Api::ApiBase
-   include Core::TokenGenerator
+  include Core::TokenGenerator
 
   before_action :load_user, only: [:index]
 
@@ -11,7 +11,7 @@ class Api::V1::OrdersController < Api::ApiBase
       if item_count > 0
         product = order.line_items.first.product
         image = helpers.product_preview_image(product, true),
-        name = product.name
+            name = product.name
       else
         image = ''
         name = ''
@@ -60,6 +60,7 @@ class Api::V1::OrdersController < Api::ApiBase
     render json: {
         just_completed: false,
         ship_address: address_hash(shipment_address),
+        bill_address: address_hash(shipment_address),
         line_items: line_items,
         amount: @order.total,
         adjustment_total: @order.adjustment_total,
@@ -318,41 +319,41 @@ class Api::V1::OrdersController < Api::ApiBase
       # p order.shipments.first.shipping_rates
 
       special_instructions = order.special_instructions
-        shipment_data = {
-            id: '',
-            stock_location: '',
-            stock_location_id: '',
-            manifests: [],
-            shipping_rates: []
-        }
-
+      shipment_data = {
+          id: '',
+          stock_location: '',
+          stock_location_id: '',
+          manifests: [],
+          shipping_rates: []
+      }
+      p order.shipment
       if order.shipment.present?
         shipment_data[:id] = order.shipment.id
         shipment_data[:stock_location] = order.shipment.stock_location.name if order.shipment.stock_location.present?
         shipment_data[:stock_location_id] = order.shipment.stock_location_id
       end
 
-        order.line_items.each do |item|
-          product = item.product
-          shipment_data[:manifests] << {
-              image: product.present? ? helpers.product_preview_image(product, true) : '',
-              name: product.name,
-              quantity: item.quantity,
-              price: item.product.price,
-              line_item_id: item.id,
-              variant_id: item.product.id
-          }
-        end
+      order.line_items.each do |item|
+        product = item.product
+        shipment_data[:manifests] << {
+            image: product.present? ? helpers.product_preview_image(product, true) : '',
+            name: product.name,
+            quantity: item.quantity,
+            price: item.product.price,
+            line_item_id: item.id,
+            variant_id: item.product.id
+        }
+      end
 
-        ShippingMethod.all.each do |shipping_rate|
-          shipment_data[:shipping_rates] << {
-              id: shipping_rate.id,
-              shipping_method_id: shipping_rate.id,
-              name: shipping_rate.name,
-              cost: shipping_rate.rate,
-              selected: false
-          }
-        end
+      ShippingMethod.all.each do |shipping_rate|
+        shipment_data[:shipping_rates] << {
+            id: shipping_rate.id,
+            shipping_method_id: shipping_rate.id,
+            name: shipping_rate.name,
+            cost: shipping_rate.rate,
+            selected: false
+        }
+      end
 
       shipments << shipment_data
 
