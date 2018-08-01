@@ -24,6 +24,7 @@ class Api::V1::WishlistsController < Api::ApiBase
             is_favourited: true,
             # promotion: product.promotionable,
             total_on_hand: product.total_on_hand,
+            on_stock: product.on_stock,
             categories: product.categories.as_json(only: [:id, :name])
         }
       end

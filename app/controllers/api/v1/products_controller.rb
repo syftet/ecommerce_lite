@@ -25,6 +25,7 @@ class Api::V1::ProductsController < Api::ApiBase
           discount_price: product.discount_price,
           is_favourited: product.is_favourite?(params[:user_id]),
           total_on_hand: product.total_on_hand,
+          on_stock: product.on_stock,
           categories: product.categories.as_json(only: [:id, :name])
       }
     end
@@ -52,6 +53,7 @@ class Api::V1::ProductsController < Api::ApiBase
         discount_price: product.discount_price,
         is_favourited: product.is_favourite?(params[:user_id]),
         total_on_hand: product.total_on_hand,
+        on_stock: product.on_stock,
         total_review: reviews.count,
         user_reviews: reviews,
         images: [],

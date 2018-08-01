@@ -105,6 +105,7 @@ class Product < ApplicationRecord
   end
 
   def on_stock
+    return false unless pos_id.present?
     uri = URI("http://accounts.tangailenterprise.com/api/products/#{pos_id}/stock_on_hand")
     http = Net::HTTP.new(uri.host, uri.port)
     req = Net::HTTP::Get.new(uri.path, 'Content-Type' => 'application/json')

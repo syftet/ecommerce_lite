@@ -33,6 +33,9 @@ class Api::V1::HomeController < Api::ApiBase
           promotion: [], #product.promotionable,
           point: product.reward_point,
           is_favourited: product.is_favourite?(params[:user_id]),
+          total_on_hand: product.total_on_hand,
+          on_stock: product.on_stock,
+          categories: product.categories.as_json(only: [:id, :name])
       }
     end
     result
