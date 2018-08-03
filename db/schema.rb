@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20180715144212) do
     t.string "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
   end
 
   create_table "admin_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -362,7 +361,7 @@ ActiveRecord::Schema.define(version: 20180715144212) do
   create_table "stock_locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.boolean "default", default: false
-    t.string "address1"
+    t.string "address"
     t.string "city"
     t.string "state"
     t.string "zipcode"
