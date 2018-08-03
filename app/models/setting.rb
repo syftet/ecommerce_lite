@@ -3,6 +3,6 @@ class Setting
 
   def initialize
     self.currency = 'Taka'
-    self.currency_symbol = '$'
+    self.currency_symbol = '৳'
   end
 end
