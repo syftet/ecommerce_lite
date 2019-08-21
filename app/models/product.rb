@@ -105,18 +105,19 @@ class Product < ApplicationRecord
   end
 
   def on_stock
-    return false unless pos_id.present?
-    uri = URI("http://accounts.tangailenterprise.com/api/products/#{pos_id}/stock_on_hand")
-    http = Net::HTTP.new(uri.host, uri.port)
-    req = Net::HTTP::Get.new(uri.path, 'Content-Type' => 'application/json')
-    res = http.request(req)
-    if res.body.to_i > 0
-      true
-    else
-      false
-    end
-  rescue => e
-    puts "failed #{e}"
+  #   return false unless pos_id.present?
+  #   uri = URI("http://accounts.tangailenterprise.com/api/products/#{pos_id}/stock_on_hand")
+  #   http = Net::HTTP.new(uri.host, uri.port)
+  #   req = Net::HTTP::Get.new(uri.path, 'Content-Type' => 'application/json')
+  #   res = http.request(req)
+  #   if res.body.to_i > 0
+  #     true
+  #   else
+  #     false
+  #   end
+  # rescue => e
+  #   puts "failed #{e}"
+    stock_items.sum(:count_on_hand)
   end
 
   def self.search_by_name_or_code(query_param)
