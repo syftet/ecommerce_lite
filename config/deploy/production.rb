@@ -1,3 +1,3 @@
-set :deploy_to, "/home/deployer/apps/ecommerce/ecommerce_lite"
+set :deploy_to, "/home/deployer/apps/ornahouse"
 set :rails_env, "production"
-set :branch, 'master'
+set :branch, 'jamuna'
